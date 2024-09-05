@@ -1,0 +1,8 @@
+numpy
+matplotlib
+jupyter
+ipython
+notebook
+tqdm
+gym
+torch
