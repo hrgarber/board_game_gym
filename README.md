@@ -10,6 +10,33 @@ The project consists of several components:
 - Jupyter notebooks for training the AI using both methods and visualizing the learning process
 - A command-line interface for playing against the trained AI
 
+## Roadmap
+
+### Completed
+1. Set up the project structure with necessary directories and files
+2. Implemented the core game environment (BoardGameEnv) in Python
+3. Created the Q-learning agent (QLearningAgent) in Python
+4. Developed the Deep Q-Network agent (DQNAgent) in Python
+5. Implemented utility functions for saving/loading models and visualizing results
+6. Created Jupyter notebooks for training both Q-learning and DQN agents
+7. Implemented a basic web interface for the game using HTML, CSS, and JavaScript
+8. Added unit tests for the board game environment, Q-learning agent, and DQN agent
+9. Created a main script for playing against the trained AI
+
+### In Progress
+10. Refining and optimizing the training process for both Q-learning and DQN agents
+
+### Upcoming
+11. Improve the web interface to allow playing against the trained AI
+12. Implement cross-platform compatibility checks and optimizations
+13. Add more comprehensive documentation and comments to the code
+14. Perform thorough testing and debugging of all components
+15. Create a user guide for setting up and using the project
+16. Optimize performance for larger board sizes and more complex game rules
+17. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
+18. Add support for multiplayer games (AI vs AI, Human vs Human)
+19. Develop a graphical user interface (GUI) for easier interaction with the game and AI
+
 ## File Structure
 
 - `src/`
