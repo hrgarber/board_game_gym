@@ -5,4 +5,4 @@ ipython
 notebook
 tqdm
 gym
-torch
+pytorch

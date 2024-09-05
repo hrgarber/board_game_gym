@@ -42,14 +42,19 @@ The project consists of several components:
 
 1. Clone this repository or download the project files.
 2. Navigate to the project directory.
-3. Create a virtual environment (optional but recommended):
+3. Create a conda environment (recommended):
    ```
-   python -m venv venv
+   conda create -n board_game_ai python=3.9
    ```
-4. Activate the virtual environment:
-   - On Windows: `venv\Scripts\activate`
-   - On macOS and Linux: `source venv/bin/activate`
+4. Activate the conda environment:
+   ```
+   conda activate board_game_ai
+   ```
 5. Install the required packages:
+   ```
+   conda install --file requirements.txt
+   ```
+   Note: Some packages might need to be installed via pip if not available in conda:
    ```
    pip install -r requirements.txt
    ```
