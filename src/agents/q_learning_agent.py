@@ -33,6 +33,10 @@ class QLearningAgent:
             q_values = [self.get_q_value(state, action) for action in valid_actions]
             return valid_actions[np.argmax(q_values)]
 
+    def act(self, state):
+        valid_actions = list(range(self.action_size))
+        return self.choose_action(state, valid_actions)
+
     def _get_state_key(self, state):
         return tuple(state.flatten())
 
