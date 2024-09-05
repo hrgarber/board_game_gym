@@ -17,6 +17,7 @@ def save_model(agent, filename):
     else:
         agent.save_model(filename)
 
+
 def load_latest_model(agent, models_dir):
     """
     Load the latest model for the given agent from the models directory.
@@ -43,6 +44,7 @@ def load_latest_model(agent, models_dir):
         else:
             print("No saved models found.")
 
+
 def plot_training_results(rewards, win_rates, agent_name):
     """
     Plot the training results for an agent.
@@ -67,6 +69,7 @@ def plot_training_results(rewards, win_rates, agent_name):
     plt.tight_layout()
     plt.show()
 
+
 def plot_version_comparison(env, models_dir):
     """
     Plot a comparison of win rates across different versions of DQN and Q-Learning models.
@@ -78,8 +81,8 @@ def plot_version_comparison(env, models_dir):
     dqn_model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
     q_model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
     
-    dqn_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in dqn_model_files]))
-    q_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in q_model_files]))
+    dqn_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in dqn_model_files if f.startswith('dqn_model_')]))
+    q_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in q_model_files if f.startswith('q_learning_model_')]))
 
     dqn_win_rates = []
     q_win_rates = []
@@ -105,6 +108,7 @@ def plot_version_comparison(env, models_dir):
     plt.legend()
     plt.show()
 
+
 def evaluate_agent(env, agent, num_episodes=100):
     """
     Evaluate an agent's performance over a number of episodes.
@@ -127,3 +131,4 @@ def evaluate_agent(env, agent, num_episodes=100):
             if reward == 1:
                 wins += 1
     return wins / num_episodes
+

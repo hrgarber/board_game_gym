@@ -40,15 +40,12 @@ class DQNAgent:
     def update_target_model(self):
         self.target_model.load_state_dict(self.model.state_dict())
 
-    def remember(self, state, action, reward, next_state, done):
-        self.memory.append((state, action, reward, next_state, done))
-
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             return random.randrange(self.action_size)
-        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+        state = torch.FloatTensor(state).unsqueeze(0).to(self.device) # Ensure correct shape
         act_values = self.model(state)
-        return np.argmax(act_values.cpu().data.numpy())
+        return np.argmax(act_values.cpu().data.numpy(), axis=1)[0]
 
     def replay(self, batch_size):
         minibatch = random.sample(self.memory, batch_size)
@@ -77,3 +74,4 @@ class DQNAgent:
 
     def save(self, name):
         torch.save(self.model.state_dict(), name)
+
