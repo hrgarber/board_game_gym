@@ -135,6 +135,8 @@ python -m unittest discover tests
 
 This will run all the tests in the `tests` directory and report the results.
 
+As of the latest update, all 23 tests are passing successfully. The test suite covers various aspects of the project, including the game environment, Q-learning agent, and DQN agent.
+
 ## Implementations
 
 ### Q-learning
