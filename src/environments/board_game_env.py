@@ -29,6 +29,8 @@ class BoardGameEnv(gym.Env):
 
     def check_win(self, row, col):
         player = self.board[row, col]
+        if player == 0:
+            return False
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for dr, dc in directions:
             count = 1
