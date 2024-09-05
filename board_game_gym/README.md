@@ -12,12 +12,19 @@ The project consists of several components:
 
 ## File Structure
 
-- `board_game_env.py`: Contains the custom OpenAI Gym environment for the board game.
-- `q_learning_agent.py`: Implements the Q-learning agent using PyTorch.
-- `dqn_agent.py`: Implements the DQN agent using PyTorch.
+- `src/`
+  - `environments/`
+    - `board_game_env.py`: Contains the custom OpenAI Gym environment for the board game.
+  - `agents/`
+    - `q_learning_agent.py`: Implements the Q-learning agent using PyTorch.
+    - `dqn_agent.py`: Implements the DQN agent using PyTorch.
+  - `utils/`
+    - `utils.py`: Contains utility functions.
+- `game_files/`: Contains game-related files.
+- `notebooks/`
+  - `train_q_learning_ai.ipynb`: Jupyter notebook for training the AI using Q-learning.
+  - `train_dqn_ai.ipynb`: Jupyter notebook for training the AI using DQN.
 - `main.py`: Provides a command-line interface for playing against the trained AI.
-- `train_q_learning_ai.ipynb`: Jupyter notebook for training the AI using Q-learning.
-- `train_dqn_ai.ipynb`: Jupyter notebook for training the AI using DQN.
 - `requirements.txt`: Lists the required Python packages.
 - `models/`: Directory for storing trained model versions.
 
