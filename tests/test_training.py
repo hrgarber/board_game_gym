@@ -1,6 +1,7 @@
 from tests.test_utils import TestCase
 import numpy as np
-from src.utils.utils import evaluate_agent
+from src.utils.utils import evaluate_agent, plot_training_results
+import matplotlib.pyplot as plt
 
 class TestTraining(TestCase):
     def setUp(self):
@@ -71,6 +72,29 @@ class TestTraining(TestCase):
         win_rate = evaluate_agent(self.env, self.dqn_agent, num_episodes=100)
         self.assertIsInstance(win_rate, float)
         self.assertTrue(0 <= win_rate <= 1)
+
+    def test_plot_training_results(self):
+        rewards = [1, 2, 3, 4, 5]
+        win_rates = [0.1, 0.2, 0.3, 0.4, 0.5]
+        agent_name = "Test Agent"
+
+        # Mock plt.show to avoid displaying the plot during testing
+        plt.show = lambda: None
+
+        # Call the function and check if it runs without errors
+        try:
+            plot_training_results(rewards, win_rates, agent_name)
+        except Exception as e:
+            self.fail(f"plot_training_results raised an exception: {e}")
+
+    def test_compare_agents(self):
+        q_win_rate = evaluate_agent(self.env, self.q_learning_agent, num_episodes=10)
+        dqn_win_rate = evaluate_agent(self.env, self.dqn_agent, num_episodes=10)
+
+        self.assertIsInstance(q_win_rate, float)
+        self.assertIsInstance(dqn_win_rate, float)
+        self.assertTrue(0 <= q_win_rate <= 1)
+        self.assertTrue(0 <= dqn_win_rate <= 1)
 
 if __name__ == "__main__":
     from unittest import main
