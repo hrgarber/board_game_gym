@@ -25,14 +25,15 @@ def main():
     args = parser.parse_args()
 
     env = BoardGameEnv()
-    state_size = env.board_size * env.board_size
-    action_size = env.board_size * env.board_size
+    state_size = env.observation_space.shape[0]
+    action_size = env.action_space.n
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     if args.agent == "q_learning":
         agent = QLearningAgent(state_size, action_size)
         agent.load_model(args.model)
     elif args.agent == "dqn":
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         agent = DQNAgent(state_size, action_size, device)
         agent.load(args.model)
 
