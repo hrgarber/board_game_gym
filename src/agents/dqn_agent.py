@@ -4,6 +4,7 @@ import torch.optim as optim
 import numpy as np
 import random
 from collections import deque
+from src.environments.board_game_env import BoardGameEnv
 
 
 class DQN(nn.Module):
