@@ -9,7 +9,7 @@ from src.utils.utils import evaluate_agent, plot_training_results
 class TestNotebookCode(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
-        self.state_size = self.env.observation_space.shape[0]
+        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
         self.action_size = self.env.action_space.n
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.q_agent = QLearningAgent(self.state_size, self.action_size)
