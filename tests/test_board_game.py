@@ -43,7 +43,7 @@ class TestBoardGameEnv(TestCase):
 class TestAlphaBetaPruning(TestCase):
     def setUp(self):
         super().setUp()
-        self.game_bot = GameBot()
+        self.game_bot = GameBot(board_size=3)
 
     def test_alpha_beta_pruning(self):
         # Set up a simple board state

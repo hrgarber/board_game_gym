@@ -4,11 +4,12 @@ import math
 class GameBot:
     def __init__(self, board_size=8):
         self.board_size = board_size
-        self.board = self.initialize_board()
+        self.board = None
         self.current_player = 1  # 1 for player, -1 for bot
+        self.initialize_board()
 
     def initialize_board(self):
-        return [[0 for _ in range(self.board_size)] for _ in range(self.board_size)]
+        self.board = [[0 for _ in range(self.board_size)] for _ in range(self.board_size)]
 
     def get_moves(self):
         return [(i, j) for i in range(self.board_size) for j in range(self.board_size) if self.board[i][j] == 0]
