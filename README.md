@@ -68,6 +68,27 @@ The project consists of several components:
 
 ## Installation
 
+You can install this project using either conda or pip. Choose the method that best suits your setup.
+
+### Using conda
+
+1. Clone this repository or download the project files.
+2. Navigate to the project directory.
+3. Create a conda environment:
+   ```
+   conda create --name board_game_gym python=3.8
+   ```
+4. Activate the conda environment:
+   ```
+   conda activate board_game_gym
+   ```
+5. Install the required packages:
+   ```
+   conda install --file requirements.txt
+   ```
+
+### Using pip
+
 1. Clone this repository or download the project files.
 2. Navigate to the project directory.
 3. Create a virtual environment (recommended):
