@@ -1,5 +1,7 @@
 from tests.test_utils import TestCase
 import numpy as np
+import math
+from game_files.game_bot import GameBot
 import os
 
 class TestBoardGameEnv(TestCase):
