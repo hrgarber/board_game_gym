@@ -42,7 +42,7 @@ def main():
     args = parser.parse_args()
 
     env = BoardGameEnv()
-    state_size = env.observation_space.shape[0]
+    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
     action_size = env.action_space.n
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
