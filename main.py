@@ -5,6 +5,13 @@ from src.agents.dqn_agent import DQNAgent
 import torch
 
 def play_game(agent, env):
+    """
+    Play a game using the given agent and environment.
+
+    Args:
+        agent: The AI agent (either QLearningAgent or DQNAgent).
+        env: The game environment (BoardGameEnv).
+    """
     state = env.reset()
     done = False
     total_reward = 0
@@ -19,6 +26,9 @@ def play_game(agent, env):
     print(f"Game over. Total reward: {total_reward}")
 
 def main():
+    """
+    Main function to set up and run the game.
+    """
     parser = argparse.ArgumentParser(description="Play the board game against a trained AI.")
     parser.add_argument("--agent", choices=["q_learning", "dqn"], default="q_learning", help="Choose the agent type")
     parser.add_argument("--model", required=True, help="Path to the trained model file")

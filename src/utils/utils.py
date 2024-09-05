@@ -5,12 +5,26 @@ from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 
 def save_model(agent, filename):
+    """
+    Save the agent's model to a file.
+
+    Args:
+        agent: The agent (either DQNAgent or QLearningAgent) to save.
+        filename (str): The name of the file to save the model to.
+    """
     if isinstance(agent, DQNAgent):
         torch.save(agent.model.state_dict(), filename)
     else:
         agent.save_model(filename)
 
 def load_latest_model(agent, models_dir):
+    """
+    Load the latest model for the given agent from the models directory.
+
+    Args:
+        agent: The agent (either DQNAgent or QLearningAgent) to load the model for.
+        models_dir (str): The directory containing the saved models.
+    """
     if isinstance(agent, DQNAgent):
         model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
         if model_files:
@@ -30,6 +44,14 @@ def load_latest_model(agent, models_dir):
             print("No saved models found.")
 
 def plot_training_results(rewards, win_rates, agent_name):
+    """
+    Plot the training results for an agent.
+
+    Args:
+        rewards (list): List of episode rewards.
+        win_rates (list): List of win rates.
+        agent_name (str): Name of the agent for the plot title.
+    """
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
 
     ax1.plot(rewards)
@@ -46,6 +68,13 @@ def plot_training_results(rewards, win_rates, agent_name):
     plt.show()
 
 def plot_version_comparison(env, models_dir):
+    """
+    Plot a comparison of win rates across different versions of DQN and Q-Learning models.
+
+    Args:
+        env: The game environment.
+        models_dir (str): The directory containing the saved models.
+    """
     dqn_model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
     q_model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
     
@@ -77,6 +106,17 @@ def plot_version_comparison(env, models_dir):
     plt.show()
 
 def evaluate_agent(env, agent, num_episodes=100):
+    """
+    Evaluate an agent's performance over a number of episodes.
+
+    Args:
+        env: The game environment.
+        agent: The agent to evaluate.
+        num_episodes (int): The number of episodes to evaluate over.
+
+    Returns:
+        float: The win rate of the agent.
+    """
     wins = 0
     for _ in range(num_episodes):
         state = env.reset()

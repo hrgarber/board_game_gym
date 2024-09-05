@@ -2,7 +2,17 @@ import gym
 import numpy as np
 
 class BoardGameEnv(gym.Env):
+    """
+    A custom OpenAI Gym environment for a board game.
+    """
+
     def __init__(self, board_size=8):
+        """
+        Initialize the board game environment.
+
+        Args:
+            board_size (int): The size of the game board (default is 8x8).
+        """
         super().__init__()
         self.board_size = board_size
         self.board = None
@@ -12,11 +22,26 @@ class BoardGameEnv(gym.Env):
         self.reset()
 
     def reset(self):
+        """
+        Reset the environment to its initial state.
+
+        Returns:
+            numpy.array: The initial state of the environment.
+        """
         self.board = np.zeros((self.board_size, self.board_size), dtype=np.int8)
         self.current_player = 1
         return self.board.flatten()
 
     def step(self, action):
+        """
+        Take a step in the environment by applying the given action.
+
+        Args:
+            action (int): The action to take, represented as a flattened index of the board.
+
+        Returns:
+            tuple: (next_state, reward, done, info)
+        """
         row, col = divmod(action, self.board_size)
         if self.board[row, col] != 0:
             return self.board.flatten(), -10, True, {}
@@ -28,6 +53,16 @@ class BoardGameEnv(gym.Env):
         return self.board.flatten(), reward, done, {}
 
     def check_win(self, row, col):
+        """
+        Check if the current move results in a win.
+
+        Args:
+            row (int): The row of the last move.
+            col (int): The column of the last move.
+
+        Returns:
+            bool: True if the game is won, False otherwise.
+        """
         player = self.board[row, col]
         if player == 0:
             return False
@@ -51,10 +86,22 @@ class BoardGameEnv(gym.Env):
         return False
 
     def render(self, mode='human'):
+        """
+        Render the current state of the environment.
+
+        Args:
+            mode (str): The mode to render with (default is 'human').
+        """
         print("  " + " ".join([str(i) for i in range(self.board_size)]))
         for i, row in enumerate(self.board):
             print(f"{i} {' '.join(['X' if cell == 1 else 'O' if cell == -1 else '.' for cell in row])}")
         print(f"Current player: {'X' if self.current_player == 1 else 'O'}")
 
     def get_valid_actions(self):
+        """
+        Get a list of valid actions (empty cells) on the board.
+
+        Returns:
+            list: A list of valid action indices.
+        """
         return [i for i, cell in enumerate(self.board.flatten()) if cell == 0]
