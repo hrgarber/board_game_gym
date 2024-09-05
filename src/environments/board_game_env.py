@@ -2,7 +2,7 @@ import gym
 from gym import spaces
 import numpy as np
 import matplotlib.pyplot as plt
-from ..utils.utils import save_model
+from src.utils.utils import save_model
 
 class BoardGameEnv(gym.Env):
     """

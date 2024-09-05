@@ -5,8 +5,8 @@ import logging
 import json
 import os
 from tqdm.notebook import tqdm
-from ..environments.board_game_env import BoardGameEnv
-from ..agents.q_learning_agent import QLearningAgent
+from src.environments.board_game_env import BoardGameEnv
+from src.agents.q_learning_agent import QLearningAgent
 
 def setup_logging():
     """Set up logging configuration."""

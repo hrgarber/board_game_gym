@@ -5,7 +5,7 @@ from datetime import datetime
 import logging
 import platform
 import torch
-from ..environments.board_game_env import BoardGameEnv
+from src.environments.board_game_env import BoardGameEnv
 
 class QLearningAgent:
     """
