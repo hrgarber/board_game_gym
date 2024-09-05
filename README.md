@@ -22,20 +22,21 @@ The project consists of several components:
 7. Implemented a basic web interface for the game using HTML, CSS, and JavaScript
 8. Added unit tests for the board game environment, Q-learning agent, and DQN agent
 9. Created a main script for playing against the trained AI
+10. Implemented Alpha-Beta Pruning algorithm for improved decision-making
 
 ### In Progress
-10. Refining and optimizing the training process for both Q-learning and DQN agents
+11. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
 
 ### Upcoming
-11. Improve the web interface to allow playing against the trained AI
-12. Implement cross-platform compatibility checks and optimizations
-13. Add more comprehensive documentation and comments to the code
-14. Perform thorough testing and debugging of all components
-15. Create a user guide for setting up and using the project
-16. Optimize performance for larger board sizes and more complex game rules
-17. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
-18. Add support for multiplayer games (AI vs AI, Human vs Human)
-19. Develop a graphical user interface (GUI) for easier interaction with the game and AI
+12. Improve the web interface to allow playing against the trained AI
+13. Implement cross-platform compatibility checks and optimizations
+14. Add more comprehensive documentation and comments to the code
+15. Perform thorough testing and debugging of all components
+16. Create a user guide for setting up and using the project
+17. Optimize performance for larger board sizes and more complex game rules
+18. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
+19. Add support for multiplayer games (AI vs AI, Human vs Human)
+20. Develop a graphical user interface (GUI) for easier interaction with the game and AI
 
 ## File Structure
 

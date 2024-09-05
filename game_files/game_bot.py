@@ -29,7 +29,7 @@ class GameBot:
     def evaluate(self):
         return sum(sum(row) for row in self.board)
 
-    def minimax(self, depth, alpha, beta, maximizing_player):
+    def alpha_beta_pruning(self, depth, alpha, beta, maximizing_player):
         if depth == 0:
             return self.evaluate()
 
@@ -39,7 +39,7 @@ class GameBot:
             max_eval = -math.inf
             for move in moves:
                 self.make_move(move)
-                eval = self.minimax(depth - 1, alpha, beta, False)
+                eval = self.alpha_beta_pruning(depth - 1, alpha, beta, False)
                 self.undo_move(move)
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, eval)
@@ -50,7 +50,7 @@ class GameBot:
             min_eval = math.inf
             for move in moves:
                 self.make_move(move)
-                eval = self.minimax(depth - 1, alpha, beta, True)
+                eval = self.alpha_beta_pruning(depth - 1, alpha, beta, True)
                 self.undo_move(move)
                 min_eval = min(min_eval, eval)
                 beta = min(beta, eval)
@@ -61,16 +61,20 @@ class GameBot:
     def get_best_move(self, depth=3):
         best_move = None
         best_eval = -math.inf
+        alpha = -math.inf
+        beta = math.inf
         moves = self.get_moves()
 
         for move in moves:
             self.make_move(move)
-            eval = self.minimax(depth - 1, -math.inf, math.inf, False)
+            eval = self.alpha_beta_pruning(depth - 1, alpha, beta, False)
             self.undo_move(move)
 
             if eval > best_eval:
                 best_eval = eval
                 best_move = move
+
+            alpha = max(alpha, eval)
 
         return best_move
 

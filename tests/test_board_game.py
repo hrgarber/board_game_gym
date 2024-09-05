@@ -38,6 +38,41 @@ class TestBoardGameEnv(TestCase):
         self.assertNotIn(0, valid_actions)
         self.assertEqual(len(valid_actions), 63)
 
+class TestAlphaBetaPruning(TestCase):
+    def setUp(self):
+        super().setUp()
+        self.game_bot = GameBot()
+
+    def test_alpha_beta_pruning(self):
+        # Set up a simple board state
+        self.game_bot.board = [
+            [1, 0, 0],
+            [0, -1, 0],
+            [0, 0, 0]
+        ]
+        self.game_bot.current_player = 1
+
+        # Test the alpha_beta_pruning method
+        best_score = self.game_bot.alpha_beta_pruning(depth=3, alpha=-math.inf, beta=math.inf, maximizing_player=True)
+        self.assertIsInstance(best_score, (int, float))
+
+    def test_get_best_move(self):
+        # Set up a simple board state
+        self.game_bot.board = [
+            [1, 0, 0],
+            [0, -1, 0],
+            [0, 0, 0]
+        ]
+        self.game_bot.current_player = 1
+
+        # Test the get_best_move method
+        best_move = self.game_bot.get_best_move(depth=3)
+        self.assertIsInstance(best_move, dict)
+        self.assertIn('row', best_move)
+        self.assertIn('col', best_move)
+        self.assertTrue(0 <= best_move['row'] < 3)
+        self.assertTrue(0 <= best_move['col'] < 3)
+
 class TestQLearningAgent(TestCase):
     def setUp(self):
         super().setUp()
