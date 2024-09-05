@@ -38,7 +38,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description="Play the board game against a trained AI.")
     parser.add_argument("--agent", choices=["q_learning", "dqn"], default="q_learning", help="Choose the agent type")
-    parser.add_argument("--model", required=True, help="Path to the trained model file")
+    parser.add_argument("--model", help="Path to the trained model file")
     args = parser.parse_args()
 
     env = BoardGameEnv()
@@ -49,10 +49,12 @@ def main():
 
     if args.agent == "q_learning":
         agent = QLearningAgent(state_size, action_size)
-        agent.load_model(args.model)
+        model_path = args.model or os.path.join(project_root, "models", "q_learning_model.json")
+        agent.load_model(model_path)
     elif args.agent == "dqn":
         agent = DQNAgent(state_size, action_size, device)
-        agent.load(args.model)
+        model_path = args.model or os.path.join(project_root, "models", "dqn_model.pth")
+        agent.load(model_path)
 
     play_game(agent, env)
 
