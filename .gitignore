@@ -30,3 +30,5 @@ ehthumbs_vista.db
 # Virtual Environment
 venv/
 env/
+
+# Add any other files or directories you want to ignore here
