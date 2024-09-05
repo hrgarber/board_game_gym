@@ -1,15 +1,17 @@
 import os
 import torch
 import matplotlib.pyplot as plt
+from src.agents.dqn_agent import DQNAgent
 
-def save_model(model, filename):
-    torch.save(model.state_dict(), filename)
+def save_model(agent, filename):
+    torch.save(agent.model.state_dict(), filename)
 
 def load_latest_model(agent, models_dir):
     model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
     if model_files:
         latest_model = max(model_files, key=lambda x: os.path.getctime(os.path.join(models_dir, x)))
-        agent.load(os.path.join(models_dir, latest_model))
+        agent.model.load_state_dict(torch.load(os.path.join(models_dir, latest_model)))
+        agent.version = int(latest_model.split('_')[2].split('.')[0])
         print(f"Loaded model: {latest_model}")
     else:
         print("No saved models found.")
@@ -32,12 +34,12 @@ def plot_training_results(rewards, win_rates, version):
 
 def plot_version_comparison(env, models_dir):
     model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
-    versions = sorted(set([int(f.split('_')[1].split('.')[0]) for f in model_files]))
+    versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in model_files]))
 
     win_rates = []
     for version in versions:
-        agent = DQNAgent(env.observation_space.shape[0], env.action_space.n)
-        agent.load(os.path.join(models_dir, f'model_{version}.pth'))
+        agent = DQNAgent(env.observation_space.shape[0], env.action_space.n, device=torch.device("cpu"))
+        agent.model.load_state_dict(torch.load(os.path.join(models_dir, f'dqn_model_{version}.pth')))
         win_rate = evaluate_agent(env, agent, num_episodes=100)
         win_rates.append(win_rate)
 
