@@ -42,19 +42,20 @@ The project consists of several components:
 
 1. Clone this repository or download the project files.
 2. Navigate to the project directory.
-3. Create a conda environment (recommended):
+3. Create a virtual environment (recommended):
    ```
-   conda create -n board_game_ai python=3.9
+   python -m venv venv
    ```
-4. Activate the conda environment:
-   ```
-   conda activate board_game_ai
-   ```
+4. Activate the virtual environment:
+   - On Windows:
+     ```
+     venv\Scripts\activate
+     ```
+   - On macOS and Linux:
+     ```
+     source venv/bin/activate
+     ```
 5. Install the required packages:
-   ```
-   conda install --file requirements.txt
-   ```
-   Note: Some packages might need to be installed via pip if not available in conda:
    ```
    pip install -r requirements.txt
    ```
@@ -69,7 +70,7 @@ You have two options for training the AI:
 
 1. Open the `train_q_learning_ai.ipynb` notebook in Jupyter:
    ```
-   jupyter notebook train_q_learning_ai.ipynb
+   jupyter notebook notebooks/train_q_learning_ai.ipynb
    ```
 2. Follow the instructions in the notebook to train the AI using Q-learning.
 
@@ -77,7 +78,7 @@ You have two options for training the AI:
 
 1. Open the `train_dqn_ai.ipynb` notebook in Jupyter:
    ```
-   jupyter notebook train_dqn_ai.ipynb
+   jupyter notebook notebooks/train_dqn_ai.ipynb
    ```
 2. Follow the instructions in the notebook to train the AI using DQN.
 
@@ -92,10 +93,20 @@ Key features of the training process:
 
 1. Run the main script:
    ```
-   python main.py
+   python main.py --agent [q_learning/dqn] --model [path_to_model_file]
    ```
-2. The script will prompt you to choose between the Q-learning and DQN models.
-3. Follow the prompts to make moves and interact with the AI.
+   Replace `[q_learning/dqn]` with your choice of agent and `[path_to_model_file]` with the path to your trained model file.
+2. Follow the prompts to make moves and interact with the AI.
+
+## Running Tests
+
+To run the tests for this project, use the following command:
+
+```
+python -m unittest discover tests
+```
+
+This will run all the tests in the `tests` directory and report the results.
 
 ## Implementations
 
@@ -125,7 +136,7 @@ You can customize various aspects of the project:
 ## Cross-Platform Compatibility
 
 This project is designed to work on both Windows and Mac:
-- On Windows with a CUDA-enabled GPU (e.g., RTX 4090), the training process will automatically use GPU acceleration for faster computations.
+- On Windows with a CUDA-enabled GPU, the training process will automatically use GPU acceleration for faster computations.
 - On Mac or Windows without a CUDA-enabled GPU, the training process will run on the CPU.
 
 The code automatically detects the available hardware and adjusts accordingly, ensuring seamless operation across different platforms.
