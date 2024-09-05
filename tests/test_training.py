@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
-from board_game_env import BoardGameEnv
-from q_learning_agent import QLearningAgent
+from src.environments.board_game_env import BoardGameEnv
+from src.agents.q_learning_agent import QLearningAgent
 
 class TestTraining(unittest.TestCase):
     def setUp(self):

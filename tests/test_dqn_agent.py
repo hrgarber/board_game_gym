@@ -1,7 +1,7 @@
 import unittest
 import torch
 import numpy as np
-from dqn_agent import DQNAgent, DQN
+from src.agents.dqn_agent import DQNAgent, DQN
 
 class TestDQNAgent(unittest.TestCase):
     def setUp(self):
