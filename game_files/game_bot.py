@@ -77,7 +77,7 @@ class GameBot:
 
             alpha = max(alpha, eval)
 
-        return best_move
+        return best_move  # This will now return a tuple (row, col)
 
     def train(self, num_games=1000):
         wins = 0

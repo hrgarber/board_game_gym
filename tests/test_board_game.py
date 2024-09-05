@@ -69,11 +69,11 @@ class TestAlphaBetaPruning(TestCase):
 
         # Test the get_best_move method
         best_move = self.game_bot.get_best_move(depth=3)
-        self.assertIsInstance(best_move, dict)
-        self.assertIn('row', best_move)
-        self.assertIn('col', best_move)
-        self.assertTrue(0 <= best_move['row'] < 3)
-        self.assertTrue(0 <= best_move['col'] < 3)
+        self.assertIsInstance(best_move, tuple)
+        self.assertEqual(len(best_move), 2)
+        row, col = best_move
+        self.assertTrue(0 <= row < 3)
+        self.assertTrue(0 <= col < 3)
 
 class TestQLearningAgent(TestCase):
     def setUp(self):
