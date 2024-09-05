@@ -79,4 +79,5 @@ class TestQLearningAgent(TestCase):
         os.remove("test_model.json")
 
 if __name__ == "__main__":
-    unittest.main()
+    from unittest import main
+    main()

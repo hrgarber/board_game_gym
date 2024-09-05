@@ -73,4 +73,5 @@ class TestTraining(TestCase):
         self.assertTrue(0 <= win_rate <= 1)
 
 if __name__ == "__main__":
-    unittest.main()
+    from unittest import main
+    main()

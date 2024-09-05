@@ -1,6 +1,7 @@
 from tests.test_utils import TestCase
 import torch
 import numpy as np
+import os
 
 class TestDQNAgent(TestCase):
     def setUp(self):
@@ -78,4 +79,5 @@ class TestDQNAgent(TestCase):
         os.remove("test_dqn_model.pth")
 
 if __name__ == '__main__':
-    unittest.main()
+    from unittest import main
+    main()
