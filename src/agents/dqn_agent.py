@@ -18,7 +18,7 @@ class DQN(nn.Module):
         return self.fc3(x)
 
 class DQNAgent:
-    def __init__(self, state_size, action_size, device, learning_rate=1e-3, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995):
+    def __init__(self, state_size, action_size, device, learning_rate=1e-3, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
@@ -28,6 +28,7 @@ class DQNAgent:
         self.epsilon_min = epsilon_min
         self.epsilon_decay = epsilon_decay
         self.learning_rate = learning_rate
+        self.batch_size = batch_size
         self.model = DQN(state_size, action_size).to(device)
         self.target_model = DQN(state_size, action_size).to(device)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)

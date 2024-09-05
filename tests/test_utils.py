@@ -8,7 +8,7 @@ from src.agents.dqn_agent import DQNAgent
 class TestCase(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
-        self.state_size = self.env.observation_space.shape[0]
+        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
         self.action_size = self.env.action_space.n
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         

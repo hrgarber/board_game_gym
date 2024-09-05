@@ -28,10 +28,10 @@ class QLearningAgent:
 
     def choose_action(self, state, valid_actions):
         if np.random.random() < self.epsilon:
-            return np.random.choice(valid_actions)
+            return int(np.random.choice(valid_actions))
         else:
             q_values = [self.get_q_value(state, action) for action in valid_actions]
-            return valid_actions[np.argmax(q_values)]
+            return int(valid_actions[np.argmax(q_values)])
 
     def act(self, state):
         valid_actions = list(range(self.action_size))

@@ -29,6 +29,7 @@ class TestBoardGameEnv(TestCase):
     def test_check_win(self):
         self.env.board[0, :5] = 1
         self.assertTrue(self.env.check_win(0, 4))
+        self.env.board = np.zeros((self.env.board_size, self.env.board_size))
         self.assertFalse(self.env.check_win(0, 0))
 
     def test_get_valid_actions(self):
