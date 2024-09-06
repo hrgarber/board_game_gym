@@ -184,6 +184,50 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
     }
 
 # Example usage
+def visualize_tuning_results(results, method):
+    """
+    Visualize the results of hyperparameter tuning.
+
+    Args:
+        results (dict): Dictionary containing tuning results.
+        method (str): The tuning method used ('grid', 'random', or 'bayesian').
+    """
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    plt.figure(figsize=(12, 6))
+    sns.set(style="whitegrid")
+
+    if method in ['grid', 'random']:
+        data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
+        data.sort(key=lambda x: x[1], reverse=True)
+        params, performances = zip(*data)
+
+        plt.bar(range(len(performances)), performances)
+        plt.title(f"{method.capitalize()} Search Results")
+        plt.xlabel("Hyperparameter Set")
+        plt.ylabel("Performance")
+        plt.xticks([])
+
+        for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
+            plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
+            plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
+
+    elif method == 'bayesian':
+        trials = results['study'].trials
+        values = [t.value for t in trials if t.value is not None]
+        best_value = results['study'].best_value
+
+        plt.plot(range(1, len(values) + 1), values, marker='o')
+        plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
+        plt.title("Bayesian Optimization Results")
+        plt.xlabel("Trial")
+        plt.ylabel("Performance")
+        plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
 if __name__ == "__main__":
     q_learning_param_grid = {
         'learning_rate': [0.001, 0.01, 0.1],
@@ -244,8 +288,6 @@ if __name__ == "__main__":
     dqn_bayesian_results = bayesian_optimization('dqn', dqn_param_ranges)
     print(dqn_bayesian_results)
     visualize_tuning_results(dqn_bayesian_results, 'bayesian')
-
-def visualize_tuning_results(results, method):
     """
     Visualize the results of hyperparameter tuning.
 
