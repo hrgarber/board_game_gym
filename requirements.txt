@@ -9,4 +9,3 @@ torch
 pygame
 scikit-optimize
 optuna
-optuna

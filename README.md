@@ -9,6 +9,7 @@ The project consists of several components:
 - Q-learning and DQN agents implemented with PyTorch for training and decision-making
 - Jupyter notebooks for training the AI using both methods and visualizing the learning process
 - A command-line interface for playing against the trained AI
+- Hyperparameter tuning using grid search, random search, and Bayesian optimization
 
 ## Instructions
 
@@ -35,20 +36,21 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
 8. Added unit tests for the board game environment, Q-learning agent, and DQN agent
 9. Created a main script for playing against the trained AI
 10. Implemented Alpha-Beta Pruning algorithm for improved decision-making
+11. Implemented hyperparameter tuning using grid search, random search, and Bayesian optimization
 
 ### In Progress
-11. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
+12. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
 
 ### Upcoming
-12. Improve the web interface to allow playing against the trained AI
-13. Implement cross-platform compatibility checks and optimizations
-14. Add more comprehensive documentation and comments to the code
-15. Perform thorough testing and debugging of all components
-16. Create a user guide for setting up and using the project
-17. Optimize performance for larger board sizes and more complex game rules
-18. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
-19. Add support for multiplayer games (AI vs AI, Human vs Human)
-20. Develop a graphical user interface (GUI) for easier interaction with the game and AI
+13. Improve the web interface to allow playing against the trained AI
+14. Implement cross-platform compatibility checks and optimizations
+15. Add more comprehensive documentation and comments to the code
+16. Perform thorough testing and debugging of all components
+17. Create a user guide for setting up and using the project
+18. Optimize performance for larger board sizes and more complex game rules
+19. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
+20. Add support for multiplayer games (AI vs AI, Human vs Human)
+21. Develop a graphical user interface (GUI) for easier interaction with the game and AI
 
 ## File Structure
 
@@ -60,6 +62,7 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
     - `dqn_agent.py`: Implements the DQN agent using PyTorch.
   - `utils/`
     - `utils.py`: Contains utility functions.
+    - `hyperparameter_tuning.py`: Implements grid search, random search, and Bayesian optimization for hyperparameter tuning.
 - `game_files/`: Contains game-related files.
 - `notebooks/`
   - `train_q_learning_ai.ipynb`: Jupyter notebook for training the AI using Q-learning.
@@ -77,6 +80,7 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
 - Jupyter Notebook
 - PyTorch
 - tqdm
+- Optuna (for Bayesian optimization)
 
 ## Installation
 
@@ -150,6 +154,16 @@ Key features of the training process:
 - GPU acceleration support for faster training on Windows with CUDA-enabled devices
 - Ability to save and load trained models
 
+### Hyperparameter Tuning
+
+To perform hyperparameter tuning, you can use the functions in `src/utils/hyperparameter_tuning.py`:
+
+1. Grid Search: `grid_search(agent_type, param_grid, num_episodes, eval_episodes)`
+2. Random Search: `random_search(agent_type, param_ranges, num_iterations, num_episodes, eval_episodes)`
+3. Bayesian Optimization: `bayesian_optimization(agent_type, param_ranges, n_trials, num_episodes, eval_episodes)`
+
+These functions allow you to find the best hyperparameters for both Q-learning and DQN agents.
+
 ### Playing the Game
 
 1. Run the main script:
@@ -169,7 +183,7 @@ python -m unittest discover tests
 
 This will run all the tests in the `tests` directory and report the results.
 
-As of the latest update, all 23 tests are passing successfully. The test suite covers various aspects of the project, including the game environment, Q-learning agent, and DQN agent.
+As of the latest update, all tests are passing successfully. The test suite covers various aspects of the project, including the game environment, Q-learning agent, DQN agent, and hyperparameter tuning functions.
 
 ## Implementations
 
@@ -187,6 +201,13 @@ The DQN implementation uses a neural network to approximate the Q-function:
 - Implements experience replay and a separate target network for improved stability during training.
 - Uses an epsilon-greedy policy with decaying exploration rate.
 
+### Hyperparameter Tuning
+
+The project now includes three methods for hyperparameter tuning:
+- Grid Search: Exhaustively searches through a predefined set of hyperparameters.
+- Random Search: Randomly samples hyperparameters from defined ranges.
+- Bayesian Optimization: Uses Optuna to perform efficient hyperparameter optimization.
+
 ## Customization
 
 You can customize various aspects of the project:
@@ -195,6 +216,7 @@ You can customize various aspects of the project:
 - Adjust the hyperparameters in `q_learning_agent.py` and `dqn_agent.py` to experiment with different learning strategies.
 - Modify the training process in the Jupyter notebooks to change the number of episodes, batch size, or add different visualizations.
 - Experiment with different neural network architectures in the `DQN` class for improved performance.
+- Use the hyperparameter tuning functions to find optimal configurations for your specific use case.
 
 ## Cross-Platform Compatibility
 
@@ -227,10 +249,8 @@ We are currently working on implementing a comprehensive evaluation framework fo
 
 3. Modify the training notebook to include evaluation and visualization after training.
 
-4. Update `requirements.txt` to include matplotlib if needed.
+4. Implement error handling and logging in the new functions.
 
-5. Implement error handling and logging in the new functions.
+5. Write unit tests for the new evaluation functions.
 
-6. Write unit tests for the new evaluation functions.
-
-This enhancement will provide valuable insights into agent performance and learning progress, facilitating easier comparison between different reinforcement learning approaches.
+This enhancement will provide valuable insights into agent performance and learning progress, facilitating easier comparison between different reinforcement learning approaches and hyperparameter configurations.
