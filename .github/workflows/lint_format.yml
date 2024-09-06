@@ -31,9 +31,9 @@ jobs:
 
     - name: Run lint and format checks
       run: |
-        pylint $(git ls-files '*.py') || exit 0
-        black . || exit 0
-        isort . || exit 0
+        pylint $(git ls-files '*.py')
+        black .
+        isort .
 
     - name: Commit and push changes
       if: github.event_name == 'pull_request' || github.event_name == 'push'
@@ -47,11 +47,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Annotate pylint issues
-      if: failure()
+      if: always()
       run: |
         pylint $(git ls-files '*.py') --output-format=json > pylint-report.json
-        python3 -c "import json
-import sys
+        python3 - <<EOF
+import json
 
 def create_annotations(report):
     annotations = []
@@ -66,4 +66,5 @@ with open('pylint-report.json') as f:
     report = json.load(f)
     annotations = create_annotations(report)
     for annotation in annotations:
-        print(annotation)"
+        print(annotation)
+EOF
