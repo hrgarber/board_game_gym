@@ -12,10 +12,13 @@ def save_model(agent, filename):
         agent: The agent (either DQNAgent or QLearningAgent) to save.
         filename (str): The name of the file to save the model to.
     """
+    base, ext = os.path.splitext(filename)
+    versioned_filename = f"{base}_v{agent.version}{ext}"
     if isinstance(agent, DQNAgent):
-        torch.save(agent.model.state_dict(), filename)
+        agent.save(versioned_filename)
     else:
-        agent.save_model(filename)
+        agent.save_model(versioned_filename)
+    print(f"Saved model version {agent.version} to {versioned_filename}")
 
 
 def load_latest_model(agent, models_dir):
@@ -28,21 +31,19 @@ def load_latest_model(agent, models_dir):
     """
     if isinstance(agent, DQNAgent):
         model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
-        if model_files:
-            latest_model = max(model_files, key=lambda x: os.path.getctime(os.path.join(models_dir, x)))
-            agent.model.load_state_dict(torch.load(os.path.join(models_dir, latest_model)))
-            agent.version = int(latest_model.split('_')[2].split('.')[0])
-            print(f"Loaded model: {latest_model}")
-        else:
-            print("No saved models found.")
     else:
         model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
-        if model_files:
-            latest_model = max(model_files, key=lambda x: os.path.getctime(os.path.join(models_dir, x)))
-            agent.load_model(os.path.join(models_dir, latest_model))
-            print(f"Loaded model: {latest_model}")
+
+    if model_files:
+        latest_model = max(model_files, key=lambda x: int(x.split('_v')[1].split('.')[0]))
+        model_path = os.path.join(models_dir, latest_model)
+        if isinstance(agent, DQNAgent):
+            agent.load(model_path)
         else:
-            print("No saved models found.")
+            agent.load_model(model_path)
+        print(f"Loaded model: {latest_model}")
+    else:
+        print("No saved models found.")
 
 
 def plot_training_results(rewards, win_rates, agent_name):

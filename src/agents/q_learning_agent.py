@@ -25,6 +25,7 @@ class QLearningAgent:
         self.epsilon = epsilon
         self.q_table = {}
         self.version = 1
+        self.version = 1
 
     def get_q_value(self, state, action):
         """
@@ -114,6 +115,7 @@ class QLearningAgent:
         }
         with open(filename, 'w') as f:
             json.dump(model_data, f)
+        self.version += 1
 
     def load_model(self, filename):
         """

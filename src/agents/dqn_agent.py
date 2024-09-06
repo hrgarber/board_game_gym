@@ -37,6 +37,7 @@ class DQNAgent:
         self.target_model = DQN(state_size, action_size).to(device)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
         self.update_target_model()
+        self.version = 1
 
     def preprocess_state(self, state):
         return torch.FloatTensor(state).to(self.device)
@@ -78,8 +79,14 @@ class DQNAgent:
             self.epsilon *= self.epsilon_decay
 
     def load(self, name):
-        self.model.load_state_dict(torch.load(name))
+        checkpoint = torch.load(name)
+        self.model.load_state_dict(checkpoint['model_state_dict'])
+        self.version = checkpoint['version']
 
     def save(self, name):
-        torch.save(self.model.state_dict(), name)
+        torch.save({
+            'model_state_dict': self.model.state_dict(),
+            'version': self.version
+        }, name)
+        self.version += 1
 
