@@ -29,6 +29,7 @@ class QLearningAgent:
         self.epsilon_min = epsilon_min
         self.q_table = {}
         self.version = 1
+        self.training_episodes = 0
 
     def decay_epsilon(self):
         """
@@ -120,7 +121,9 @@ class QLearningAgent:
         """
         model_data = {
             "q_table": {str(k): v for k, v in self.q_table.items()},
-            "version": self.version
+            "version": self.version,
+            "training_episodes": self.training_episodes,
+            "epsilon": self.epsilon
         }
         with open(filename, 'w') as f:
             json.dump(model_data, f)
@@ -137,3 +140,24 @@ class QLearningAgent:
             model_data = json.load(f)
         self.q_table = {eval(k): v for k, v in model_data["q_table"].items()}
         self.version = model_data["version"]
+        self.training_episodes = model_data["training_episodes"]
+        self.epsilon = model_data["epsilon"]
+
+    def train(self, env, num_episodes):
+        """
+        Train the Q-learning agent for a specified number of episodes.
+
+        Args:
+            env: The environment to train in.
+            num_episodes (int): The number of episodes to train for.
+        """
+        for episode in range(num_episodes):
+            state = env.reset()
+            done = False
+            while not done:
+                action = self.choose_action(state, env.get_valid_actions())
+                next_state, reward, done, _ = env.step(action)
+                self.update_q_value(state, action, reward, next_state)
+                state = next_state
+            self.decay_epsilon()
+            self.training_episodes += 1
