@@ -135,7 +135,7 @@ class BoardGameEnv(gym.Env):
         self.current_player = original_player
         self.board[row, col] = original_value
         
-        return blocked
+        return blocked or self.check_line(row, col, 4)  # Also check for blocking a line of 4
 
     def check_line(self, row, col, line_length):
         """

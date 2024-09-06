@@ -79,6 +79,7 @@ class DQNAgent:
         self.optimizer.step()
         
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+        return loss.item()  # Return the loss value for monitoring
 
     def load(self, name):
         checkpoint = torch.load(name)
@@ -107,6 +108,6 @@ class DQNAgent:
                 state = next_state
                 if done:
                     break
-            if episode % 10 == 0:
+            if episode % self.update_target_every == 0:
                 self.update_target_model()
 
