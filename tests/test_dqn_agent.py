@@ -1,14 +1,19 @@
-import unittest
-import torch
-import numpy as np
 import os
+import unittest
+
+import numpy as np
+import torch
+
 from src.agents.dqn_agent import DQNAgent
 from src.environments.board_game_env import BoardGameEnv
+
 
 class TestDQNAgent(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
-        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        self.state_size = (
+            self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        )
         self.action_size = self.env.action_space.n
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.agent = DQNAgent(self.state_size, self.action_size, self.device)
@@ -52,9 +57,19 @@ class TestDQNAgent(unittest.TestCase):
             self.agent.remember(state, action, reward, next_state, done)
 
         # Perform a replay step
-        initial_q_values = self.agent.model(torch.FloatTensor(state).unsqueeze(0).to(self.device)).detach().cpu().numpy()
+        initial_q_values = (
+            self.agent.model(torch.FloatTensor(state).unsqueeze(0).to(self.device))
+            .detach()
+            .cpu()
+            .numpy()
+        )
         self.agent.replay(self.agent.batch_size)
-        updated_q_values = self.agent.model(torch.FloatTensor(state).unsqueeze(0).to(self.device)).detach().cpu().numpy()
+        updated_q_values = (
+            self.agent.model(torch.FloatTensor(state).unsqueeze(0).to(self.device))
+            .detach()
+            .cpu()
+            .numpy()
+        )
 
         # Check if Q-values have been updated
         self.assertFalse(np.array_equal(initial_q_values, updated_q_values))
@@ -83,7 +98,9 @@ class TestDQNAgent(unittest.TestCase):
         new_agent.load("test_dqn_model.pth")
 
         # Check if the loaded model has the same weights as the original model
-        for param1, param2 in zip(self.agent.model.parameters(), new_agent.model.parameters()):
+        for param1, param2 in zip(
+            self.agent.model.parameters(), new_agent.model.parameters()
+        ):
             self.assertTrue(torch.equal(param1, param2))
 
         # Clean up
@@ -122,8 +139,10 @@ class TestDQNAgent(unittest.TestCase):
         initial_target_weights = self.agent.target_model.fc1.weight.data.clone()
         for _ in range(self.agent.update_target_every):
             self.agent.train(self.env, 1, 1)
-        self.assertFalse(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
+        self.assertFalse(
+            torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data)
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
-

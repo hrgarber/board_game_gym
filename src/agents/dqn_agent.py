@@ -1,9 +1,11 @@
+import random
+from collections import deque
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
-from collections import deque
-import random
+
 
 class DQN(nn.Module):
     def __init__(self, state_size, action_size):
@@ -21,8 +23,21 @@ class DQN(nn.Module):
         x = self.fc3(x)
         return x
 
+
 class DQNAgent:
-    def __init__(self, state_size, action_size, device, learning_rate=1e-3, discount_factor=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32, update_target_every=100):
+    def __init__(
+        self,
+        state_size,
+        action_size,
+        device,
+        learning_rate=1e-3,
+        discount_factor=0.99,
+        epsilon=1.0,
+        epsilon_min=0.01,
+        epsilon_decay=0.995,
+        batch_size=32,
+        update_target_every=100,
+    ):
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
@@ -47,7 +62,9 @@ class DQNAgent:
         self.memory.append((state, action, reward, next_state, done))
 
     def update_target_model(self):
-        for target_param, param in zip(self.target_model.parameters(), self.model.parameters()):
+        for target_param, param in zip(
+            self.target_model.parameters(), self.model.parameters()
+        ):
             target_param.data.copy_(param.data)
 
     def act(self, state):
@@ -63,26 +80,30 @@ class DQNAgent:
 
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
-        
+
         states = torch.stack([self.preprocess_state(state) for state in states])
-        next_states = torch.stack([self.preprocess_state(state) for state in next_states])
-        
+        next_states = torch.stack(
+            [self.preprocess_state(state) for state in next_states]
+        )
+
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
         dones = torch.FloatTensor(dones).to(self.device)
 
         current_q_values = self.model(states).gather(1, actions.unsqueeze(1))
-        
+
         # Double DQN: use online network to select action, target network to evaluate it
         next_actions = self.model(next_states).max(1)[1].unsqueeze(1)
-        next_q_values = self.target_model(next_states).gather(1, next_actions).squeeze(1).detach()
+        next_q_values = (
+            self.target_model(next_states).gather(1, next_actions).squeeze(1).detach()
+        )
         target_q_values = rewards + (1 - dones) * self.discount_factor * next_q_values
 
         loss = nn.MSELoss()(current_q_values, target_q_values.unsqueeze(1))
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-        
+
         return loss.item()  # Return the loss value for monitoring
 
     def decay_epsilon(self):
@@ -90,14 +111,13 @@ class DQNAgent:
 
     def load(self, name):
         checkpoint = torch.load(name)
-        self.model.load_state_dict(checkpoint['model_state_dict'])
-        self.version = checkpoint['version']
+        self.model.load_state_dict(checkpoint["model_state_dict"])
+        self.version = checkpoint["version"]
 
     def save(self, name):
-        torch.save({
-            'model_state_dict': self.model.state_dict(),
-            'version': self.version
-        }, name)
+        torch.save(
+            {"model_state_dict": self.model.state_dict(), "version": self.version}, name
+        )
         self.version += 1
 
     def update(self, state, action, reward, next_state, done):
@@ -115,16 +135,15 @@ class DQNAgent:
                 state = next_state
                 if done:
                     break
-            
+
             self.decay_epsilon()
-            
+
             if (episode + 1) % self.update_target_every == 0:
                 print(f"Updating target model at episode {episode + 1}")
                 self.update_target_model()
-        
+
         print("Final update of target model")
         self.update_target_model()  # Ensure the target model is updated at the end of training
 
         if len(self.memory) > self.batch_size:
             self.replay(self.batch_size)
-

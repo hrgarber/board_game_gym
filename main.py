@@ -1,16 +1,18 @@
-import sys
-import os
 import argparse
+import os
+import sys
+
 import torch
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, project_root)
 
-from src.environments.board_game_env import BoardGameEnv
-from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
+from src.agents.q_learning_agent import QLearningAgent
+from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import load_latest_model
+
 
 def play_game(agent, env):
     """
@@ -33,12 +35,20 @@ def play_game(agent, env):
     env.render()
     print(f"Game over. Total reward: {total_reward}")
 
+
 def main():
     """
     Main function to set up and run the game.
     """
-    parser = argparse.ArgumentParser(description="Play the board game against a trained AI.")
-    parser.add_argument("--agent", choices=["q_learning", "dqn"], default="q_learning", help="Choose the agent type")
+    parser = argparse.ArgumentParser(
+        description="Play the board game against a trained AI."
+    )
+    parser.add_argument(
+        "--agent",
+        choices=["q_learning", "dqn"],
+        default="q_learning",
+        help="Choose the agent type",
+    )
     parser.add_argument("--model", help="Path to the trained model file")
     args = parser.parse_args()
 
@@ -58,6 +68,7 @@ def main():
         load_latest_model(agent, model_path)
 
     play_game(agent, env)
+
 
 if __name__ == "__main__":
     main()

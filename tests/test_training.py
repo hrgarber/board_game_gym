@@ -1,8 +1,11 @@
-from tests.test_utils import TestCase
-import numpy as np
-from src.utils.utils import evaluate_agent, plot_training_results, compare_agents, plot_agent_comparison
-from src.utils.training_utils import train_agent
 import matplotlib.pyplot as plt
+import numpy as np
+
+from src.utils.training_utils import train_agent
+from src.utils.utils import (compare_agents, evaluate_agent,
+                             plot_agent_comparison, plot_training_results)
+from tests.test_utils import TestCase
+
 
 class TestTraining(TestCase):
     def setUp(self):
@@ -39,21 +42,21 @@ class TestTraining(TestCase):
         episode_reward = 0
         state = self.env.reset()
         done = False
-        
+
         while not done:
             action = agent.act(state)
             next_state, reward, done, _ = self.env.step(action)
-            
+
             if isinstance(agent, type(self.q_learning_agent)):
                 agent.update_q_value(state, action, reward, next_state)
             else:
                 agent.remember(state, action, reward, next_state, done)
                 if len(agent.memory) > agent.batch_size:
                     agent.replay(agent.batch_size)
-            
+
             state = next_state
             episode_reward += reward
-        
+
         self.assert_valid_reward(episode_reward)
         self.assertTrue(done)
 
@@ -61,7 +64,7 @@ class TestTraining(TestCase):
         num_episodes = 100
         rewards = [1] * 50 + [-1] * 50  # Simulate 50 wins and 50 losses
         win_rate = sum(rewards) / (2 * num_episodes) + 0.5
-        
+
         self.assertAlmostEqual(win_rate, 0.5, places=2)
 
     def test_evaluate_agent_q_learning(self):
@@ -89,7 +92,9 @@ class TestTraining(TestCase):
             self.fail(f"plot_training_results raised an exception: {e}")
 
     def test_compare_agents(self):
-        q_win_rate, dqn_win_rate = compare_agents(self.env, self.q_learning_agent, self.dqn_agent, num_episodes=10)
+        q_win_rate, dqn_win_rate = compare_agents(
+            self.env, self.q_learning_agent, self.dqn_agent, num_episodes=10
+        )
 
         self.assertIsInstance(q_win_rate, float)
         self.assertIsInstance(dqn_win_rate, float)
@@ -98,7 +103,7 @@ class TestTraining(TestCase):
 
     def test_plot_agent_comparison(self):
         q_win_rate, dqn_win_rate = 0.6, 0.7
-        
+
         # Mock plt.show to avoid displaying the plot during testing
         plt.show = lambda: None
 
@@ -114,14 +119,23 @@ class TestTraining(TestCase):
         update_target_every = 5
 
         # Test Q-Learning agent training
-        q_results = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        q_results = train_agent(
+            self.env, self.q_learning_agent, num_episodes, max_steps
+        )
         self.assertIsInstance(q_results, tuple)
         self.assertEqual(len(q_results), 2)
         self.assertEqual(len(q_results[0]), num_episodes)
         self.assertEqual(len(q_results[1]), num_episodes // 100 + 1)
 
         # Test DQN agent training
-        dqn_results = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        dqn_results = train_agent(
+            self.env,
+            self.dqn_agent,
+            num_episodes,
+            max_steps,
+            batch_size,
+            update_target_every,
+        )
         self.assertIsInstance(dqn_results, tuple)
         self.assertEqual(len(dqn_results), 2)
         self.assertEqual(len(dqn_results[0]), num_episodes)
@@ -134,20 +148,35 @@ class TestTraining(TestCase):
         update_target_every = 5
 
         # Train Q-Learning agent
-        q_results = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        q_results = train_agent(
+            self.env, self.q_learning_agent, num_episodes, max_steps
+        )
         q_initial_performance = np.mean(q_results[0][:200])
         q_final_performance = np.mean(q_results[0][-200:])
         self.assertGreater(q_final_performance, q_initial_performance)
 
         # Train DQN agent
-        dqn_results = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        dqn_results = train_agent(
+            self.env,
+            self.dqn_agent,
+            num_episodes,
+            max_steps,
+            batch_size,
+            update_target_every,
+        )
         dqn_initial_performance = np.mean(dqn_results[0][:200])
         dqn_final_performance = np.mean(dqn_results[0][-200:])
-        self.assertGreaterEqual(dqn_final_performance, dqn_initial_performance * 0.9)  # Allow for 10% variance
+        self.assertGreaterEqual(
+            dqn_final_performance, dqn_initial_performance * 0.9
+        )  # Allow for 10% variance
 
         # Add more detailed assertions
-        self.assertGreater(q_final_performance, q_initial_performance * 1.2)  # Expect at least 20% improvement
-        self.assertGreater(dqn_final_performance, dqn_initial_performance * 1.2)  # Expect at least 20% improvement
+        self.assertGreater(
+            q_final_performance, q_initial_performance * 1.2
+        )  # Expect at least 20% improvement
+        self.assertGreater(
+            dqn_final_performance, dqn_initial_performance * 1.2
+        )  # Expect at least 20% improvement
 
     def test_epsilon_decay_during_training(self):
         num_episodes = 100
@@ -164,10 +193,18 @@ class TestTraining(TestCase):
         update_target_every = 5
         initial_memory_size = len(self.dqn_agent.memory)
 
-        train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        train_agent(
+            self.env,
+            self.dqn_agent,
+            num_episodes,
+            max_steps,
+            batch_size,
+            update_target_every,
+        )
         self.assertGreater(len(self.dqn_agent.memory), initial_memory_size)
+
 
 if __name__ == "__main__":
     from unittest import main
-    main()
 
+    main()

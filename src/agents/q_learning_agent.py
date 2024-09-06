@@ -1,13 +1,24 @@
+import json
+
 import numpy as np
 import torch
-import json
+
 
 class QLearningAgent:
     """
     A Q-Learning agent for reinforcement learning.
     """
 
-    def __init__(self, state_size, action_size, learning_rate=0.1, discount_factor=0.95, epsilon=0.1, epsilon_decay=0.995, epsilon_min=0.01):
+    def __init__(
+        self,
+        state_size,
+        action_size,
+        learning_rate=0.1,
+        discount_factor=0.95,
+        epsilon=0.1,
+        epsilon_decay=0.995,
+        epsilon_min=0.01,
+    ):
         """
         Initialize the Q-Learning agent.
 
@@ -63,11 +74,15 @@ class QLearningAgent:
         """
         state_key = self._get_state_key(state)
         next_state_key = self._get_state_key(next_state)
-        
+
         current_q = self.get_q_value(state, action)
-        next_max_q = max([self.get_q_value(next_state, a) for a in range(self.action_size)])
-        
-        new_q = current_q + self.learning_rate * (reward + self.discount_factor * next_max_q - current_q)
+        next_max_q = max(
+            [self.get_q_value(next_state, a) for a in range(self.action_size)]
+        )
+
+        new_q = current_q + self.learning_rate * (
+            reward + self.discount_factor * next_max_q - current_q
+        )
         self.q_table[(state_key, action)] = new_q
 
     def choose_action(self, state, valid_actions):
@@ -123,9 +138,9 @@ class QLearningAgent:
             "q_table": {str(k): v for k, v in self.q_table.items()},
             "version": self.version,
             "training_episodes": self.training_episodes,
-            "epsilon": self.epsilon
+            "epsilon": self.epsilon,
         }
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             json.dump(model_data, f)
         self.version += 1
 
@@ -136,7 +151,7 @@ class QLearningAgent:
         Args:
             filename (str): The name of the file to load the model from.
         """
-        with open(filename, 'r') as f:
+        with open(filename, "r") as f:
             model_data = json.load(f)
         self.q_table = {eval(k): v for k, v in model_data["q_table"].items()}
         self.version = model_data["version"]
@@ -174,15 +189,28 @@ class QLearningAgent:
                 state = next_state
             self.decay_epsilon()
             self.training_episodes += 1
-import numpy as np
+
+
 import json
+
+import numpy as np
+
 
 class QLearningAgent:
     """
     A Q-Learning agent for reinforcement learning.
     """
 
-    def __init__(self, state_size, action_size, learning_rate=0.1, discount_factor=0.95, epsilon=0.1, epsilon_decay=0.995, epsilon_min=0.01):
+    def __init__(
+        self,
+        state_size,
+        action_size,
+        learning_rate=0.1,
+        discount_factor=0.95,
+        epsilon=0.1,
+        epsilon_decay=0.995,
+        epsilon_min=0.01,
+    ):
         self.state_size = state_size
         self.action_size = action_size
         self.learning_rate = learning_rate
@@ -204,11 +232,15 @@ class QLearningAgent:
     def update_q_value(self, state, action, reward, next_state):
         state_key = self._get_state_key(state)
         next_state_key = self._get_state_key(next_state)
-        
+
         current_q = self.get_q_value(state, action)
-        next_max_q = max([self.get_q_value(next_state, a) for a in range(self.action_size)])
-        
-        new_q = current_q + self.learning_rate * (reward + self.discount_factor * next_max_q - current_q)
+        next_max_q = max(
+            [self.get_q_value(next_state, a) for a in range(self.action_size)]
+        )
+
+        new_q = current_q + self.learning_rate * (
+            reward + self.discount_factor * next_max_q - current_q
+        )
         self.q_table[(state_key, action)] = new_q
 
     def choose_action(self, state, valid_actions):
@@ -230,14 +262,14 @@ class QLearningAgent:
             "q_table": {str(k): v for k, v in self.q_table.items()},
             "version": self.version,
             "training_episodes": self.training_episodes,
-            "epsilon": self.epsilon
+            "epsilon": self.epsilon,
         }
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             json.dump(model_data, f)
         self.version += 1
 
     def load_model(self, filename):
-        with open(filename, 'r') as f:
+        with open(filename, "r") as f:
             model_data = json.load(f)
         self.q_table = {eval(k): v for k, v in model_data["q_table"].items()}
         self.version = model_data["version"]

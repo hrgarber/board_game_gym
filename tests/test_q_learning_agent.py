@@ -1,13 +1,18 @@
-import unittest
-import numpy as np
 import os
+import unittest
+
+import numpy as np
+
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
+
 
 class TestQLearningAgent(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
-        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        self.state_size = (
+            self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        )
         self.action_size = self.env.action_space.n
         self.agent = QLearningAgent(self.state_size, self.action_size)
 
@@ -85,5 +90,6 @@ class TestQLearningAgent(unittest.TestCase):
             self.agent.decay_epsilon()
         self.assertGreaterEqual(self.agent.epsilon, self.agent.epsilon_min)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

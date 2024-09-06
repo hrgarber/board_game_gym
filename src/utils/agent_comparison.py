@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
+
 from src.utils.utils import evaluate_agent
+
 
 def compare_agents(env, q_agent, dqn_agent, num_episodes=100):
     """
@@ -16,8 +18,9 @@ def compare_agents(env, q_agent, dqn_agent, num_episodes=100):
     """
     q_win_rate = evaluate_agent(env, q_agent, num_episodes)
     dqn_win_rate = evaluate_agent(env, dqn_agent, num_episodes)
-    
+
     return q_win_rate, dqn_win_rate
+
 
 def plot_agent_comparison(q_win_rate, dqn_win_rate):
     """
@@ -28,10 +31,10 @@ def plot_agent_comparison(q_win_rate, dqn_win_rate):
         dqn_win_rate (float): Win rate of the DQN agent.
     """
     plt.figure(figsize=(10, 6))
-    plt.bar(['Q-Learning', 'DQN'], [q_win_rate, dqn_win_rate])
-    plt.ylabel('Win Rate')
-    plt.title('Agent Performance Comparison')
+    plt.bar(["Q-Learning", "DQN"], [q_win_rate, dqn_win_rate])
+    plt.ylabel("Win Rate")
+    plt.title("Agent Performance Comparison")
     plt.ylim(0, 1)
     for i, v in enumerate([q_win_rate, dqn_win_rate]):
-        plt.text(i, v, f'{v:.2%}', ha='center', va='bottom')
+        plt.text(i, v, f"{v:.2%}", ha="center", va="bottom")
     plt.show()

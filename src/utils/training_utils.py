@@ -1,11 +1,15 @@
 import numpy as np
 import torch
 from tqdm import tqdm
-from src.agents.q_learning_agent import QLearningAgent
+
 from src.agents.dqn_agent import DQNAgent
+from src.agents.q_learning_agent import QLearningAgent
 from src.utils.utils import evaluate_agent
 
-def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_target_every=None):
+
+def train_agent(
+    env, agent, num_episodes, max_steps, batch_size=None, update_target_every=None
+):
     """Train the agent (Q-Learning or DQN).
 
     Args:
@@ -24,7 +28,9 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
 
     for episode in tqdm(range(num_episodes)):
         state = env.reset()
-        assert state.shape[0] == 64, f"Unexpected state shape: {state.shape[0]}, should be 64."
+        assert (
+            state.shape[0] == 64
+        ), f"Unexpected state shape: {state.shape[0]}, should be 64."
         total_reward = 0
 
         for step in range(max_steps):
@@ -50,7 +56,9 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
         if episode % 100 == 0:
             win_rate = evaluate_agent(env, agent)
             win_rates.append(win_rate)
-            print(f"Episode {episode}, Win Rate: {win_rate:.2f}, Total Reward: {total_reward}")
+            print(
+                f"Episode {episode}, Win Rate: {win_rate:.2f}, Total Reward: {total_reward}"
+            )
 
         if isinstance(agent, DQNAgent) and episode % update_target_every == 0:
             agent.update_target_model()

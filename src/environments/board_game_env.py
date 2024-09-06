@@ -1,6 +1,7 @@
 import gym
 import numpy as np
 
+
 class BoardGameEnv(gym.Env):
     """
     A custom OpenAI Gym environment for a board game.
@@ -18,7 +19,9 @@ class BoardGameEnv(gym.Env):
         self.board = None
         self.current_player = None
         self.action_space = gym.spaces.Discrete(board_size * board_size)
-        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=(board_size, board_size), dtype=np.int8)
+        self.observation_space = gym.spaces.Box(
+            low=-1, high=1, shape=(board_size, board_size), dtype=np.int8
+        )
         self.reset()
 
     def reset(self):
@@ -47,15 +50,15 @@ class BoardGameEnv(gym.Env):
             return self.board.flatten(), -10, True, {}
 
         self.board[row, col] = self.current_player
-        
+
         # Check for win
         if self.check_win(row, col):
             return self.board.flatten(), 10, True, {}
-        
+
         # Check for draw
         if self.is_draw():
             return self.board.flatten(), 0, True, {}
-        
+
         # Check for blocking opponent's winning move
         if self.check_blocking_move(row, col):
             reward = 1.0
@@ -66,7 +69,7 @@ class BoardGameEnv(gym.Env):
             reward = 0.5
         else:
             reward = 0.1  # Small positive reward for non-winning moves
-        
+
         self.current_player *= -1
         return self.board.flatten(), reward, False, {}
 
@@ -89,13 +92,21 @@ class BoardGameEnv(gym.Env):
             count = 1
             for i in range(1, 5):
                 r, c = row + i * dr, col + i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
             for i in range(1, 5):
                 r, c = row - i * dr, col - i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
@@ -128,9 +139,9 @@ class BoardGameEnv(gym.Env):
         self.current_player *= -1
         original_value = self.board[row, col]
         self.board[row, col] = self.current_player
-        
+
         blocked_win = False
-        
+
         # Check for potential winning moves in all directions
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for dr, dc in directions:
@@ -144,12 +155,14 @@ class BoardGameEnv(gym.Env):
                     break
             if blocked_win:
                 break
-        
+
         # Revert the changes
         self.current_player = original_player
         self.board[row, col] = original_value
-        
-        return blocked_win or self.check_line(row, col, 4)  # Also check if it blocks a line of 4
+
+        return blocked_win or self.check_line(
+            row, col, 4
+        )  # Also check if it blocks a line of 4
 
     def check_line(self, row, col, line_length):
         """
@@ -169,13 +182,21 @@ class BoardGameEnv(gym.Env):
             count = 1
             for i in range(1, line_length):
                 r, c = row + i * dr, col + i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
             for i in range(1, line_length):
                 r, c = row - i * dr, col - i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
@@ -192,7 +213,7 @@ class BoardGameEnv(gym.Env):
         """
         return self.board.flatten()
 
-    def render(self, mode='human'):
+    def render(self, mode="human"):
         """
         Render the current state of the environment.
 
@@ -206,8 +227,8 @@ class BoardGameEnv(gym.Env):
         for i, row in enumerate(self.board):
             board_str += f"{i} {' '.join(['X' if cell == 1 else 'O' if cell == -1 else '.' for cell in row])}\n"
         board_str += f"Current player: {'X' if self.current_player == 1 else 'O'}"
-        
-        if mode == 'human':
+
+        if mode == "human":
             print(board_str)
         return board_str
 

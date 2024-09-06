@@ -1,8 +1,11 @@
 import os
-import torch
+
 import matplotlib.pyplot as plt
+import torch
+
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
+
 
 def save_model(agent, filename):
     """
@@ -30,12 +33,14 @@ def load_latest_model(agent, models_dir):
         models_dir (str): The directory containing the saved models.
     """
     if isinstance(agent, DQNAgent):
-        model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
+        model_files = [f for f in os.listdir(models_dir) if f.endswith(".pth")]
     else:
-        model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
+        model_files = [f for f in os.listdir(models_dir) if f.endswith(".json")]
 
     if model_files:
-        latest_model = max(model_files, key=lambda x: int(x.split('_v')[1].split('.')[0]))
+        latest_model = max(
+            model_files, key=lambda x: int(x.split("_v")[1].split(".")[0])
+        )
         model_path = os.path.join(models_dir, latest_model)
         if isinstance(agent, DQNAgent):
             agent.load(model_path)
@@ -44,6 +49,7 @@ def load_latest_model(agent, models_dir):
         print(f"Loaded model: {latest_model}")
     else:
         print("No saved models found.")
+
 
 def compare_agents(env, q_agent, dqn_agent, num_episodes=100):
     """
@@ -60,8 +66,9 @@ def compare_agents(env, q_agent, dqn_agent, num_episodes=100):
     """
     q_win_rate = evaluate_agent(env, q_agent, num_episodes)
     dqn_win_rate = evaluate_agent(env, dqn_agent, num_episodes)
-    
+
     return q_win_rate, dqn_win_rate
+
 
 def plot_agent_comparison(q_win_rate, dqn_win_rate):
     """
@@ -72,13 +79,14 @@ def plot_agent_comparison(q_win_rate, dqn_win_rate):
         dqn_win_rate (float): Win rate of the DQN agent.
     """
     plt.figure(figsize=(10, 6))
-    plt.bar(['Q-Learning', 'DQN'], [q_win_rate, dqn_win_rate])
-    plt.ylabel('Win Rate')
-    plt.title('Agent Performance Comparison')
+    plt.bar(["Q-Learning", "DQN"], [q_win_rate, dqn_win_rate])
+    plt.ylabel("Win Rate")
+    plt.title("Agent Performance Comparison")
     plt.ylim(0, 1)
     for i, v in enumerate([q_win_rate, dqn_win_rate]):
-        plt.text(i, v, f'{v:.2%}', ha='center', va='bottom')
+        plt.text(i, v, f"{v:.2%}", ha="center", va="bottom")
     plt.show()
+
 
 def evaluate_agent(env, agent, num_episodes=100):
     """
@@ -118,14 +126,14 @@ def plot_training_results(rewards, win_rates, agent_name):
     episodes = range(1, len(rewards) + 1)
 
     ax1.plot(episodes, rewards)
-    ax1.set_title(f'{agent_name} Episode Rewards')
-    ax1.set_xlabel('Episode')
-    ax1.set_ylabel('Reward')
+    ax1.set_title(f"{agent_name} Episode Rewards")
+    ax1.set_xlabel("Episode")
+    ax1.set_ylabel("Reward")
 
     ax2.plot(episodes, win_rates)
-    ax2.set_title(f'{agent_name} Win Rate')
-    ax2.set_xlabel('Episode')
-    ax2.set_ylabel('Win Rate')
+    ax2.set_title(f"{agent_name} Win Rate")
+    ax2.set_xlabel("Episode")
+    ax2.set_ylabel("Win Rate")
     ax2.set_ylim(0, 1)  # Set y-axis limits for win rate between 0 and 1
 
     plt.tight_layout()
@@ -140,35 +148,58 @@ def plot_version_comparison(env, models_dir):
         env: The game environment.
         models_dir (str): The directory containing the saved models.
     """
-    dqn_model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
-    q_model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
-    
-    dqn_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in dqn_model_files if f.startswith('dqn_model_')]))
-    q_versions = sorted(set([int(f.split('_')[2].split('.')[0]) for f in q_model_files if f.startswith('q_learning_model_')]))
+    dqn_model_files = [f for f in os.listdir(models_dir) if f.endswith(".pth")]
+    q_model_files = [f for f in os.listdir(models_dir) if f.endswith(".json")]
+
+    dqn_versions = sorted(
+        set(
+            [
+                int(f.split("_")[2].split(".")[0])
+                for f in dqn_model_files
+                if f.startswith("dqn_model_")
+            ]
+        )
+    )
+    q_versions = sorted(
+        set(
+            [
+                int(f.split("_")[2].split(".")[0])
+                for f in q_model_files
+                if f.startswith("q_learning_model_")
+            ]
+        )
+    )
 
     dqn_win_rates = []
     q_win_rates = []
 
     for version in dqn_versions:
-        agent = DQNAgent(env.observation_space.shape[0], env.action_space.n, device=torch.device("cpu"))
-        agent.model.load_state_dict(torch.load(os.path.join(models_dir, f'dqn_model_{version}.pth')))
+        agent = DQNAgent(
+            env.observation_space.shape[0],
+            env.action_space.n,
+            device=torch.device("cpu"),
+        )
+        agent.model.load_state_dict(
+            torch.load(os.path.join(models_dir, f"dqn_model_{version}.pth"))
+        )
         win_rate = evaluate_agent(env, agent, num_episodes=100)
         dqn_win_rates.append(win_rate)
 
     for version in q_versions:
         agent = QLearningAgent(env.observation_space.shape[0], env.action_space.n)
-        agent.load_model(os.path.join(models_dir, f'q_learning_model_{version}.json'))
+        agent.load_model(os.path.join(models_dir, f"q_learning_model_{version}.json"))
         win_rate = evaluate_agent(env, agent, num_episodes=100)
         q_win_rates.append(win_rate)
 
     plt.figure(figsize=(10, 6))
-    plt.plot(dqn_versions, dqn_win_rates, marker='o', label='DQN')
-    plt.plot(q_versions, q_win_rates, marker='s', label='Q-Learning')
-    plt.title('Win Rate Comparison Across Versions')
-    plt.xlabel('Version')
-    plt.ylabel('Win Rate')
+    plt.plot(dqn_versions, dqn_win_rates, marker="o", label="DQN")
+    plt.plot(q_versions, q_win_rates, marker="s", label="Q-Learning")
+    plt.title("Win Rate Comparison Across Versions")
+    plt.xlabel("Version")
+    plt.ylabel("Win Rate")
     plt.legend()
     plt.show()
+
 
 def play_test_game(env, agent, agent_name):
     """Play a test game using the trained agent.

@@ -1,0 +1,612 @@
+************* Module game_bot
+game_files/game_bot.py:27: [C0301(line-too-long), ] Line too long (112/100)
+game_files/game_bot.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+game_files/game_bot.py:83: [W0622(redefined-builtin), GameBot.alpha_beta_pruning] Redefining built-in 'eval'
+game_files/game_bot.py:79: [R1705(no-else-return), GameBot.alpha_beta_pruning] Unnecessary "else" after "return", remove the "else" and de-indent the code inside it
+game_files/game_bot.py:120: [W0622(redefined-builtin), GameBot.get_best_move] Redefining built-in 'eval'
+game_files/game_bot.py:143: [E1111(assignment-from-no-return), GameBot.train] Assigning result of a function call, where the function has no return
+************* Module main
+main.py:41: [C0301(line-too-long), ] Line too long (117/100)
+main.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+main.py:4: [E0401(import-error), ] Unable to import 'torch'
+main.py:10: [C0413(wrong-import-position), ] Import "from src.environments.board_game_env import BoardGameEnv" should be placed at the top of the module
+main.py:11: [C0413(wrong-import-position), ] Import "from src.agents.q_learning_agent import QLearningAgent" should be placed at the top of the module
+main.py:12: [C0413(wrong-import-position), ] Import "from src.agents.dqn_agent import DQNAgent" should be placed at the top of the module
+main.py:13: [C0413(wrong-import-position), ] Import "from src.utils.utils import load_latest_model" should be placed at the top of the module
+************* Module src.agents
+src/agents/__init__.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+************* Module src.agents.dqn_agent
+src/agents/dqn_agent.py:25: [C0301(line-too-long), ] Line too long (190/100)
+src/agents/dqn_agent.py:66: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:69: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:75: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:85: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:118: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:120: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:124: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/dqn_agent.py:130: [C0305(trailing-newlines), ] Trailing newlines
+src/agents/dqn_agent.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/agents/dqn_agent.py:1: [E0401(import-error), ] Unable to import 'torch'
+src/agents/dqn_agent.py:2: [R0402(consider-using-from-import), ] Use 'from torch import nn' instead
+src/agents/dqn_agent.py:2: [E0401(import-error), ] Unable to import 'torch.nn'
+src/agents/dqn_agent.py:3: [R0402(consider-using-from-import), ] Use 'from torch import optim' instead
+src/agents/dqn_agent.py:3: [E0401(import-error), ] Unable to import 'torch.optim'
+src/agents/dqn_agent.py:4: [E0401(import-error), ] Unable to import 'numpy'
+src/agents/dqn_agent.py:8: [C0115(missing-class-docstring), DQN] Missing class docstring
+src/agents/dqn_agent.py:10: [R1725(super-with-arguments), DQN.__init__] Consider using Python 3 style super() without arguments
+src/agents/dqn_agent.py:17: [C0116(missing-function-docstring), DQN.forward] Missing function or method docstring
+src/agents/dqn_agent.py:8: [R0903(too-few-public-methods), DQN] Too few public methods (1/2)
+src/agents/dqn_agent.py:24: [C0115(missing-class-docstring), DQNAgent] Missing class docstring
+src/agents/dqn_agent.py:24: [R0902(too-many-instance-attributes), DQNAgent] Too many instance attributes (15/7)
+src/agents/dqn_agent.py:25: [R0913(too-many-arguments), DQNAgent.__init__] Too many arguments (11/5)
+src/agents/dqn_agent.py:43: [C0116(missing-function-docstring), DQNAgent.preprocess_state] Missing function or method docstring
+src/agents/dqn_agent.py:46: [C0116(missing-function-docstring), DQNAgent.remember] Missing function or method docstring
+src/agents/dqn_agent.py:46: [R0913(too-many-arguments), DQNAgent.remember] Too many arguments (6/5)
+src/agents/dqn_agent.py:49: [C0116(missing-function-docstring), DQNAgent.update_target_model] Missing function or method docstring
+src/agents/dqn_agent.py:53: [C0116(missing-function-docstring), DQNAgent.act] Missing function or method docstring
+src/agents/dqn_agent.py:60: [C0116(missing-function-docstring), DQNAgent.replay] Missing function or method docstring
+src/agents/dqn_agent.py:88: [C0116(missing-function-docstring), DQNAgent.decay_epsilon] Missing function or method docstring
+src/agents/dqn_agent.py:91: [C0116(missing-function-docstring), DQNAgent.load] Missing function or method docstring
+src/agents/dqn_agent.py:96: [C0116(missing-function-docstring), DQNAgent.save] Missing function or method docstring
+src/agents/dqn_agent.py:103: [C0116(missing-function-docstring), DQNAgent.update] Missing function or method docstring
+src/agents/dqn_agent.py:103: [R0913(too-many-arguments), DQNAgent.update] Too many arguments (6/5)
+src/agents/dqn_agent.py:108: [C0116(missing-function-docstring), DQNAgent.train] Missing function or method docstring
+src/agents/dqn_agent.py:111: [W0612(unused-variable), DQNAgent.train] Unused variable 'step'
+src/agents/dqn_agent.py:5: [C0411(wrong-import-order), ] standard import "collections.deque" should be placed before third party imports "torch", "torch.nn", "torch.optim", "numpy"
+src/agents/dqn_agent.py:6: [C0411(wrong-import-order), ] standard import "random" should be placed before third party imports "torch", "torch.nn", "torch.optim", "numpy"
+************* Module src.agents.q_learning_agent
+src/agents/q_learning_agent.py:10: [C0301(line-too-long), ] Line too long (141/100)
+src/agents/q_learning_agent.py:66: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/q_learning_agent.py:69: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/q_learning_agent.py:70: [C0301(line-too-long), ] Line too long (105/100)
+src/agents/q_learning_agent.py:185: [C0301(line-too-long), ] Line too long (141/100)
+src/agents/q_learning_agent.py:207: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/q_learning_agent.py:210: [C0303(trailing-whitespace), ] Trailing whitespace
+src/agents/q_learning_agent.py:211: [C0301(line-too-long), ] Line too long (105/100)
+src/agents/q_learning_agent.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/agents/q_learning_agent.py:1: [E0401(import-error), ] Unable to import 'numpy'
+src/agents/q_learning_agent.py:2: [E0401(import-error), ] Unable to import 'torch'
+src/agents/q_learning_agent.py:5: [R0902(too-many-instance-attributes), QLearningAgent] Too many instance attributes (10/7)
+src/agents/q_learning_agent.py:10: [R0913(too-many-arguments), QLearningAgent.__init__] Too many arguments (8/5)
+src/agents/q_learning_agent.py:68: [R1728(consider-using-generator), QLearningAgent.update_q_value] Consider using a generator instead 'max(self.get_q_value(next_state, a) for a in range(self.action_size))'
+src/agents/q_learning_agent.py:65: [W0612(unused-variable), QLearningAgent.update_q_value] Unused variable 'next_state_key'
+src/agents/q_learning_agent.py:84: [R1705(no-else-return), QLearningAgent.choose_action] Unnecessary "else" after "return", remove the "else" and de-indent the code inside it
+src/agents/q_learning_agent.py:128: [W1514(unspecified-encoding), QLearningAgent.save_model] Using open without explicitly specifying an encoding
+src/agents/q_learning_agent.py:139: [W1514(unspecified-encoding), QLearningAgent.load_model] Using open without explicitly specifying an encoding
+src/agents/q_learning_agent.py:141: [W0123(eval-used), QLearningAgent.load_model] Use of eval
+src/agents/q_learning_agent.py:146: [R0913(too-many-arguments), QLearningAgent.update] Too many arguments (6/5)
+src/agents/q_learning_agent.py:146: [W0613(unused-argument), QLearningAgent.update] Unused argument 'done'
+src/agents/q_learning_agent.py:167: [W0612(unused-variable), QLearningAgent.train] Unused variable 'episode'
+src/agents/q_learning_agent.py:177: [W0404(reimported), ] Reimport 'numpy' (imported line 1)
+src/agents/q_learning_agent.py:177: [E0401(import-error), ] Unable to import 'numpy'
+src/agents/q_learning_agent.py:177: [C0413(wrong-import-position), ] Import "import numpy as np" should be placed at the top of the module
+src/agents/q_learning_agent.py:178: [W0404(reimported), ] Reimport 'json' (imported line 3)
+src/agents/q_learning_agent.py:178: [C0413(wrong-import-position), ] Import "import json" should be placed at the top of the module
+src/agents/q_learning_agent.py:180: [E0102(function-redefined), QLearningAgent] class already defined line 5
+src/agents/q_learning_agent.py:180: [R0902(too-many-instance-attributes), QLearningAgent] Too many instance attributes (10/7)
+src/agents/q_learning_agent.py:185: [R0913(too-many-arguments), QLearningAgent.__init__] Too many arguments (8/5)
+src/agents/q_learning_agent.py:197: [C0116(missing-function-docstring), QLearningAgent.decay_epsilon] Missing function or method docstring
+src/agents/q_learning_agent.py:200: [C0116(missing-function-docstring), QLearningAgent.get_q_value] Missing function or method docstring
+src/agents/q_learning_agent.py:204: [C0116(missing-function-docstring), QLearningAgent.update_q_value] Missing function or method docstring
+src/agents/q_learning_agent.py:209: [R1728(consider-using-generator), QLearningAgent.update_q_value] Consider using a generator instead 'max(self.get_q_value(next_state, a) for a in range(self.action_size))'
+src/agents/q_learning_agent.py:206: [W0612(unused-variable), QLearningAgent.update_q_value] Unused variable 'next_state_key'
+src/agents/q_learning_agent.py:214: [C0116(missing-function-docstring), QLearningAgent.choose_action] Missing function or method docstring
+src/agents/q_learning_agent.py:215: [R1705(no-else-return), QLearningAgent.choose_action] Unnecessary "else" after "return", remove the "else" and de-indent the code inside it
+src/agents/q_learning_agent.py:221: [C0116(missing-function-docstring), QLearningAgent.act] Missing function or method docstring
+src/agents/q_learning_agent.py:228: [C0116(missing-function-docstring), QLearningAgent.save_model] Missing function or method docstring
+src/agents/q_learning_agent.py:235: [W1514(unspecified-encoding), QLearningAgent.save_model] Using open without explicitly specifying an encoding
+src/agents/q_learning_agent.py:239: [C0116(missing-function-docstring), QLearningAgent.load_model] Missing function or method docstring
+src/agents/q_learning_agent.py:240: [W1514(unspecified-encoding), QLearningAgent.load_model] Using open without explicitly specifying an encoding
+src/agents/q_learning_agent.py:242: [W0123(eval-used), QLearningAgent.load_model] Use of eval
+src/agents/q_learning_agent.py:247: [C0116(missing-function-docstring), QLearningAgent.update] Missing function or method docstring
+src/agents/q_learning_agent.py:247: [R0913(too-many-arguments), QLearningAgent.update] Too many arguments (6/5)
+src/agents/q_learning_agent.py:247: [W0613(unused-argument), QLearningAgent.update] Unused argument 'done'
+src/agents/q_learning_agent.py:250: [C0116(missing-function-docstring), QLearningAgent.train] Missing function or method docstring
+src/agents/q_learning_agent.py:251: [W0612(unused-variable), QLearningAgent.train] Unused variable 'episode'
+src/agents/q_learning_agent.py:3: [C0411(wrong-import-order), ] standard import "json" should be placed before third party imports "numpy", "torch"
+src/agents/q_learning_agent.py:178: [C0411(wrong-import-order), ] standard import "json" should be placed before third party imports "numpy", "torch", "numpy"
+src/agents/q_learning_agent.py:177: [C0412(ungrouped-imports), ] Imports from package numpy are not grouped
+src/agents/q_learning_agent.py:2: [W0611(unused-import), ] Unused import torch
+************* Module src.environments
+src/environments/__init__.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+************* Module src.environments.board_game_env
+src/environments/board_game_env.py:21: [C0301(line-too-long), ] Line too long (110/100)
+src/environments/board_game_env.py:50: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:54: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:58: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:69: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:92: [C0301(line-too-long), ] Line too long (104/100)
+src/environments/board_game_env.py:98: [C0301(line-too-long), ] Line too long (104/100)
+src/environments/board_game_env.py:131: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:133: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:147: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:151: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:172: [C0301(line-too-long), ] Line too long (104/100)
+src/environments/board_game_env.py:178: [C0301(line-too-long), ] Line too long (104/100)
+src/environments/board_game_env.py:207: [C0301(line-too-long), ] Line too long (112/100)
+src/environments/board_game_env.py:209: [C0303(trailing-whitespace), ] Trailing whitespace
+src/environments/board_game_env.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/environments/board_game_env.py:1: [E0401(import-error), ] Unable to import 'gym'
+src/environments/board_game_env.py:2: [E0401(import-error), ] Unable to import 'numpy'
+************* Module src.utils
+src/utils/__init__.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+************* Module src.utils.agent_comparison
+src/utils/agent_comparison.py:19: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/agent_comparison.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/utils/agent_comparison.py:1: [E0401(import-error), ] Unable to import 'matplotlib.pyplot'
+************* Module src.utils.agent_evaluation
+src/utils/agent_evaluation.py:22: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/agent_evaluation.py:28: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/agent_evaluation.py:35: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/agent_evaluation.py:39: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/agent_evaluation.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/utils/agent_evaluation.py:1: [E0401(import-error), ] Unable to import 'numpy'
+src/utils/agent_evaluation.py:2: [E0401(import-error), ] Unable to import 'matplotlib.pyplot'
+src/utils/agent_evaluation.py:4: [W0613(unused-argument), evaluate_agent] Unused argument 'epsilon'
+************* Module src.utils.hyperparameter_tuning
+src/utils/hyperparameter_tuning.py:92: [C0301(line-too-long), ] Line too long (134/100)
+src/utils/hyperparameter_tuning.py:95: [C0301(line-too-long), ] Line too long (114/100)
+src/utils/hyperparameter_tuning.py:108: [C0301(line-too-long), ] Line too long (104/100)
+src/utils/hyperparameter_tuning.py:118: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/hyperparameter_tuning.py:129: [C0301(line-too-long), ] Line too long (136/100)
+src/utils/hyperparameter_tuning.py:132: [C0301(line-too-long), ] Line too long (116/100)
+src/utils/hyperparameter_tuning.py:150: [C0301(line-too-long), ] Line too long (144/100)
+src/utils/hyperparameter_tuning.py:151: [C0301(line-too-long), ] Line too long (142/100)
+src/utils/hyperparameter_tuning.py:152: [C0301(line-too-long), ] Line too long (110/100)
+src/utils/hyperparameter_tuning.py:153: [C0301(line-too-long), ] Line too long (133/100)
+src/utils/hyperparameter_tuning.py:155: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/hyperparameter_tuning.py:157: [C0301(line-too-long), ] Line too long (128/100)
+src/utils/hyperparameter_tuning.py:166: [C0301(line-too-long), ] Line too long (128/100)
+src/utils/hyperparameter_tuning.py:461: [C0301(line-too-long), ] Line too long (102/100)
+src/utils/hyperparameter_tuning.py:472: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/hyperparameter_tuning.py:483: [C0301(line-too-long), ] Line too long (134/100)
+src/utils/hyperparameter_tuning.py:486: [C0301(line-too-long), ] Line too long (114/100)
+src/utils/hyperparameter_tuning.py:499: [C0301(line-too-long), ] Line too long (104/100)
+src/utils/hyperparameter_tuning.py:509: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/hyperparameter_tuning.py:520: [C0301(line-too-long), ] Line too long (136/100)
+src/utils/hyperparameter_tuning.py:523: [C0301(line-too-long), ] Line too long (116/100)
+src/utils/hyperparameter_tuning.py:541: [C0301(line-too-long), ] Line too long (144/100)
+src/utils/hyperparameter_tuning.py:542: [C0301(line-too-long), ] Line too long (142/100)
+src/utils/hyperparameter_tuning.py:543: [C0301(line-too-long), ] Line too long (110/100)
+src/utils/hyperparameter_tuning.py:544: [C0301(line-too-long), ] Line too long (133/100)
+src/utils/hyperparameter_tuning.py:546: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/hyperparameter_tuning.py:548: [C0301(line-too-long), ] Line too long (128/100)
+src/utils/hyperparameter_tuning.py:557: [C0301(line-too-long), ] Line too long (128/100)
+src/utils/hyperparameter_tuning.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/utils/hyperparameter_tuning.py:4: [E0401(import-error), ] Unable to import 'numpy'
+src/utils/hyperparameter_tuning.py:5: [E0401(import-error), ] Unable to import 'tqdm'
+src/utils/hyperparameter_tuning.py:6: [E0401(import-error), ] Unable to import 'optuna'
+src/utils/hyperparameter_tuning.py:7: [E0401(import-error), ] Unable to import 'sklearn.model_selection'
+src/utils/hyperparameter_tuning.py:9: [E0401(import-error), ] Unable to import 'matplotlib.pyplot'
+src/utils/hyperparameter_tuning.py:10: [E0401(import-error), ] Unable to import 'seaborn'
+src/utils/hyperparameter_tuning.py:11: [E0401(import-error), ] Unable to import 'pandas'
+src/utils/hyperparameter_tuning.py:17: [C0413(wrong-import-position), ] Import "from src.environments.board_game_env import BoardGameEnv" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:18: [C0413(wrong-import-position), ] Import "from src.agents.q_learning_agent import QLearningAgent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:19: [C0413(wrong-import-position), ] Import "from src.agents.dqn_agent import DQNAgent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:20: [C0413(wrong-import-position), ] Import "from src.utils.utils import evaluate_agent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:26: [R0914(too-many-locals), cross_validate] Too many local variables (20/15)
+src/utils/hyperparameter_tuning.py:47: [W0612(unused-variable), cross_validate] Unused variable 'val_index'
+src/utils/hyperparameter_tuning.py:56: [W0612(unused-variable), cross_validate] Unused variable 'episode'
+src/utils/hyperparameter_tuning.py:75: [W1203(logging-fstring-interpolation), grid_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:92: [W1203(logging-fstring-interpolation), grid_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:95: [R0913(too-many-arguments), random_search] Too many arguments (6/5)
+src/utils/hyperparameter_tuning.py:110: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:123: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:129: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:132: [R0913(too-many-arguments), bayesian_optimization] Too many arguments (6/5)
+src/utils/hyperparameter_tuning.py:147: [W1203(logging-fstring-interpolation), bayesian_optimization] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:160: [W1203(logging-fstring-interpolation), bayesian_optimization.objective] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:166: [W1203(logging-fstring-interpolation), bayesian_optimization] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:181: [W0621(redefined-outer-name), visualize_tuning_results] Redefining name 'plt' from outer scope (line 9)
+src/utils/hyperparameter_tuning.py:183: [W0621(redefined-outer-name), visualize_tuning_results] Redefining name 'sns' from outer scope (line 10)
+src/utils/hyperparameter_tuning.py:184: [W0621(redefined-outer-name), visualize_tuning_results] Redefining name 'pd' from outer scope (line 11)
+src/utils/hyperparameter_tuning.py:181: [W0404(reimported), visualize_tuning_results] Reimport 'matplotlib.pyplot' (imported line 9)
+src/utils/hyperparameter_tuning.py:181: [C0415(import-outside-toplevel), visualize_tuning_results] Import outside toplevel (matplotlib.pyplot)
+src/utils/hyperparameter_tuning.py:181: [E0401(import-error), visualize_tuning_results] Unable to import 'matplotlib.pyplot'
+src/utils/hyperparameter_tuning.py:183: [W0404(reimported), visualize_tuning_results] Reimport 'seaborn' (imported line 10)
+src/utils/hyperparameter_tuning.py:183: [C0415(import-outside-toplevel), visualize_tuning_results] Import outside toplevel (seaborn)
+src/utils/hyperparameter_tuning.py:183: [E0401(import-error), visualize_tuning_results] Unable to import 'seaborn'
+src/utils/hyperparameter_tuning.py:184: [W0404(reimported), visualize_tuning_results] Reimport 'pandas' (imported line 11)
+src/utils/hyperparameter_tuning.py:184: [C0415(import-outside-toplevel), visualize_tuning_results] Import outside toplevel (pandas)
+src/utils/hyperparameter_tuning.py:184: [E0401(import-error), visualize_tuning_results] Unable to import 'pandas'
+src/utils/hyperparameter_tuning.py:173: [R0915(too-many-statements), visualize_tuning_results] Too many statements (56/50)
+src/utils/hyperparameter_tuning.py:382: [W0404(reimported), ] Reimport 'os' (imported line 1)
+src/utils/hyperparameter_tuning.py:382: [C0413(wrong-import-position), ] Import "import os" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:383: [W0404(reimported), ] Reimport 'sys' (imported line 2)
+src/utils/hyperparameter_tuning.py:383: [C0413(wrong-import-position), ] Import "import sys" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:384: [W0404(reimported), ] Reimport 'itertools' (imported line 3)
+src/utils/hyperparameter_tuning.py:384: [C0413(wrong-import-position), ] Import "import itertools" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:385: [W0404(reimported), ] Reimport 'numpy' (imported line 4)
+src/utils/hyperparameter_tuning.py:385: [E0401(import-error), ] Unable to import 'numpy'
+src/utils/hyperparameter_tuning.py:385: [C0413(wrong-import-position), ] Import "import numpy as np" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:386: [E0401(import-error), ] Unable to import 'tqdm'
+src/utils/hyperparameter_tuning.py:386: [W0404(reimported), ] Reimport 'tqdm' (imported line 5)
+src/utils/hyperparameter_tuning.py:386: [C0413(wrong-import-position), ] Import "from tqdm import tqdm" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:387: [W0404(reimported), ] Reimport 'optuna' (imported line 6)
+src/utils/hyperparameter_tuning.py:387: [E0401(import-error), ] Unable to import 'optuna'
+src/utils/hyperparameter_tuning.py:387: [C0413(wrong-import-position), ] Import "import optuna" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:388: [E0401(import-error), ] Unable to import 'sklearn.model_selection'
+src/utils/hyperparameter_tuning.py:388: [W0404(reimported), ] Reimport 'KFold' (imported line 7)
+src/utils/hyperparameter_tuning.py:388: [C0413(wrong-import-position), ] Import "from sklearn.model_selection import KFold" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:389: [W0404(reimported), ] Reimport 'logging' (imported line 8)
+src/utils/hyperparameter_tuning.py:389: [C0413(wrong-import-position), ] Import "import logging" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:395: [W0404(reimported), ] Reimport 'BoardGameEnv' (imported line 17)
+src/utils/hyperparameter_tuning.py:395: [C0413(wrong-import-position), ] Import "from src.environments.board_game_env import BoardGameEnv" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:396: [W0404(reimported), ] Reimport 'QLearningAgent' (imported line 18)
+src/utils/hyperparameter_tuning.py:396: [C0413(wrong-import-position), ] Import "from src.agents.q_learning_agent import QLearningAgent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:397: [W0404(reimported), ] Reimport 'DQNAgent' (imported line 19)
+src/utils/hyperparameter_tuning.py:397: [C0413(wrong-import-position), ] Import "from src.agents.dqn_agent import DQNAgent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:398: [W0404(reimported), ] Reimport 'evaluate_agent' (imported line 20)
+src/utils/hyperparameter_tuning.py:398: [C0413(wrong-import-position), ] Import "from src.utils.utils import evaluate_agent" should be placed at the top of the module
+src/utils/hyperparameter_tuning.py:404: [E0102(function-redefined), cross_validate] function already defined line 26
+src/utils/hyperparameter_tuning.py:404: [R0914(too-many-locals), cross_validate] Too many local variables (20/15)
+src/utils/hyperparameter_tuning.py:425: [W0612(unused-variable), cross_validate] Unused variable 'val_index'
+src/utils/hyperparameter_tuning.py:434: [W0612(unused-variable), cross_validate] Unused variable 'episode'
+src/utils/hyperparameter_tuning.py:449: [E0102(function-redefined), grid_search] function already defined line 71
+src/utils/hyperparameter_tuning.py:463: [W1203(logging-fstring-interpolation), grid_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:477: [W1203(logging-fstring-interpolation), grid_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:483: [W1203(logging-fstring-interpolation), grid_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:486: [E0102(function-redefined), random_search] function already defined line 95
+src/utils/hyperparameter_tuning.py:486: [R0913(too-many-arguments), random_search] Too many arguments (6/5)
+src/utils/hyperparameter_tuning.py:501: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:514: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:520: [W1203(logging-fstring-interpolation), random_search] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:523: [E0102(function-redefined), bayesian_optimization] function already defined line 132
+src/utils/hyperparameter_tuning.py:523: [R0913(too-many-arguments), bayesian_optimization] Too many arguments (6/5)
+src/utils/hyperparameter_tuning.py:538: [W1203(logging-fstring-interpolation), bayesian_optimization] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:551: [W1203(logging-fstring-interpolation), bayesian_optimization.objective] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:557: [W1203(logging-fstring-interpolation), bayesian_optimization] Use lazy % formatting in logging functions
+src/utils/hyperparameter_tuning.py:564: [E0102(function-redefined), visualize_tuning_results] function already defined line 173
+src/utils/hyperparameter_tuning.py:572: [W0621(redefined-outer-name), visualize_tuning_results] Redefining name 'plt' from outer scope (line 9)
+src/utils/hyperparameter_tuning.py:573: [W0621(redefined-outer-name), visualize_tuning_results] Redefining name 'sns' from outer scope (line 10)
+src/utils/hyperparameter_tuning.py:572: [W0404(reimported), visualize_tuning_results] Reimport 'matplotlib.pyplot' (imported line 9)
+src/utils/hyperparameter_tuning.py:572: [C0415(import-outside-toplevel), visualize_tuning_results] Import outside toplevel (matplotlib.pyplot)
+src/utils/hyperparameter_tuning.py:572: [E0401(import-error), visualize_tuning_results] Unable to import 'matplotlib.pyplot'
+src/utils/hyperparameter_tuning.py:573: [W0404(reimported), visualize_tuning_results] Reimport 'seaborn' (imported line 10)
+src/utils/hyperparameter_tuning.py:573: [C0415(import-outside-toplevel), visualize_tuning_results] Import outside toplevel (seaborn)
+src/utils/hyperparameter_tuning.py:573: [E0401(import-error), visualize_tuning_results] Unable to import 'seaborn'
+src/utils/hyperparameter_tuning.py:579: [R1721(unnecessary-comprehension), visualize_tuning_results] Unnecessary use of a comprehension, use list(zip(results['params'], results['performances'])) instead.
+src/utils/hyperparameter_tuning.py:8: [C0411(wrong-import-order), ] standard import "logging" should be placed before third party imports "numpy", "tqdm.tqdm", "optuna", "sklearn.model_selection.KFold"
+src/utils/hyperparameter_tuning.py:382: [C0411(wrong-import-order), ] standard import "os" should be placed before third party imports "numpy", "tqdm.tqdm", "optuna" (...) "matplotlib.pyplot", "seaborn", "pandas" and first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:383: [C0411(wrong-import-order), ] standard import "sys" should be placed before third party imports "numpy", "tqdm.tqdm", "optuna" (...) "matplotlib.pyplot", "seaborn", "pandas" and first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:384: [C0411(wrong-import-order), ] standard import "itertools" should be placed before third party imports "numpy", "tqdm.tqdm", "optuna" (...) "matplotlib.pyplot", "seaborn", "pandas" and first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:385: [C0411(wrong-import-order), ] third party import "numpy" should be placed before first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:386: [C0411(wrong-import-order), ] third party import "tqdm.tqdm" should be placed before first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:387: [C0411(wrong-import-order), ] third party import "optuna" should be placed before first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:388: [C0411(wrong-import-order), ] third party import "sklearn.model_selection.KFold" should be placed before first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:389: [C0411(wrong-import-order), ] standard import "logging" should be placed before third party imports "numpy", "tqdm.tqdm", "optuna" (...) "tqdm.tqdm", "optuna", "sklearn.model_selection.KFold" and first party imports "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent", "src.utils.utils.evaluate_agent" 
+src/utils/hyperparameter_tuning.py:382: [C0412(ungrouped-imports), ] Imports from package os are not grouped
+src/utils/hyperparameter_tuning.py:383: [C0412(ungrouped-imports), ] Imports from package sys are not grouped
+src/utils/hyperparameter_tuning.py:384: [C0412(ungrouped-imports), ] Imports from package itertools are not grouped
+src/utils/hyperparameter_tuning.py:389: [C0412(ungrouped-imports), ] Imports from package logging are not grouped
+src/utils/hyperparameter_tuning.py:385: [C0412(ungrouped-imports), ] Imports from package numpy are not grouped
+src/utils/hyperparameter_tuning.py:386: [C0412(ungrouped-imports), ] Imports from package tqdm are not grouped
+src/utils/hyperparameter_tuning.py:387: [C0412(ungrouped-imports), ] Imports from package optuna are not grouped
+src/utils/hyperparameter_tuning.py:388: [C0412(ungrouped-imports), ] Imports from package sklearn are not grouped
+src/utils/hyperparameter_tuning.py:395: [C0412(ungrouped-imports), ] Imports from package src are not grouped
+src/utils/hyperparameter_tuning.py:9: [W0611(unused-import), ] Unused matplotlib.pyplot imported as plt
+src/utils/hyperparameter_tuning.py:10: [W0611(unused-import), ] Unused seaborn imported as sns
+src/utils/hyperparameter_tuning.py:11: [W0611(unused-import), ] Unused pandas imported as pd
+************* Module src.utils.training_utils
+src/utils/training_utils.py:17: [C0301(line-too-long), ] Line too long (118/100)
+src/utils/training_utils.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/utils/training_utils.py:1: [E0401(import-error), ] Unable to import 'numpy'
+src/utils/training_utils.py:2: [E0401(import-error), ] Unable to import 'torch'
+src/utils/training_utils.py:3: [E0401(import-error), ] Unable to import 'tqdm'
+src/utils/training_utils.py:8: [R0913(too-many-arguments), train_agent] Too many arguments (6/5)
+src/utils/training_utils.py:8: [R0914(too-many-locals), train_agent] Too many local variables (17/15)
+src/utils/training_utils.py:30: [W0612(unused-variable), train_agent] Unused variable 'step'
+src/utils/training_utils.py:1: [W0611(unused-import), ] Unused numpy imported as np
+src/utils/training_utils.py:2: [W0611(unused-import), ] Unused import torch
+************* Module src.utils.utils
+src/utils/utils.py:63: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/utils.py:145: [C0303(trailing-whitespace), ] Trailing whitespace
+src/utils/utils.py:146: [C0301(line-too-long), ] Line too long (123/100)
+src/utils/utils.py:147: [C0301(line-too-long), ] Line too long (126/100)
+src/utils/utils.py:153: [C0301(line-too-long), ] Line too long (104/100)
+src/utils/utils.py:154: [C0301(line-too-long), ] Line too long (101/100)
+src/utils/utils.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+src/utils/utils.py:2: [E0401(import-error), ] Unable to import 'torch'
+src/utils/utils.py:3: [E0401(import-error), ] Unable to import 'matplotlib.pyplot'
+src/utils/utils.py:116: [W0612(unused-variable), plot_training_results] Unused variable 'fig'
+src/utils/utils.py:146: [R1718(consider-using-set-comprehension), plot_version_comparison] Consider using a set comprehension
+src/utils/utils.py:147: [R1718(consider-using-set-comprehension), plot_version_comparison] Consider using a set comprehension
+************* Module tests.test_board_game
+tests/test_board_game.py:53: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_board_game.py:58: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_board_game.py:93: [C0301(line-too-long), ] Line too long (118/100)
+tests/test_board_game.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_board_game.py:2: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_board_game.py:7: [C0115(missing-class-docstring), TestBoardGameEnv] Missing class docstring
+tests/test_board_game.py:8: [C0116(missing-function-docstring), TestBoardGameEnv.test_init] Missing function or method docstring
+tests/test_board_game.py:13: [C0116(missing-function-docstring), TestBoardGameEnv.test_reset] Missing function or method docstring
+tests/test_board_game.py:21: [C0116(missing-function-docstring), TestBoardGameEnv.test_step] Missing function or method docstring
+tests/test_board_game.py:22: [W0612(unused-variable), TestBoardGameEnv.test_step] Unused variable 'initial_state'
+tests/test_board_game.py:31: [C0116(missing-function-docstring), TestBoardGameEnv.test_check_win] Missing function or method docstring
+tests/test_board_game.py:37: [C0116(missing-function-docstring), TestBoardGameEnv.test_get_valid_actions] Missing function or method docstring
+tests/test_board_game.py:43: [C0116(missing-function-docstring), TestBoardGameEnv.test_is_draw] Missing function or method docstring
+tests/test_board_game.py:49: [C0116(missing-function-docstring), TestBoardGameEnv.test_check_blocking_move] Missing function or method docstring
+tests/test_board_game.py:64: [C0116(missing-function-docstring), TestBoardGameEnv.test_check_line] Missing function or method docstring
+tests/test_board_game.py:69: [C0116(missing-function-docstring), TestBoardGameEnv.test_render] Missing function or method docstring
+tests/test_board_game.py:78: [C0115(missing-class-docstring), TestAlphaBetaPruning] Missing class docstring
+tests/test_board_game.py:83: [C0116(missing-function-docstring), TestAlphaBetaPruning.test_alpha_beta_pruning] Missing function or method docstring
+tests/test_board_game.py:96: [C0116(missing-function-docstring), TestAlphaBetaPruning.test_get_best_move] Missing function or method docstring
+tests/test_board_game.py:113: [C0115(missing-class-docstring), TestQLearningAgent] Missing class docstring
+tests/test_board_game.py:118: [C0116(missing-function-docstring), TestQLearningAgent.test_init] Missing function or method docstring
+tests/test_board_game.py:123: [C0116(missing-function-docstring), TestQLearningAgent.test_get_q_value] Missing function or method docstring
+tests/test_board_game.py:128: [C0116(missing-function-docstring), TestQLearningAgent.test_update_q_value] Missing function or method docstring
+tests/test_board_game.py:137: [C0116(missing-function-docstring), TestQLearningAgent.test_choose_action] Missing function or method docstring
+tests/test_board_game.py:143: [C0116(missing-function-docstring), TestQLearningAgent.test_save_load_model] Missing function or method docstring
+tests/test_board_game.py:2: [C0411(wrong-import-order), ] third party import "numpy" should be placed before first party import "tests.test_utils.TestCase" 
+tests/test_board_game.py:3: [C0411(wrong-import-order), ] standard import "math" should be placed before third party import "numpy" and first party import "tests.test_utils.TestCase" 
+tests/test_board_game.py:5: [C0411(wrong-import-order), ] standard import "os" should be placed before third party import "numpy" and first party imports "tests.test_utils.TestCase", "game_files.game_bot.GameBot" 
+************* Module tests.test_dqn_agent
+tests/test_dqn_agent.py:55: [C0301(line-too-long), ] Line too long (121/100)
+tests/test_dqn_agent.py:57: [C0301(line-too-long), ] Line too long (121/100)
+tests/test_dqn_agent.py:125: [C0301(line-too-long), ] Line too long (102/100)
+tests/test_dqn_agent.py:129: [C0305(trailing-newlines), ] Trailing newlines
+tests/test_dqn_agent.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_dqn_agent.py:2: [E0401(import-error), ] Unable to import 'torch'
+tests/test_dqn_agent.py:3: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_dqn_agent.py:8: [C0115(missing-class-docstring), TestDQNAgent] Missing class docstring
+tests/test_dqn_agent.py:16: [C0116(missing-function-docstring), TestDQNAgent.test_initialization] Missing function or method docstring
+tests/test_dqn_agent.py:22: [C0116(missing-function-docstring), TestDQNAgent.test_preprocess_state] Missing function or method docstring
+tests/test_dqn_agent.py:28: [C0116(missing-function-docstring), TestDQNAgent.test_remember] Missing function or method docstring
+tests/test_dqn_agent.py:38: [C0116(missing-function-docstring), TestDQNAgent.test_act] Missing function or method docstring
+tests/test_dqn_agent.py:44: [C0116(missing-function-docstring), TestDQNAgent.test_replay] Missing function or method docstring
+tests/test_dqn_agent.py:62: [C0116(missing-function-docstring), TestDQNAgent.test_update_target_model] Missing function or method docstring
+tests/test_dqn_agent.py:76: [C0116(missing-function-docstring), TestDQNAgent.test_save_load_model] Missing function or method docstring
+tests/test_dqn_agent.py:92: [C0116(missing-function-docstring), TestDQNAgent.test_update] Missing function or method docstring
+tests/test_dqn_agent.py:103: [C0116(missing-function-docstring), TestDQNAgent.test_train] Missing function or method docstring
+tests/test_dqn_agent.py:109: [C0116(missing-function-docstring), TestDQNAgent.test_epsilon_decay] Missing function or method docstring
+tests/test_dqn_agent.py:116: [C0116(missing-function-docstring), TestDQNAgent.test_model_output] Missing function or method docstring
+tests/test_dqn_agent.py:121: [C0116(missing-function-docstring), TestDQNAgent.test_target_model_update_frequency] Missing function or method docstring
+tests/test_dqn_agent.py:4: [C0411(wrong-import-order), ] standard import "os" should be placed before third party imports "torch", "numpy"
+************* Module tests.test_hyperparameter_tuning
+tests/test_hyperparameter_tuning.py:4: [C0301(line-too-long), ] Line too long (119/100)
+tests/test_hyperparameter_tuning.py:36: [C0301(line-too-long), ] Line too long (111/100)
+tests/test_hyperparameter_tuning.py:50: [C0301(line-too-long), ] Line too long (113/100)
+tests/test_hyperparameter_tuning.py:66: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_hyperparameter_tuning.py:70: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_hyperparameter_tuning.py:89: [C0301(line-too-long), ] Line too long (119/100)
+tests/test_hyperparameter_tuning.py:121: [C0301(line-too-long), ] Line too long (111/100)
+tests/test_hyperparameter_tuning.py:135: [C0301(line-too-long), ] Line too long (113/100)
+tests/test_hyperparameter_tuning.py:156: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_hyperparameter_tuning.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_hyperparameter_tuning.py:2: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_hyperparameter_tuning.py:3: [E0401(import-error), ] Unable to import 'optuna'
+tests/test_hyperparameter_tuning.py:9: [C0115(missing-class-docstring), TestHyperparameterTuning] Missing class docstring
+tests/test_hyperparameter_tuning.py:15: [C0116(missing-function-docstring), TestHyperparameterTuning.test_grid_search] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:29: [C0116(missing-function-docstring), TestHyperparameterTuning.test_random_search] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:43: [C0116(missing-function-docstring), TestHyperparameterTuning.test_bayesian_optimization] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:56: [C0116(missing-function-docstring), TestHyperparameterTuning.test_visualize_tuning_results] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:82: [W0718(broad-exception-caught), TestHyperparameterTuning.test_visualize_tuning_results] Catching too general exception Exception
+tests/test_hyperparameter_tuning.py:87: [W0404(reimported), ] Reimport 'unittest' (imported line 1)
+tests/test_hyperparameter_tuning.py:87: [C0413(wrong-import-position), ] Import "import unittest" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:88: [W0404(reimported), ] Reimport 'numpy' (imported line 2)
+tests/test_hyperparameter_tuning.py:88: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_hyperparameter_tuning.py:88: [C0413(wrong-import-position), ] Import "import numpy as np" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:89: [W0404(reimported), ] Reimport 'grid_search' (imported line 4)
+tests/test_hyperparameter_tuning.py:89: [W0404(reimported), ] Reimport 'random_search' (imported line 4)
+tests/test_hyperparameter_tuning.py:89: [W0404(reimported), ] Reimport 'bayesian_optimization' (imported line 4)
+tests/test_hyperparameter_tuning.py:89: [W0404(reimported), ] Reimport 'visualize_tuning_results' (imported line 4)
+tests/test_hyperparameter_tuning.py:89: [C0413(wrong-import-position), ] Import "from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization, visualize_tuning_results" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:90: [W0404(reimported), ] Reimport 'BoardGameEnv' (imported line 5)
+tests/test_hyperparameter_tuning.py:90: [C0413(wrong-import-position), ] Import "from src.environments.board_game_env import BoardGameEnv" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:91: [W0404(reimported), ] Reimport 'QLearningAgent' (imported line 6)
+tests/test_hyperparameter_tuning.py:91: [C0413(wrong-import-position), ] Import "from src.agents.q_learning_agent import QLearningAgent" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:92: [W0404(reimported), ] Reimport 'DQNAgent' (imported line 7)
+tests/test_hyperparameter_tuning.py:92: [C0413(wrong-import-position), ] Import "from src.agents.dqn_agent import DQNAgent" should be placed at the top of the module
+tests/test_hyperparameter_tuning.py:94: [C0115(missing-class-docstring), TestHyperparameterTuning] Missing class docstring
+tests/test_hyperparameter_tuning.py:94: [E0102(function-redefined), TestHyperparameterTuning] class already defined line 9
+tests/test_hyperparameter_tuning.py:100: [C0116(missing-function-docstring), TestHyperparameterTuning.test_grid_search] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:114: [C0116(missing-function-docstring), TestHyperparameterTuning.test_random_search] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:128: [C0116(missing-function-docstring), TestHyperparameterTuning.test_bayesian_optimization] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:141: [C0116(missing-function-docstring), TestHyperparameterTuning.test_visualize_tuning_results] Missing function or method docstring
+tests/test_hyperparameter_tuning.py:169: [W0718(broad-exception-caught), TestHyperparameterTuning.test_visualize_tuning_results] Catching too general exception Exception
+tests/test_hyperparameter_tuning.py:87: [C0411(wrong-import-order), ] standard import "unittest" should be placed before third party imports "numpy", "optuna" and first party imports "src.utils.hyperparameter_tuning.grid_search", "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent" 
+tests/test_hyperparameter_tuning.py:88: [C0411(wrong-import-order), ] third party import "numpy" should be placed before first party imports "src.utils.hyperparameter_tuning.grid_search", "src.environments.board_game_env.BoardGameEnv", "src.agents.q_learning_agent.QLearningAgent", "src.agents.dqn_agent.DQNAgent" 
+tests/test_hyperparameter_tuning.py:88: [C0412(ungrouped-imports), ] Imports from package numpy are not grouped
+tests/test_hyperparameter_tuning.py:89: [C0412(ungrouped-imports), ] Imports from package src are not grouped
+tests/test_hyperparameter_tuning.py:2: [W0611(unused-import), ] Unused numpy imported as np
+tests/test_hyperparameter_tuning.py:6: [W0611(unused-import), ] Unused QLearningAgent imported from src.agents.q_learning_agent
+tests/test_hyperparameter_tuning.py:7: [W0611(unused-import), ] Unused DQNAgent imported from src.agents.dqn_agent
+************* Module tests.test_notebook_code
+tests/test_notebook_code.py:7: [C0301(line-too-long), ] Line too long (104/100)
+tests/test_notebook_code.py:20: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:28: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:39: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:46: [C0301(line-too-long), ] Line too long (112/100)
+tests/test_notebook_code.py:47: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:52: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:73: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_notebook_code.py:106: [C0305(trailing-newlines), ] Trailing newlines
+tests/test_notebook_code.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_notebook_code.py:2: [E0401(import-error), ] Unable to import 'torch'
+tests/test_notebook_code.py:9: [C0115(missing-class-docstring), TestNotebookCode] Missing class docstring
+tests/test_notebook_code.py:16: [C0116(missing-function-docstring), TestNotebookCode.test_q_learning_agent] Missing function or method docstring
+tests/test_notebook_code.py:24: [C0116(missing-function-docstring), TestNotebookCode.test_dqn_agent] Missing function or method docstring
+tests/test_notebook_code.py:36: [C0116(missing-function-docstring), TestNotebookCode.test_training_utils] Missing function or method docstring
+tests/test_notebook_code.py:58: [C0116(missing-function-docstring), TestNotebookCode.test_evaluate_agent] Missing function or method docstring
+tests/test_notebook_code.py:70: [C0116(missing-function-docstring), TestNotebookCode.test_plot_training_results] Missing function or method docstring
+tests/test_notebook_code.py:75: [C0415(import-outside-toplevel), TestNotebookCode.test_plot_training_results] Import outside toplevel (matplotlib.pyplot)
+tests/test_notebook_code.py:75: [E0401(import-error), TestNotebookCode.test_plot_training_results] Unable to import 'matplotlib.pyplot'
+tests/test_notebook_code.py:80: [W0718(broad-exception-caught), TestNotebookCode.test_plot_training_results] Catching too general exception Exception
+tests/test_notebook_code.py:83: [C0116(missing-function-docstring), TestNotebookCode.test_compare_agents] Missing function or method docstring
+tests/test_notebook_code.py:94: [C0116(missing-function-docstring), TestNotebookCode.test_plot_agent_comparison] Missing function or method docstring
+tests/test_notebook_code.py:96: [C0415(import-outside-toplevel), TestNotebookCode.test_plot_agent_comparison] Import outside toplevel (matplotlib.pyplot)
+tests/test_notebook_code.py:96: [E0401(import-error), TestNotebookCode.test_plot_agent_comparison] Unable to import 'matplotlib.pyplot'
+tests/test_notebook_code.py:101: [W0718(broad-exception-caught), TestNotebookCode.test_plot_agent_comparison] Catching too general exception Exception
+************* Module tests.test_q_learning_agent
+tests/test_q_learning_agent.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_q_learning_agent.py:2: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_q_learning_agent.py:7: [C0115(missing-class-docstring), TestQLearningAgent] Missing class docstring
+tests/test_q_learning_agent.py:14: [C0116(missing-function-docstring), TestQLearningAgent.test_initialization] Missing function or method docstring
+tests/test_q_learning_agent.py:19: [C0116(missing-function-docstring), TestQLearningAgent.test_get_q_value] Missing function or method docstring
+tests/test_q_learning_agent.py:24: [C0116(missing-function-docstring), TestQLearningAgent.test_update_q_value] Missing function or method docstring
+tests/test_q_learning_agent.py:33: [C0116(missing-function-docstring), TestQLearningAgent.test_choose_action] Missing function or method docstring
+tests/test_q_learning_agent.py:39: [C0116(missing-function-docstring), TestQLearningAgent.test_act] Missing function or method docstring
+tests/test_q_learning_agent.py:45: [C0116(missing-function-docstring), TestQLearningAgent.test_decay_epsilon] Missing function or method docstring
+tests/test_q_learning_agent.py:50: [C0116(missing-function-docstring), TestQLearningAgent.test_update] Missing function or method docstring
+tests/test_q_learning_agent.py:60: [C0116(missing-function-docstring), TestQLearningAgent.test_train] Missing function or method docstring
+tests/test_q_learning_agent.py:66: [C0116(missing-function-docstring), TestQLearningAgent.test_save_load_model] Missing function or method docstring
+tests/test_q_learning_agent.py:77: [C0116(missing-function-docstring), TestQLearningAgent.test_get_state_key] Missing function or method docstring
+tests/test_q_learning_agent.py:79: [W0212(protected-access), TestQLearningAgent.test_get_state_key] Access to a protected member _get_state_key of a client class
+tests/test_q_learning_agent.py:83: [C0116(missing-function-docstring), TestQLearningAgent.test_epsilon_decay_limit] Missing function or method docstring
+tests/test_q_learning_agent.py:3: [C0411(wrong-import-order), ] standard import "os" should be placed before third party import "numpy"
+************* Module tests.test_training
+tests/test_training.py:3: [C0301(line-too-long), ] Line too long (104/100)
+tests/test_training.py:42: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:46: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:53: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:56: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:64: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:92: [C0301(line-too-long), ] Line too long (115/100)
+tests/test_training.py:101: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_training.py:124: [C0301(line-too-long), ] Line too long (117/100)
+tests/test_training.py:143: [C0301(line-too-long), ] Line too long (117/100)
+tests/test_training.py:146: [C0301(line-too-long), ] Line too long (111/100)
+tests/test_training.py:149: [C0301(line-too-long), ] Line too long (111/100)
+tests/test_training.py:150: [C0301(line-too-long), ] Line too long (115/100)
+tests/test_training.py:167: [C0301(line-too-long), ] Line too long (103/100)
+tests/test_training.py:173: [C0305(trailing-newlines), ] Trailing newlines
+tests/test_training.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_training.py:2: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_training.py:5: [E0401(import-error), ] Unable to import 'matplotlib.pyplot'
+tests/test_training.py:7: [C0115(missing-class-docstring), TestTraining] Missing class docstring
+tests/test_training.py:13: [C0116(missing-function-docstring), TestTraining.test_q_learning_training_step] Missing function or method docstring
+tests/test_training.py:16: [C0116(missing-function-docstring), TestTraining.test_dqn_training_step] Missing function or method docstring
+tests/test_training.py:32: [C0116(missing-function-docstring), TestTraining.test_q_learning_episode_completion] Missing function or method docstring
+tests/test_training.py:35: [C0116(missing-function-docstring), TestTraining.test_dqn_episode_completion] Missing function or method docstring
+tests/test_training.py:60: [C0116(missing-function-docstring), TestTraining.test_win_rate_calculation] Missing function or method docstring
+tests/test_training.py:67: [C0116(missing-function-docstring), TestTraining.test_evaluate_agent_q_learning] Missing function or method docstring
+tests/test_training.py:72: [C0116(missing-function-docstring), TestTraining.test_evaluate_agent_dqn] Missing function or method docstring
+tests/test_training.py:77: [C0116(missing-function-docstring), TestTraining.test_plot_training_results] Missing function or method docstring
+tests/test_training.py:88: [W0718(broad-exception-caught), TestTraining.test_plot_training_results] Catching too general exception Exception
+tests/test_training.py:91: [C0116(missing-function-docstring), TestTraining.test_compare_agents] Missing function or method docstring
+tests/test_training.py:99: [C0116(missing-function-docstring), TestTraining.test_plot_agent_comparison] Missing function or method docstring
+tests/test_training.py:107: [W0718(broad-exception-caught), TestTraining.test_plot_agent_comparison] Catching too general exception Exception
+tests/test_training.py:110: [C0116(missing-function-docstring), TestTraining.test_train_agent] Missing function or method docstring
+tests/test_training.py:130: [C0116(missing-function-docstring), TestTraining.test_training_improvement] Missing function or method docstring
+tests/test_training.py:152: [C0116(missing-function-docstring), TestTraining.test_epsilon_decay_during_training] Missing function or method docstring
+tests/test_training.py:160: [C0116(missing-function-docstring), TestTraining.test_memory_growth_dqn] Missing function or method docstring
+tests/test_training.py:2: [C0411(wrong-import-order), ] third party import "numpy" should be placed before first party import "tests.test_utils.TestCase" 
+tests/test_training.py:5: [C0411(wrong-import-order), ] third party import "matplotlib.pyplot" should be placed before first party imports "tests.test_utils.TestCase", "src.utils.utils.evaluate_agent", "src.utils.training_utils.train_agent" 
+************* Module tests.test_utils
+tests/test_utils.py:14: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:17: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:20: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:24: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:28: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:31: [C0303(trailing-whitespace), ] Trailing whitespace
+tests/test_utils.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tests/test_utils.py:2: [E0401(import-error), ] Unable to import 'numpy'
+tests/test_utils.py:3: [E0401(import-error), ] Unable to import 'torch'
+tests/test_utils.py:8: [C0115(missing-class-docstring), TestCase] Missing class docstring
+tests/test_utils.py:15: [C0116(missing-function-docstring), TestCase.create_q_learning_agent] Missing function or method docstring
+tests/test_utils.py:18: [C0116(missing-function-docstring), TestCase.create_dqn_agent] Missing function or method docstring
+tests/test_utils.py:21: [C0116(missing-function-docstring), TestCase.assert_valid_action] Missing function or method docstring
+tests/test_utils.py:25: [C0116(missing-function-docstring), TestCase.assert_valid_state] Missing function or method docstring
+tests/test_utils.py:29: [C0116(missing-function-docstring), TestCase.assert_valid_reward] Missing function or method docstring
+tests/test_utils.py:32: [C0116(missing-function-docstring), TestCase.assert_valid_done] Missing function or method docstring
+************* Module tune_hyperparameters
+tune_hyperparameters.py:8: [C0301(line-too-long), ] Line too long (102/100)
+tune_hyperparameters.py:9: [C0301(line-too-long), ] Line too long (107/100)
+tune_hyperparameters.py:10: [C0301(line-too-long), ] Line too long (102/100)
+tune_hyperparameters.py:40: [C0301(line-too-long), ] Line too long (102/100)
+tune_hyperparameters.py:41: [C0301(line-too-long), ] Line too long (107/100)
+tune_hyperparameters.py:42: [C0301(line-too-long), ] Line too long (102/100)
+tune_hyperparameters.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+tune_hyperparameters.py:5: [C0116(missing-function-docstring), main] Missing function or method docstring
+tune_hyperparameters.py:14: [W1514(unspecified-encoding), main] Using open without explicitly specifying an encoding
+tune_hyperparameters.py:26: [W1514(unspecified-encoding), main] Using open without explicitly specifying an encoding
+tune_hyperparameters.py:27: [E0606(possibly-used-before-assignment), main] Possibly using variable 'results' before assignment
+tune_hyperparameters.py:33: [W0404(reimported), ] Reimport 'argparse' (imported line 1)
+tune_hyperparameters.py:33: [C0413(wrong-import-position), ] Import "import argparse" should be placed at the top of the module
+tune_hyperparameters.py:34: [W0404(reimported), ] Reimport 'json' (imported line 2)
+tune_hyperparameters.py:34: [C0413(wrong-import-position), ] Import "import json" should be placed at the top of the module
+tune_hyperparameters.py:35: [W0404(reimported), ] Reimport 'grid_search' (imported line 3)
+tune_hyperparameters.py:35: [W0404(reimported), ] Reimport 'random_search' (imported line 3)
+tune_hyperparameters.py:35: [W0404(reimported), ] Reimport 'bayesian_optimization' (imported line 3)
+tune_hyperparameters.py:35: [C0413(wrong-import-position), ] Import "from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization" should be placed at the top of the module
+tune_hyperparameters.py:37: [C0116(missing-function-docstring), main] Missing function or method docstring
+tune_hyperparameters.py:37: [E0102(function-redefined), main] function already defined line 5
+tune_hyperparameters.py:46: [W1514(unspecified-encoding), main] Using open without explicitly specifying an encoding
+tune_hyperparameters.py:58: [W1514(unspecified-encoding), main] Using open without explicitly specifying an encoding
+tune_hyperparameters.py:59: [E0606(possibly-used-before-assignment), main] Possibly using variable 'results' before assignment
+tune_hyperparameters.py:33: [C0411(wrong-import-order), ] standard import "argparse" should be placed before first party import "src.utils.hyperparameter_tuning.grid_search" 
+tune_hyperparameters.py:34: [C0411(wrong-import-order), ] standard import "json" should be placed before first party import "src.utils.hyperparameter_tuning.grid_search" 
+tune_hyperparameters.py:33: [C0412(ungrouped-imports), ] Imports from package argparse are not grouped
+tune_hyperparameters.py:34: [C0412(ungrouped-imports), ] Imports from package json are not grouped
+tune_hyperparameters.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==tests.test_board_game:[118:140]
+==tests.test_q_learning_agent:[14:36]
+        self.assertEqual(self.agent.state_size, self.state_size)
+        self.assertEqual(self.agent.action_size, self.action_size)
+        self.assertEqual(len(self.agent.q_table), 0)
+
+    def test_get_q_value(self):
+        state = np.zeros(self.state_size)
+        action = 0
+        self.assertEqual(self.agent.get_q_value(state, action), 0.0)
+
+    def test_update_q_value(self):
+        state = np.zeros(self.state_size)
+        next_state = np.zeros(self.state_size)
+        next_state[0] = 1
+        action = 0
+        reward = 1
+        self.agent.update_q_value(state, action, reward, next_state)
+        self.assertGreater(self.agent.get_q_value(state, action), 0.0)
+
+    def test_choose_action(self):
+        state = np.zeros(self.state_size)
+        valid_actions = list(range(self.action_size))
+        action = self.agent.choose_action(state, valid_actions)
+tune_hyperparameters.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==src.utils.agent_comparison:[16:37]
+==src.utils.utils:[60:94]
+    q_win_rate = evaluate_agent(env, q_agent, num_episodes)
+    dqn_win_rate = evaluate_agent(env, dqn_agent, num_episodes)
+
+    return q_win_rate, dqn_win_rate
+
+def plot_agent_comparison(q_win_rate, dqn_win_rate):
+    """
+    Plot a bar chart comparing the win rates of Q-Learning and DQN agents.
+
+    Args:
+        q_win_rate (float): Win rate of the Q-Learning agent.
+        dqn_win_rate (float): Win rate of the DQN agent.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.bar(['Q-Learning', 'DQN'], [q_win_rate, dqn_win_rate])
+    plt.ylabel('Win Rate')
+    plt.title('Agent Performance Comparison')
+    plt.ylim(0, 1)
+    for i, v in enumerate([q_win_rate, dqn_win_rate]):
+        plt.text(i, v, f'{v:.2%}', ha='center', va='bottom')
+    plt.show()
+tune_hyperparameters.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==main:[26:39]
+==src.utils.utils:[185:193]
+    while not done:
+        env.render()
+        action = agent.act(state)
+        state, reward, done, _ = env.step(action)
+        total_reward += reward
+
+    env.render()
+    print(f"Game over. Total reward: {total_reward}")
+tune_hyperparameters.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==tests.test_board_game:[128:133]
+==tests.test_q_learning_agent:[50:55]
+        state = np.zeros(self.state_size)
+        next_state = np.zeros(self.state_size)
+        next_state[0] = 1
+        action = 0
+        reward = 1
+
+-----------------------------------
+Your code has been rated at 5.40/10
+

@@ -1,5 +1,6 @@
-import random
 import math
+import random
+
 
 class GameBot:
     """
@@ -20,11 +21,18 @@ class GameBot:
 
     def initialize_board(self):
         """Initialize an empty game board."""
-        self.board = [[0 for _ in range(self.board_size)] for _ in range(self.board_size)]
+        self.board = [
+            [0 for _ in range(self.board_size)] for _ in range(self.board_size)
+        ]
 
     def get_moves(self):
         """Get all possible moves on the current board."""
-        return [(i, j) for i in range(self.board_size) for j in range(self.board_size) if self.board[i][j] == 0]
+        return [
+            (i, j)
+            for i in range(self.board_size)
+            for j in range(self.board_size)
+            if self.board[i][j] == 0
+        ]
 
     def make_move(self, move):
         """
@@ -144,7 +152,11 @@ class GameBot:
             self.current_player = 1
 
             while self.get_moves():
-                move = self.get_best_move() if self.current_player == 1 else self.get_random_move()
+                move = (
+                    self.get_best_move()
+                    if self.current_player == 1
+                    else self.get_random_move()
+                )
                 self.make_move(move)
 
                 if self.check_win():
@@ -177,6 +189,7 @@ class GameBot:
     def get_current_player(self):
         """Get the current player."""
         return self.current_player
+
 
 # Initialize the bot
 bot = GameBot()

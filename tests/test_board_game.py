@@ -1,8 +1,11 @@
-from tests.test_utils import TestCase
-import numpy as np
 import math
-from game_files.game_bot import GameBot
 import os
+
+import numpy as np
+
+from game_files.game_bot import GameBot
+from tests.test_utils import TestCase
+
 
 class TestBoardGameEnv(TestCase):
     def test_init(self):
@@ -50,12 +53,12 @@ class TestBoardGameEnv(TestCase):
         self.env.board[0, :4] = 1
         self.assertTrue(self.env.check_blocking_move(0, 4))
         self.assertFalse(self.env.check_blocking_move(1, 0))
-        
+
         # Additional test for the case (0, 4)
         self.env.board = np.zeros((self.env.board_size, self.env.board_size))
         self.env.board[0, :4] = -1  # Opponent's pieces
         self.assertTrue(self.env.check_blocking_move(0, 4))
-        
+
         # Test blocking a potential win
         self.env.board = np.zeros((self.env.board_size, self.env.board_size))
         self.env.board[0, :4] = 1
@@ -70,10 +73,11 @@ class TestBoardGameEnv(TestCase):
         self.env.reset()
         self.env.board[0, 0] = 1
         self.env.board[1, 1] = -1
-        rendered_output = self.env.render(mode='ansi')
+        rendered_output = self.env.render(mode="ansi")
         self.assertIsInstance(rendered_output, str)
-        self.assertIn('X', rendered_output)
-        self.assertIn('O', rendered_output)
+        self.assertIn("X", rendered_output)
+        self.assertIn("O", rendered_output)
+
 
 class TestAlphaBetaPruning(TestCase):
     def setUp(self):
@@ -82,24 +86,18 @@ class TestAlphaBetaPruning(TestCase):
 
     def test_alpha_beta_pruning(self):
         # Set up a simple board state
-        self.game_bot.board = [
-            [1, 0, 0],
-            [0, -1, 0],
-            [0, 0, 0]
-        ]
+        self.game_bot.board = [[1, 0, 0], [0, -1, 0], [0, 0, 0]]
         self.game_bot.current_player = 1
 
         # Test the alpha_beta_pruning method
-        best_score = self.game_bot.alpha_beta_pruning(depth=3, alpha=-math.inf, beta=math.inf, maximizing_player=True)
+        best_score = self.game_bot.alpha_beta_pruning(
+            depth=3, alpha=-math.inf, beta=math.inf, maximizing_player=True
+        )
         self.assertIsInstance(best_score, (int, float))
 
     def test_get_best_move(self):
         # Set up a simple board state
-        self.game_bot.board = [
-            [1, 0, 0],
-            [0, -1, 0],
-            [0, 0, 0]
-        ]
+        self.game_bot.board = [[1, 0, 0], [0, -1, 0], [0, 0, 0]]
         self.game_bot.current_player = 1
 
         # Test the get_best_move method
@@ -109,6 +107,7 @@ class TestAlphaBetaPruning(TestCase):
         row, col = best_move
         self.assertTrue(0 <= row < 3)
         self.assertTrue(0 <= col < 3)
+
 
 class TestQLearningAgent(TestCase):
     def setUp(self):
@@ -151,6 +150,8 @@ class TestQLearningAgent(TestCase):
 
         os.remove("test_model.json")
 
+
 if __name__ == "__main__":
     from unittest import main
+
     main()
