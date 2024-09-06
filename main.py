@@ -49,12 +49,12 @@ def main():
 
     if args.agent == "q_learning":
         agent = QLearningAgent(state_size, action_size)
-        model_path = args.model or os.path.join(project_root, "models", "q_learning_model.json")
-        agent.load_model(model_path)
+        model_path = args.model or os.path.join(project_root, "models")
+        load_latest_model(agent, model_path)
     elif args.agent == "dqn":
         agent = DQNAgent(state_size, action_size, device)
-        model_path = args.model or os.path.join(project_root, "models", "dqn_model.pth")
-        agent.load(model_path)
+        model_path = args.model or os.path.join(project_root, "models")
+        load_latest_model(agent, model_path)
 
     play_game(agent, env)
 

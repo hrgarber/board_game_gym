@@ -133,3 +133,26 @@ def evaluate_agent(env, agent, num_episodes=100):
                 wins += 1
     return wins / num_episodes
 
+def load_latest_model(agent, models_dir):
+    """
+    Load the latest model for the given agent from the models directory.
+
+    Args:
+        agent: The agent (either DQNAgent or QLearningAgent) to load the model for.
+        models_dir (str): The directory containing the saved models.
+    """
+    if isinstance(agent, DQNAgent):
+        model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
+    else:
+        model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
+
+    if model_files:
+        latest_model = max(model_files, key=lambda x: int(x.split('_v')[1].split('.')[0]))
+        model_path = os.path.join(models_dir, latest_model)
+        if isinstance(agent, DQNAgent):
+            agent.load(model_path)
+        else:
+            agent.load_model(model_path)
+        print(f"Loaded model: {latest_model}")
+    else:
+        print("No saved models found.")
