@@ -42,7 +42,7 @@ class DQNAgent:
         return torch.FloatTensor(state).to(self.device)
 
     def remember(self, state, action, reward, next_state, done):
-        self.memory.append((state.flatten(), action, reward, next_state.flatten(), done))
+        self.memory.append((state, action, reward, next_state, done))
 
     def update_target_model(self):
         self.target_model.load_state_dict(self.model.state_dict())
@@ -50,17 +50,19 @@ class DQNAgent:
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             return random.randrange(self.action_size)
-        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)  # Ensure correct shape
+        state = self.preprocess_state(state)
         act_values = self.model(state)
-        return np.argmax(act_values.cpu().data.numpy(), axis=1)[0]
+        return np.argmax(act_values.cpu().data.numpy())
 
     def replay(self, batch_size):
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
-        states = torch.FloatTensor(np.array(states)).to(self.device)
+        
+        states = torch.stack([self.preprocess_state(state) for state in states])
+        next_states = torch.stack([self.preprocess_state(state) for state in next_states])
+        
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
-        next_states = torch.FloatTensor(np.array(next_states)).to(self.device)
         dones = torch.FloatTensor(dones).to(self.device)
 
         current_q_values = self.model(states).gather(1, actions.unsqueeze(1))
@@ -71,6 +73,7 @@ class DQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+        
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
