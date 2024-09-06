@@ -8,12 +8,14 @@ import random
 class DQN(nn.Module):
     def __init__(self, state_size, action_size):
         super(DQN, self).__init__()
-        assert state_size == 64, f"Unexpected state_size: {state_size}, should be 64."
+        self.state_size = state_size
+        self.action_size = action_size
         self.fc1 = nn.Linear(state_size, 128)
         self.fc2 = nn.Linear(128, 128)
         self.fc3 = nn.Linear(128, action_size)
 
     def forward(self, x):
+        x = x.view(-1, self.state_size)  # Ensure correct input shape
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
         x = self.fc3(x)
@@ -21,7 +23,6 @@ class DQN(nn.Module):
 
 class DQNAgent:
     def __init__(self, state_size, action_size, device, learning_rate=1e-3, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
-        assert state_size == 64, f"Unexpected state_size: {state_size}, should be 64."
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
@@ -36,6 +37,9 @@ class DQNAgent:
         self.target_model = DQN(state_size, action_size).to(device)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
         self.update_target_model()
+
+    def preprocess_state(self, state):
+        return torch.FloatTensor(state).to(self.device)
 
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state.flatten(), action, reward, next_state.flatten(), done))
