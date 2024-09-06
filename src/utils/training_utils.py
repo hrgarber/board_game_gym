@@ -1,3 +1,5 @@
+import numpy as np
+import torch
 from tqdm import tqdm
 from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
