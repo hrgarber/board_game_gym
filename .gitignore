@@ -56,3 +56,5 @@ Thumbs.db
 models/
 
 # Any other project-specific files to ignore
+# Ignore hyperparameter tuning logs
+hyperparameter_tuning.log

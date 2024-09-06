@@ -320,3 +320,4 @@
 2024-09-06 09:27:41,595 - INFO - Parameters: {'learning_rate': 0.033864412007422816, 'discount_factor': 0.9734505451909027, 'epsilon': 0.1493397283763614, 'epsilon_decay': 0.9917561470508189}, Performance: 0.0
 2024-09-06 09:27:41,660 - INFO - Parameters: {'learning_rate': 0.019600243453021266, 'discount_factor': 0.9380441234244332, 'epsilon': 0.1930463720565896, 'epsilon_decay': 0.9953617836527474}, Performance: 0.0
 2024-09-06 09:27:41,660 - INFO - Random search completed. Best parameters: {'learning_rate': 0.008766823057817588, 'discount_factor': 0.9361891724312522, 'epsilon': 0.29753894314738716, 'epsilon_decay': 0.9931040501525721}, Best performance: 0.0
+# This file contains runtime-specific logs and should not be version controlled
