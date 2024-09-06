@@ -114,14 +114,14 @@ class BoardGameEnv(gym.Env):
 
     def check_blocking_move(self, row, col):
         """
-        Check if the current move blocks the opponent's winning move.
+        Check if the current move blocks the opponent's winning move or a line of 4.
 
         Args:
             row (int): The row of the last move.
             col (int): The column of the last move.
 
         Returns:
-            bool: True if the move blocks a winning move, False otherwise.
+            bool: True if the move blocks a winning move or a line of 4, False otherwise.
         """
         # Temporarily change the player and the board
         original_player = self.current_player
@@ -129,13 +129,14 @@ class BoardGameEnv(gym.Env):
         original_value = self.board[row, col]
         self.board[row, col] = self.current_player
         
-        blocked = self.check_win(row, col)
+        blocked_win = self.check_win(row, col)
+        blocked_line_of_4 = self.check_line(row, col, 4)
         
         # Revert the changes
         self.current_player = original_player
         self.board[row, col] = original_value
         
-        return blocked or self.check_line(row, col, 4)  # Also check for blocking a line of 4
+        return blocked_win or blocked_line_of_4
 
     def check_line(self, row, col, line_length):
         """

@@ -128,21 +128,21 @@ class TestTraining(TestCase):
         self.assertEqual(len(dqn_results[1]), num_episodes // 100 + 1)
 
     def test_training_improvement(self):
-        num_episodes = 500  # Increase the number of episodes further
+        num_episodes = 1000  # Increase the number of episodes
         max_steps = 100
         batch_size = 32
         update_target_every = 5
 
         # Train Q-Learning agent
         q_results = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
-        q_initial_performance = np.mean(q_results[0][:50])
-        q_final_performance = np.mean(q_results[0][-50:])
+        q_initial_performance = np.mean(q_results[0][:100])
+        q_final_performance = np.mean(q_results[0][-100:])
         self.assertGreater(q_final_performance, q_initial_performance)
 
         # Train DQN agent
         dqn_results = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
-        dqn_initial_performance = np.mean(dqn_results[0][:50])
-        dqn_final_performance = np.mean(dqn_results[0][-50:])
+        dqn_initial_performance = np.mean(dqn_results[0][:100])
+        dqn_final_performance = np.mean(dqn_results[0][-100:])
         self.assertGreater(dqn_final_performance, dqn_initial_performance)
 
     def test_epsilon_decay_during_training(self):

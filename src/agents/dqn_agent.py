@@ -58,7 +58,8 @@ class DQNAgent:
 
     def replay(self, batch_size):
         if len(self.memory) < batch_size:
-            return
+            return 0  # Return 0 if no replay was performed
+
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
         
@@ -110,4 +111,5 @@ class DQNAgent:
                     break
             if episode % self.update_target_every == 0:
                 self.update_target_model()
+        self.update_target_model()  # Ensure the target model is updated at the end of training
 
