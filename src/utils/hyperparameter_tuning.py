@@ -619,10 +619,10 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
     logging.info(f"Starting Bayesian optimization for {agent_type} agent")
     def objective(trial):
         params = {
-            'learning_rate': trial.suggest_loguniform('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1]),
-            'discount_factor': trial.suggest_uniform('discount_factor', param_ranges['discount_factor'][0], param_ranges['discount_factor'][1]),
-            'epsilon': trial.suggest_uniform('epsilon', param_ranges['epsilon'][0], param_ranges['epsilon'][1]),
-            'epsilon_decay': trial.suggest_uniform('epsilon_decay', param_ranges['epsilon_decay'][0], param_ranges['epsilon_decay'][1])
+            'learning_rate': trial.suggest_float('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1], log=True),
+            'discount_factor': trial.suggest_float('discount_factor', param_ranges['discount_factor'][0], param_ranges['discount_factor'][1]),
+            'epsilon': trial.suggest_float('epsilon', param_ranges['epsilon'][0], param_ranges['epsilon'][1]),
+            'epsilon_decay': trial.suggest_float('epsilon_decay', param_ranges['epsilon_decay'][0], param_ranges['epsilon_decay'][1])
         }
         
         if agent_type == 'dqn':
