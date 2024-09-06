@@ -62,8 +62,13 @@ class TestHyperparameterTuning(unittest.TestCase):
             'params': [{'learning_rate': 0.05}, {'learning_rate': 0.15}],
             'performances': [0.55, 0.65]
         }
+        
+        # Create a mock Optuna study
+        study = optuna.create_study(direction='maximize')
+        study.optimize(lambda trial: trial.suggest_float('x', 0, 1), n_trials=5)
+        
         bayesian_results = {
-            'study': None,  # Mock study object
+            'study': study,
             'best_params': {'learning_rate': 0.075},
             'best_performance': 0.7
         }

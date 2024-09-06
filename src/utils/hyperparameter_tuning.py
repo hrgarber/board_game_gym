@@ -161,10 +161,10 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
     logging.info(f"Starting Bayesian optimization for {agent_type} agent")
     def objective(trial):
         params = {
-            'learning_rate': trial.suggest_loguniform('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1]),
-            'discount_factor': trial.suggest_uniform('discount_factor', param_ranges['discount_factor'][0], param_ranges['discount_factor'][1]),
-            'epsilon': trial.suggest_uniform('epsilon', param_ranges['epsilon'][0], param_ranges['epsilon'][1]),
-            'epsilon_decay': trial.suggest_uniform('epsilon_decay', param_ranges['epsilon_decay'][0], param_ranges['epsilon_decay'][1])
+            'learning_rate': trial.suggest_float('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1], log=True),
+            'discount_factor': trial.suggest_float('discount_factor', param_ranges['discount_factor'][0], param_ranges['discount_factor'][1]),
+            'epsilon': trial.suggest_float('epsilon', param_ranges['epsilon'][0], param_ranges['epsilon'][1]),
+            'epsilon_decay': trial.suggest_float('epsilon_decay', param_ranges['epsilon_decay'][0], param_ranges['epsilon_decay'][1])
         }
         
         if agent_type == 'dqn':
@@ -372,16 +372,30 @@ if __name__ == "__main__":
             plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
 
     elif method == 'bayesian':
-        trials = results['study'].trials
-        values = [t.value for t in trials if t.value is not None]
-        best_value = results['study'].best_value
+        if 'study' in results and results['study'] is not None:
+            study = results['study']
+            trials = study.trials
+            values = [t.value for t in trials if t.value is not None]
+            best_value = study.best_value
 
-        plt.plot(range(1, len(values) + 1), values, marker='o')
-        plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
-        plt.title("Bayesian Optimization Results")
-        plt.xlabel("Trial")
-        plt.ylabel("Performance")
-        plt.legend()
+            plt.plot(range(1, len(values) + 1), values, marker='o')
+            plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
+            plt.title("Bayesian Optimization Results")
+            plt.xlabel("Trial")
+            plt.ylabel("Performance")
+            plt.legend()
+
+            # Plot parameter importances
+            plt.figure(figsize=(10, 6))
+            importances = optuna.importance.get_param_importances(study)
+            plt.bar(importances.keys(), importances.values())
+            plt.title("Parameter Importances")
+            plt.xlabel("Parameter")
+            plt.ylabel("Importance")
+            plt.xticks(rotation=45)
+        else:
+            print("Error: 'study' not found or is None in results for Bayesian optimization.")
+            return
 
     plt.tight_layout()
     plt.show()
