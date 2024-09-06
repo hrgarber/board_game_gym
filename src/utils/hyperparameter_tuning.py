@@ -16,8 +16,12 @@ from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
 from src.utils.utils import evaluate_agent
 
+import logging
+from datetime import datetime
+
 # Set up logging
-logging.basicConfig(filename='hyperparameter_tuning.log', level=logging.INFO,
+log_filename = f'hyperparameter_tuning_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'
+logging.basicConfig(filename=log_filename, level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 def cross_validate(agent_type, params, n_splits=5, num_episodes=1000, eval_episodes=100):
