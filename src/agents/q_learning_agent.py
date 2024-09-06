@@ -143,6 +143,19 @@ class QLearningAgent:
         self.training_episodes = model_data["training_episodes"]
         self.epsilon = model_data["epsilon"]
 
+    def update(self, state, action, reward, next_state, done):
+        """
+        Update the Q-value for a given state-action pair.
+
+        Args:
+            state (numpy.array): The current state.
+            action (int): The action taken.
+            reward (float): The reward received.
+            next_state (numpy.array): The resulting state after taking the action.
+            done (bool): Whether the episode has ended.
+        """
+        self.update_q_value(state, action, reward, next_state)
+
     def train(self, env, num_episodes):
         """
         Train the Q-learning agent for a specified number of episodes.
@@ -157,7 +170,7 @@ class QLearningAgent:
             while not done:
                 action = self.choose_action(state, env.get_valid_actions())
                 next_state, reward, done, _ = env.step(action)
-                self.update_q_value(state, action, reward, next_state)
+                self.update(state, action, reward, next_state, done)
                 state = next_state
             self.decay_epsilon()
             self.training_episodes += 1
