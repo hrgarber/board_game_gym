@@ -10,6 +10,7 @@ import pandas as pd
 import seaborn as sns
 from sklearn.model_selection import KFold
 from tqdm import tqdm
+import optuna.visualization
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -691,42 +692,82 @@ def visualize_tuning_results(results, method):
     """
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import pandas as pd
 
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(15, 10))
     sns.set(style="whitegrid")
 
     if method in ["grid", "random"]:
-        data = [
-            (params, perf)
-            for params, perf in zip(results["params"], results["performances"])
-        ]
-        data.sort(key=lambda x: x[1], reverse=True)
-        params, performances = zip(*data)
+        if "params" in results and "performances" in results:
+            df = pd.DataFrame(results["params"])
+            df["performance"] = results["performances"]
+            df = df.sort_values("performance", ascending=False)
 
-        plt.bar(range(len(performances)), performances)
-        plt.title(f"{method.capitalize()} Search Results")
-        plt.xlabel("Hyperparameter Set")
-        plt.ylabel("Performance")
-        plt.xticks([])
+            # Plot performance distribution
+            plt.subplot(2, 2, 1)
+            sns.histplot(df["performance"], kde=True)
+            plt.title(f"{method.capitalize()} Search Performance Distribution")
+            plt.xlabel("Performance")
 
-        for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
-            plt.text(i, perf, f"{perf:.3f}", ha="center", va="bottom")
-            plt.text(i, 0, str(param), ha="center", va="top", rotation=90, fontsize=8)
+            # Plot top 10 performances
+            plt.subplot(2, 2, 2)
+            top_10 = df.head(10)
+            sns.barplot(x=top_10.index, y="performance", data=top_10)
+            plt.title(f"Top 10 {method.capitalize()} Search Results")
+            plt.xlabel("Hyperparameter Set")
+            plt.ylabel("Performance")
+
+            # Plot parameter correlations
+            plt.subplot(2, 2, 3)
+            sns.heatmap(df.corr(), annot=True, cmap="coolwarm")
+            plt.title("Parameter Correlations")
+
+            # Plot parallel coordinates for top 10 sets
+            plt.subplot(2, 2, 4)
+            pd.plotting.parallel_coordinates(top_10, "performance")
+            plt.title("Top 10 Hyperparameter Sets")
+            plt.xticks(rotation=45)
+
+        else:
+            print(f"Error: 'params' or 'performances' not found in results for {method} search.")
+            return
 
     elif method == "bayesian":
-        trials = results["study"].trials
-        values = [t.value for t in trials if t.value is not None]
-        best_value = results["study"].best_value
+        if "study" in results and results["study"] is not None:
+            study = results["study"]
+            if len(study.trials) > 0:
+                # Plot optimization history
+                plt.subplot(2, 2, 1)
+                optuna.visualization.plot_optimization_history(study)
+                plt.title("Bayesian Optimization History")
 
-        plt.plot(range(1, len(values) + 1), values, marker="o")
-        plt.axhline(y=best_value, color="r", linestyle="--", label="Best Value")
-        plt.title("Bayesian Optimization Results")
-        plt.xlabel("Trial")
-        plt.ylabel("Performance")
-        plt.legend()
+                # Plot parameter importances
+                plt.subplot(2, 2, 2)
+                optuna.visualization.plot_param_importances(study)
+                plt.title("Parameter Importances")
+
+                # Plot parallel coordinates
+                plt.subplot(2, 2, 3)
+                optuna.visualization.plot_parallel_coordinate(study)
+                plt.title("Parallel Coordinate Plot")
+
+                # Plot slice plot
+                plt.subplot(2, 2, 4)
+                optuna.visualization.plot_slice(study)
+                plt.title("Slice Plot")
+            else:
+                print("Error: No trials found in the study for Bayesian optimization.")
+                return
+        else:
+            print("Error: 'study' not found or is None in results for Bayesian optimization.")
+            return
+    else:
+        print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")
+        return
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig(f"{method}_tuning_results.png")
+    plt.close()
 
 
 if __name__ == "__main__":
