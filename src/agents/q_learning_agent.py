@@ -7,7 +7,7 @@ class QLearningAgent:
     A Q-Learning agent for reinforcement learning.
     """
 
-    def __init__(self, state_size, action_size, learning_rate=0.1, discount_factor=0.95, epsilon=0.1):
+    def __init__(self, state_size, action_size, learning_rate=0.1, discount_factor=0.95, epsilon=0.1, epsilon_decay=0.995, epsilon_min=0.01):
         """
         Initialize the Q-Learning agent.
 
@@ -16,16 +16,25 @@ class QLearningAgent:
             action_size (int): The number of possible actions.
             learning_rate (float): The learning rate for Q-value updates.
             discount_factor (float): The discount factor for future rewards.
-            epsilon (float): The exploration rate for epsilon-greedy policy.
+            epsilon (float): The initial exploration rate for epsilon-greedy policy.
+            epsilon_decay (float): The decay rate for epsilon.
+            epsilon_min (float): The minimum value for epsilon.
         """
         self.state_size = state_size
         self.action_size = action_size
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.epsilon = epsilon
+        self.epsilon_decay = epsilon_decay
+        self.epsilon_min = epsilon_min
         self.q_table = {}
         self.version = 1
-        self.version = 1
+
+    def decay_epsilon(self):
+        """
+        Decay the epsilon value for exploration.
+        """
+        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
 
     def get_q_value(self, state, action):
         """

@@ -85,6 +85,24 @@ class BoardGameEnv(gym.Env):
                 return True
         return False
 
+    def is_draw(self):
+        """
+        Check if the game is a draw (no more empty cells).
+
+        Returns:
+            bool: True if the game is a draw, False otherwise.
+        """
+        return np.all(self.board != 0)
+
+    def get_state(self):
+        """
+        Get the current state of the board.
+
+        Returns:
+            numpy.array: The flattened board state.
+        """
+        return self.board.flatten()
+
     def render(self, mode='human'):
         """
         Render the current state of the environment.
