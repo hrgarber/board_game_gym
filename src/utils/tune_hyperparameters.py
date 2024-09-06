@@ -1,11 +1,11 @@
 import argparse
 import json
-from typing import Dict, Any
+from typing import Any, Dict
 
 from src.utils.hyperparameter_tuning import (
     bayesian_optimization,
     grid_search,
-    random_search
+    random_search,
 )
 
 

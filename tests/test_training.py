@@ -2,8 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.utils.training_utils import train_agent
-from src.utils.utils import (compare_agents, evaluate_agent,
-                             plot_agent_comparison, plot_training_results)
+from src.utils.utils import (
+    compare_agents,
+    evaluate_agent,
+    plot_agent_comparison,
+    plot_training_results,
+)
 from tests.test_utils import TestCase
 
 

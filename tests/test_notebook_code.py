@@ -6,8 +6,12 @@ from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
 from src.utils.training_utils import train_agent
-from src.utils.utils import (compare_agents, evaluate_agent,
-                             plot_agent_comparison, plot_training_results)
+from src.utils.utils import (
+    compare_agents,
+    evaluate_agent,
+    plot_agent_comparison,
+    plot_training_results,
+)
 
 
 class TestNotebookCode(unittest.TestCase):
