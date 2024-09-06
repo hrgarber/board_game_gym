@@ -58,14 +58,14 @@ class BoardGameEnv(gym.Env):
         
         # Check for blocking opponent's winning move
         if self.check_blocking_move(row, col):
-            reward = 0.5
+            reward = 1.0
         # Check for creating lines
         elif self.check_line(row, col, 4):
-            reward = 0.5
+            reward = 0.8
         elif self.check_line(row, col, 3):
-            reward = 0.2
+            reward = 0.5
         else:
-            reward = -0.1  # Small negative reward for non-winning moves
+            reward = 0.1  # Small positive reward for non-winning moves
         
         self.current_player *= -1
         return self.board.flatten(), reward, False, {}
