@@ -25,14 +25,16 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100):
         eval_episodes (int): Number of episodes to evaluate each trained agent.
 
     Returns:
-        dict: Best parameters and their performance.
+        dict: Results of the grid search, including all parameter combinations and their performances.
     """
     env = BoardGameEnv()
     state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
     action_size = env.action_space.n
 
-    best_params = None
-    best_performance = float('-inf')
+    results = {
+        "params": [],
+        "performances": []
+    }
 
     param_combinations = list(itertools.product(*param_grid.values()))
     for params in tqdm(param_combinations, desc="Grid Search Progress"):
@@ -58,11 +60,14 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100):
         # Evaluate the agent
         performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
 
-        if performance > best_performance:
-            best_performance = performance
-            best_params = param_dict
+        results["params"].append(param_dict)
+        results["performances"].append(performance)
 
-    return {"best_params": best_params, "best_performance": best_performance}
+    best_idx = np.argmax(results["performances"])
+    results["best_params"] = results["params"][best_idx]
+    results["best_performance"] = results["performances"][best_idx]
+
+    return results
 
 def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=1000, eval_episodes=100):
     """
@@ -76,14 +81,16 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
         eval_episodes (int): Number of episodes to evaluate each trained agent.
 
     Returns:
-        dict: Best parameters and their performance.
+        dict: Results of the random search, including all parameter combinations and their performances.
     """
     env = BoardGameEnv()
     state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
     action_size = env.action_space.n
 
-    best_params = None
-    best_performance = float('-inf')
+    results = {
+        "params": [],
+        "performances": []
+    }
 
     for _ in tqdm(range(num_iterations), desc="Random Search Progress"):
         param_dict = {k: np.random.uniform(v[0], v[1]) for k, v in param_ranges.items()}
@@ -108,11 +115,14 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
         # Evaluate the agent
         performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
 
-        if performance > best_performance:
-            best_performance = performance
-            best_params = param_dict
+        results["params"].append(param_dict)
+        results["performances"].append(performance)
 
-    return {"best_params": best_params, "best_performance": best_performance}
+    best_idx = np.argmax(results["performances"])
+    results["best_params"] = results["params"][best_idx]
+    results["best_performance"] = results["performances"][best_idx]
+
+    return results
 
 def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1000, eval_episodes=100):
     """
@@ -126,7 +136,7 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
         eval_episodes (int): Number of episodes to evaluate each trained agent.
 
     Returns:
-        dict: Best parameters and their performance.
+        dict: Results of the Bayesian optimization, including the study object and best parameters.
     """
     env = BoardGameEnv()
     state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
@@ -167,7 +177,11 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
     study = optuna.create_study(direction='maximize')
     study.optimize(objective, n_trials=n_trials)
 
-    return {"best_params": study.best_params, "best_performance": study.best_value}
+    return {
+        "study": study,
+        "best_params": study.best_params,
+        "best_performance": study.best_value
+    }
 
 # Example usage
 if __name__ == "__main__":
@@ -189,10 +203,12 @@ if __name__ == "__main__":
     print("Grid Search for Q-Learning:")
     q_learning_results = grid_search('q_learning', q_learning_param_grid)
     print(q_learning_results)
+    visualize_tuning_results(q_learning_results, 'grid')
 
     print("\nGrid Search for DQN:")
     dqn_results = grid_search('dqn', dqn_param_grid)
     print(dqn_results)
+    visualize_tuning_results(dqn_results, 'grid')
 
     q_learning_param_ranges = {
         'learning_rate': (0.001, 0.1),
@@ -212,15 +228,65 @@ if __name__ == "__main__":
     print("\nRandom Search for Q-Learning:")
     q_learning_random_results = random_search('q_learning', q_learning_param_ranges)
     print(q_learning_random_results)
+    visualize_tuning_results(q_learning_random_results, 'random')
 
     print("\nRandom Search for DQN:")
     dqn_random_results = random_search('dqn', dqn_param_ranges)
     print(dqn_random_results)
+    visualize_tuning_results(dqn_random_results, 'random')
 
     print("\nBayesian Optimization for Q-Learning:")
     q_learning_bayesian_results = bayesian_optimization('q_learning', q_learning_param_ranges)
     print(q_learning_bayesian_results)
+    visualize_tuning_results(q_learning_bayesian_results, 'bayesian')
 
     print("\nBayesian Optimization for DQN:")
     dqn_bayesian_results = bayesian_optimization('dqn', dqn_param_ranges)
     print(dqn_bayesian_results)
+    visualize_tuning_results(dqn_bayesian_results, 'bayesian')
+
+def visualize_tuning_results(results, method):
+    """
+    Visualize the results of hyperparameter tuning.
+
+    Args:
+        results (dict): Dictionary containing tuning results.
+        method (str): The tuning method used ('grid', 'random', or 'bayesian').
+    """
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    plt.figure(figsize=(12, 6))
+    sns.set(style="whitegrid")
+
+    if method in ['grid', 'random']:
+        data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
+        data.sort(key=lambda x: x[1], reverse=True)
+        params, performances = zip(*data)
+
+        plt.bar(range(len(performances)), performances)
+        plt.title(f"{method.capitalize()} Search Results")
+        plt.xlabel("Hyperparameter Set")
+        plt.ylabel("Performance")
+        plt.xticks([])
+
+        for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
+            plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
+            plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
+
+    elif method == 'bayesian':
+        trials = results['study'].trials
+        values = [t.value for t in trials if t.value is not None]
+        best_value = results['study'].best_value
+
+        plt.plot(range(1, len(values) + 1), values, marker='o')
+        plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
+        plt.title("Bayesian Optimization Results")
+        plt.xlabel("Trial")
+        plt.ylabel("Performance")
+        plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
