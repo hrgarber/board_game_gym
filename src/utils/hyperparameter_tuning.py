@@ -166,7 +166,6 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
         "best_performance": study.best_value
     }
 
-# Example usage
 def visualize_tuning_results(results, method):
     """
     Visualize the results of hyperparameter tuning.
@@ -182,31 +181,42 @@ def visualize_tuning_results(results, method):
     sns.set(style="whitegrid")
 
     if method in ['grid', 'random']:
-        data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
-        data.sort(key=lambda x: x[1], reverse=True)
-        params, performances = zip(*data)
+        if 'params' in results and 'performances' in results:
+            data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
+            data.sort(key=lambda x: x[1], reverse=True)
+            params, performances = zip(*data)
 
-        plt.bar(range(len(performances)), performances)
-        plt.title(f"{method.capitalize()} Search Results")
-        plt.xlabel("Hyperparameter Set")
-        plt.ylabel("Performance")
-        plt.xticks([])
+            plt.bar(range(len(performances)), performances)
+            plt.title(f"{method.capitalize()} Search Results")
+            plt.xlabel("Hyperparameter Set")
+            plt.ylabel("Performance")
+            plt.xticks([])
 
-        for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
-            plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
-            plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
+            for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
+                plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
+                plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
+        else:
+            print(f"Error: 'params' or 'performances' not found in results for {method} search.")
+            return
 
     elif method == 'bayesian':
-        trials = results['study'].trials
-        values = [t.value for t in trials if t.value is not None]
-        best_value = results['study'].best_value
+        if 'study' in results:
+            trials = results['study'].trials
+            values = [t.value for t in trials if t.value is not None]
+            best_value = results['study'].best_value
 
-        plt.plot(range(1, len(values) + 1), values, marker='o')
-        plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
-        plt.title("Bayesian Optimization Results")
-        plt.xlabel("Trial")
-        plt.ylabel("Performance")
-        plt.legend()
+            plt.plot(range(1, len(values) + 1), values, marker='o')
+            plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
+            plt.title("Bayesian Optimization Results")
+            plt.xlabel("Trial")
+            plt.ylabel("Performance")
+            plt.legend()
+        else:
+            print("Error: 'study' not found in results for Bayesian optimization.")
+            return
+    else:
+        print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")
+        return
 
     plt.tight_layout()
     plt.show()
