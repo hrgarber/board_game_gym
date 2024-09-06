@@ -9,3 +9,4 @@ torch
 pygame
 scikit-optimize
 optuna
+pandas
