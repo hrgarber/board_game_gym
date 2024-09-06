@@ -50,8 +50,7 @@ jobs:
       if: failure()
       run: |
         pylint $(git ls-files '*.py') --output-format=json > pylint-report.json
-        python3 -c "
-import json
+        python3 -c "import json
 import sys
 
 def create_annotations(report):
@@ -67,5 +66,4 @@ with open('pylint-report.json') as f:
     report = json.load(f)
     annotations = create_annotations(report)
     for annotation in annotations:
-        print(annotation)
-"
+        print(annotation)"
