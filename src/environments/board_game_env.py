@@ -47,10 +47,28 @@ class BoardGameEnv(gym.Env):
             return self.board.flatten(), -10, True, {}
 
         self.board[row, col] = self.current_player
-        done = self.check_win(row, col)
-        reward = 1 if done else 0
+        
+        # Check for win
+        if self.check_win(row, col):
+            return self.board.flatten(), 10, True, {}
+        
+        # Check for draw
+        if self.is_draw():
+            return self.board.flatten(), 0, True, {}
+        
+        # Check for blocking opponent's winning move
+        if self.check_blocking_move(row, col):
+            reward = 0.5
+        # Check for creating lines
+        elif self.check_line(row, col, 4):
+            reward = 0.5
+        elif self.check_line(row, col, 3):
+            reward = 0.2
+        else:
+            reward = -0.1  # Small negative reward for non-winning moves
+        
         self.current_player *= -1
-        return self.board.flatten(), reward, done, {}
+        return self.board.flatten(), reward, False, {}
 
     def check_win(self, row, col):
         """
@@ -93,6 +111,61 @@ class BoardGameEnv(gym.Env):
             bool: True if the game is a draw, False otherwise.
         """
         return np.all(self.board != 0)
+
+    def check_blocking_move(self, row, col):
+        """
+        Check if the current move blocks the opponent's winning move.
+
+        Args:
+            row (int): The row of the last move.
+            col (int): The column of the last move.
+
+        Returns:
+            bool: True if the move blocks a winning move, False otherwise.
+        """
+        # Temporarily change the player
+        self.current_player *= -1
+        self.board[row, col] *= -1
+        
+        blocked = self.check_win(row, col)
+        
+        # Revert the changes
+        self.current_player *= -1
+        self.board[row, col] *= -1
+        
+        return blocked
+
+    def check_line(self, row, col, line_length):
+        """
+        Check if the current move creates a line of the specified length.
+
+        Args:
+            row (int): The row of the last move.
+            col (int): The column of the last move.
+            line_length (int): The length of the line to check for.
+
+        Returns:
+            bool: True if a line of the specified length is created, False otherwise.
+        """
+        player = self.board[row, col]
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for dr, dc in directions:
+            count = 1
+            for i in range(1, line_length):
+                r, c = row + i * dr, col + i * dc
+                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                    count += 1
+                else:
+                    break
+            for i in range(1, line_length):
+                r, c = row - i * dr, col - i * dc
+                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                    count += 1
+                else:
+                    break
+            if count >= line_length:
+                return True
+        return False
 
     def get_state(self):
         """

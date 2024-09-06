@@ -10,6 +10,18 @@ The project consists of several components:
 - Jupyter notebooks for training the AI using both methods and visualizing the learning process
 - A command-line interface for playing against the trained AI
 
+## Instructions
+
+The game is played on an 8x8 grid board. Two players take turns placing their pieces on the board, with the goal of forming an unbroken chain of five pieces horizontally, vertically, or diagonally.
+
+Key rules:
+1. Players alternate turns, placing one piece at a time on an empty cell.
+2. The first player to create a continuous line of five of their pieces wins the game.
+3. If the board fills up before either player achieves five in a row, the game is a draw.
+4. Once a piece is placed, it cannot be moved or removed.
+
+The AI opponent uses reinforcement learning techniques to improve its strategy over time.
+
 ## Roadmap
 
 ### Completed
