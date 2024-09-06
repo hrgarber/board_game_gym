@@ -22,12 +22,12 @@ class DQN(nn.Module):
         return x
 
 class DQNAgent:
-    def __init__(self, state_size, action_size, device, learning_rate=1e-3, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
+    def __init__(self, state_size, action_size, device, learning_rate=1e-3, discount_factor=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
         self.memory = deque(maxlen=10000)
-        self.gamma = gamma
+        self.discount_factor = discount_factor
         self.epsilon = epsilon
         self.epsilon_min = epsilon_min
         self.epsilon_decay = epsilon_decay
@@ -68,7 +68,7 @@ class DQNAgent:
 
         current_q_values = self.model(states).gather(1, actions.unsqueeze(1))
         next_q_values = self.target_model(next_states).max(1)[0].detach()
-        target_q_values = rewards + (1 - dones) * self.gamma * next_q_values
+        target_q_values = rewards + (1 - dones) * self.discount_factor * next_q_values
 
         loss = nn.MSELoss()(current_q_values, target_q_values.unsqueeze(1))
         self.optimizer.zero_grad()
