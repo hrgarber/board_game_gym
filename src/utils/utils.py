@@ -115,12 +115,14 @@ def plot_training_results(rewards, win_rates, agent_name):
     """
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
 
-    ax1.plot(rewards)
+    episodes = range(1, len(rewards) + 1)
+
+    ax1.plot(episodes, rewards)
     ax1.set_title(f'{agent_name} Episode Rewards')
     ax1.set_xlabel('Episode')
     ax1.set_ylabel('Reward')
 
-    ax2.plot(win_rates)
+    ax2.plot(episodes, win_rates)
     ax2.set_title(f'{agent_name} Win Rate')
     ax2.set_xlabel('Episode')
     ax2.set_ylabel('Win Rate')
