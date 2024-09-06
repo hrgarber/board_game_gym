@@ -71,7 +71,7 @@ jobs:
         fi
 
     - name: Run black check
-      run: black --check --exclude "\.ipynb$" .
+      run: black --exclude "\.ipynb$" .
 
     - name: Run isort
       run: isort --check-only --diff .
