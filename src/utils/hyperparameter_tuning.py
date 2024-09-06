@@ -3,6 +3,7 @@ import sys
 import itertools
 import numpy as np
 from tqdm import tqdm
+import optuna
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -113,6 +114,61 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
 
     return {"best_params": best_params, "best_performance": best_performance}
 
+def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1000, eval_episodes=100):
+    """
+    Perform Bayesian optimization for hyperparameter tuning using Optuna.
+
+    Args:
+        agent_type (str): Type of agent ('q_learning' or 'dqn').
+        param_ranges (dict): Dictionary of parameters and their possible ranges.
+        n_trials (int): Number of trials for optimization.
+        num_episodes (int): Number of episodes to train for each trial.
+        eval_episodes (int): Number of episodes to evaluate each trained agent.
+
+    Returns:
+        dict: Best parameters and their performance.
+    """
+    env = BoardGameEnv()
+    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
+    action_size = env.action_space.n
+
+    def objective(trial):
+        params = {
+            'learning_rate': trial.suggest_loguniform('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1]),
+            'discount_factor': trial.suggest_uniform('discount_factor', param_ranges['discount_factor'][0], param_ranges['discount_factor'][1]),
+            'epsilon': trial.suggest_uniform('epsilon', param_ranges['epsilon'][0], param_ranges['epsilon'][1]),
+            'epsilon_decay': trial.suggest_uniform('epsilon_decay', param_ranges['epsilon_decay'][0], param_ranges['epsilon_decay'][1])
+        }
+        
+        if agent_type == 'dqn':
+            params['batch_size'] = trial.suggest_int('batch_size', param_ranges['batch_size'][0], param_ranges['batch_size'][1])
+
+        if agent_type == 'q_learning':
+            agent = QLearningAgent(state_size, action_size, **params)
+        elif agent_type == 'dqn':
+            agent = DQNAgent(state_size, action_size, **params)
+        else:
+            raise ValueError("Invalid agent type. Choose 'q_learning' or 'dqn'.")
+
+        # Train the agent
+        for _ in range(num_episodes):
+            state = env.reset()
+            done = False
+            while not done:
+                action = agent.act(state)
+                next_state, reward, done, _ = env.step(action)
+                agent.update(state, action, reward, next_state, done)
+                state = next_state
+
+        # Evaluate the agent
+        performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
+        return performance
+
+    study = optuna.create_study(direction='maximize')
+    study.optimize(objective, n_trials=n_trials)
+
+    return {"best_params": study.best_params, "best_performance": study.best_value}
+
 # Example usage
 if __name__ == "__main__":
     q_learning_param_grid = {
@@ -160,3 +216,11 @@ if __name__ == "__main__":
     print("\nRandom Search for DQN:")
     dqn_random_results = random_search('dqn', dqn_param_ranges)
     print(dqn_random_results)
+
+    print("\nBayesian Optimization for Q-Learning:")
+    q_learning_bayesian_results = bayesian_optimization('q_learning', q_learning_param_ranges)
+    print(q_learning_bayesian_results)
+
+    print("\nBayesian Optimization for DQN:")
+    dqn_bayesian_results = bayesian_optimization('dqn', dqn_param_ranges)
+    print(dqn_bayesian_results)
