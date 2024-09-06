@@ -22,8 +22,10 @@ from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import evaluate_agent
 
 # Set up logging
+log_dir = os.path.join(project_root, "logs")
+os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
-    filename="hyperparameter_tuning.log",
+    filename=os.path.join(log_dir, "hyperparameter_tuning.log"),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -316,7 +318,9 @@ def visualize_tuning_results(results, method):
         return
 
     plt.tight_layout()
-    plt.savefig(f"{method}_tuning_results.png")
+    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, f"{method}_tuning_results.png"))
     plt.close()
 
 
