@@ -10,6 +10,7 @@ sys.path.insert(0, project_root)
 from src.environments.board_game_env import BoardGameEnv
 from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
+from src.utils.utils import load_latest_model
 
 def play_game(agent, env):
     """
