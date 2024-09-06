@@ -79,7 +79,9 @@ class DQNAgent:
         loss.backward()
         self.optimizer.step()
         
+        old_epsilon = self.epsilon
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+        print(f"Epsilon decayed from {old_epsilon} to {self.epsilon}")
         return loss.item()  # Return the loss value for monitoring
 
     def load(self, name):
@@ -110,6 +112,8 @@ class DQNAgent:
                 if done:
                     break
             if episode % self.update_target_every == 0:
+                print(f"Updating target model at episode {episode}")
                 self.update_target_model()
+        print("Final update of target model")
         self.update_target_model()  # Ensure the target model is updated at the end of training
 
