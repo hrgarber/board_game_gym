@@ -88,13 +88,24 @@ class TestTraining(TestCase):
             self.fail(f"plot_training_results raised an exception: {e}")
 
     def test_compare_agents(self):
-        q_win_rate = evaluate_agent(self.env, self.q_learning_agent, num_episodes=10)
-        dqn_win_rate = evaluate_agent(self.env, self.dqn_agent, num_episodes=10)
+        q_win_rate, dqn_win_rate = compare_agents(self.env, self.q_learning_agent, self.dqn_agent, num_episodes=10)
 
         self.assertIsInstance(q_win_rate, float)
         self.assertIsInstance(dqn_win_rate, float)
         self.assertTrue(0 <= q_win_rate <= 1)
         self.assertTrue(0 <= dqn_win_rate <= 1)
+
+    def test_plot_agent_comparison(self):
+        q_win_rate, dqn_win_rate = 0.6, 0.7
+        
+        # Mock plt.show to avoid displaying the plot during testing
+        import matplotlib.pyplot as plt
+        plt.show = lambda: None
+
+        try:
+            plot_agent_comparison(q_win_rate, dqn_win_rate)
+        except Exception as e:
+            self.fail(f"plot_agent_comparison raised an exception: {e}")
 
 if __name__ == "__main__":
     from unittest import main
