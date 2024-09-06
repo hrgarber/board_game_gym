@@ -10,6 +10,7 @@ The project consists of several components:
 - Jupyter notebooks for training the AI using both methods and visualizing the learning process
 - A command-line interface for playing against the trained AI
 - Hyperparameter tuning using grid search, random search, and Bayesian optimization
+- A basic web interface for playing the game
 
 ## Instructions
 
@@ -37,20 +38,21 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
 9. Created a main script for playing against the trained AI
 10. Implemented Alpha-Beta Pruning algorithm for improved decision-making
 11. Implemented hyperparameter tuning using grid search, random search, and Bayesian optimization
+12. Created an agent evaluation framework for assessing and comparing agent performance
 
 ### In Progress
-12. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
+13. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
+14. Improving the web interface to allow playing against the trained AI
 
 ### Upcoming
-13. Improve the web interface to allow playing against the trained AI
-14. Implement cross-platform compatibility checks and optimizations
-15. Add more comprehensive documentation and comments to the code
-16. Perform thorough testing and debugging of all components
-17. Create a user guide for setting up and using the project
-18. Optimize performance for larger board sizes and more complex game rules
-19. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
-20. Add support for multiplayer games (AI vs AI, Human vs Human)
-21. Develop a graphical user interface (GUI) for easier interaction with the game and AI
+15. Implement cross-platform compatibility checks and optimizations
+16. Add more comprehensive documentation and comments to the code
+17. Perform thorough testing and debugging of all components
+18. Create a user guide for setting up and using the project
+19. Optimize performance for larger board sizes and more complex game rules
+20. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
+21. Add support for multiplayer games (AI vs AI, Human vs Human)
+22. Develop a graphical user interface (GUI) for easier interaction with the game and AI
 
 ## File Structure
 
@@ -63,13 +65,17 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
   - `utils/`
     - `utils.py`: Contains utility functions.
     - `hyperparameter_tuning.py`: Implements grid search, random search, and Bayesian optimization for hyperparameter tuning.
-- `game_files/`: Contains game-related files.
+    - `agent_evaluation.py`: Contains functions for evaluating agent performance.
+    - `training_utils.py`: Contains utilities for training agents.
+- `game_files/`: Contains game-related files for the web interface.
 - `notebooks/`
   - `train_q_learning_ai.ipynb`: Jupyter notebook for training the AI using Q-learning.
   - `train_dqn_ai.ipynb`: Jupyter notebook for training the AI using DQN.
+  - `hyperparameter_tuning.ipynb`: Jupyter notebook for hyperparameter tuning.
 - `main.py`: Provides a command-line interface for playing against the trained AI.
 - `requirements.txt`: Lists the required Python packages.
 - `models/`: Directory for storing trained model versions.
+- `tests/`: Contains unit tests for various components of the project.
 
 ## Requirements
 
@@ -81,6 +87,8 @@ The AI opponent uses reinforcement learning techniques to improve its strategy o
 - PyTorch
 - tqdm
 - Optuna (for Bayesian optimization)
+- Pandas
+- Seaborn
 
 ## Installation
 
@@ -156,7 +164,7 @@ Key features of the training process:
 
 ### Hyperparameter Tuning
 
-To perform hyperparameter tuning, you can use the functions in `src/utils/hyperparameter_tuning.py`:
+To perform hyperparameter tuning, you can use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py`:
 
 1. Grid Search: `grid_search(agent_type, param_grid, num_episodes, eval_episodes)`
 2. Random Search: `random_search(agent_type, param_ranges, num_iterations, num_episodes, eval_episodes)`
@@ -173,6 +181,14 @@ These functions allow you to find the best hyperparameters for both Q-learning a
    Replace `[q_learning/dqn]` with your choice of agent and `[path_to_model_file]` with the path to your trained model file.
 2. Follow the prompts to make moves and interact with the AI.
 
+### Web Interface
+
+To play the game using the web interface:
+
+1. Open the `game_files/index.html` file in a web browser.
+2. Use the buttons to train the AI, start a new game, or reset the board.
+3. Click on the cells to make your moves when playing against the AI.
+
 ## Running Tests
 
 To run the tests for this project, use the following command:
@@ -182,8 +198,6 @@ python -m unittest discover tests
 ```
 
 This will run all the tests in the `tests` directory and report the results.
-
-As of the latest update, all tests are passing successfully. The test suite covers various aspects of the project, including the game environment, Q-learning agent, DQN agent, and hyperparameter tuning functions.
 
 ## Implementations
 
@@ -203,10 +217,19 @@ The DQN implementation uses a neural network to approximate the Q-function:
 
 ### Hyperparameter Tuning
 
-The project now includes three methods for hyperparameter tuning:
+The project includes three methods for hyperparameter tuning:
 - Grid Search: Exhaustively searches through a predefined set of hyperparameters.
 - Random Search: Randomly samples hyperparameters from defined ranges.
 - Bayesian Optimization: Uses Optuna to perform efficient hyperparameter optimization.
+
+### Agent Evaluation
+
+The project now includes an agent evaluation framework:
+- `evaluate_agent`: Runs the agent in the environment without exploration.
+- `calculate_metrics`: Processes evaluation results and calculates performance metrics.
+- `plot_learning_curve`: Visualizes episode rewards over time.
+- `plot_average_reward`: Visualizes average reward per episode.
+- `plot_loss_curve`: Visualizes the loss curve for DQN.
 
 ## Customization
 
@@ -233,24 +256,3 @@ Contributions to improve the project are welcome. Please feel free to submit iss
 ## License
 
 This project is open-source and available under the MIT License.
-
-## In Progress: Agent Evaluation Framework
-
-We are currently working on implementing a comprehensive evaluation framework for Q-Learning and DQN agents. This framework will allow us to assess and compare the performance of these agents after training. Here's our plan:
-
-1. Create a new file `src/utils/agent_evaluation.py` with the following functions:
-   - `evaluate_agent`: Run the agent in the environment without exploration.
-   - `calculate_metrics`: Process evaluation results and calculate performance metrics.
-   - `plot_learning_curve`: Visualize episode rewards over time.
-   - `plot_average_reward`: Visualize average reward per episode.
-   - `plot_loss_curve`: Visualize the loss curve for DQN.
-
-2. Update `src/utils/training_utils.py` to track losses during DQN training.
-
-3. Modify the training notebook to include evaluation and visualization after training.
-
-4. Implement error handling and logging in the new functions.
-
-5. Write unit tests for the new evaluation functions.
-
-This enhancement will provide valuable insights into agent performance and learning progress, facilitating easier comparison between different reinforcement learning approaches and hyperparameter configurations.
