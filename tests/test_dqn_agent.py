@@ -110,6 +110,7 @@ class TestDQNAgent(unittest.TestCase):
         initial_epsilon = self.agent.epsilon
         for _ in range(100):
             self.agent.replay(self.agent.batch_size)
+            self.agent.decay_epsilon()  # Explicitly call decay_epsilon after each replay
         self.assertLess(self.agent.epsilon, initial_epsilon)
 
     def test_model_output(self):
