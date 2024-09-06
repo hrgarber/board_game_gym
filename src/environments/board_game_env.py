@@ -136,9 +136,8 @@ class BoardGameEnv(gym.Env):
         self.current_player = original_player
         self.board[row, col] = original_value
         
-        print(f"Checking blocking move at ({row}, {col})")
-        print(f"Board state:\n{self.board}")
-        print(f"Blocked win: {blocked_win}, Blocked line of 4: {blocked_line_of_4}")
+        if blocked_win or blocked_line_of_4:
+            print(f"Blocking move detected at ({row}, {col})")
         
         return blocked_win or blocked_line_of_4
 
