@@ -190,25 +190,42 @@ def visualize_tuning_results(results, method):
     """
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import pandas as pd
 
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(15, 10))
     sns.set(style="whitegrid")
 
     if method in ['grid', 'random']:
         if 'params' in results and 'performances' in results:
-            data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
-            data.sort(key=lambda x: x[1], reverse=True)
-            params, performances = zip(*data)
+            df = pd.DataFrame(results['params'])
+            df['performance'] = results['performances']
+            df = df.sort_values('performance', ascending=False)
 
-            plt.bar(range(len(performances)), performances)
-            plt.title(f"{method.capitalize()} Search Results")
+            # Plot performance distribution
+            plt.subplot(2, 2, 1)
+            sns.histplot(df['performance'], kde=True)
+            plt.title(f"{method.capitalize()} Search Performance Distribution")
+            plt.xlabel("Performance")
+
+            # Plot top 10 performances
+            plt.subplot(2, 2, 2)
+            top_10 = df.head(10)
+            sns.barplot(x=top_10.index, y='performance', data=top_10)
+            plt.title(f"Top 10 {method.capitalize()} Search Results")
             plt.xlabel("Hyperparameter Set")
             plt.ylabel("Performance")
-            plt.xticks([])
 
-            for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
-                plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
-                plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
+            # Plot parameter correlations
+            plt.subplot(2, 2, 3)
+            sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+            plt.title("Parameter Correlations")
+
+            # Plot parallel coordinates for top 10 sets
+            plt.subplot(2, 2, 4)
+            pd.plotting.parallel_coordinates(top_10, 'performance')
+            plt.title("Top 10 Hyperparameter Sets")
+            plt.xticks(rotation=45)
+
         else:
             print(f"Error: 'params' or 'performances' not found in results for {method} search.")
             return
@@ -219,12 +236,37 @@ def visualize_tuning_results(results, method):
             values = [t.value for t in trials if t.value is not None]
             best_value = results['study'].best_value
 
+            # Plot optimization history
+            plt.subplot(2, 2, 1)
             plt.plot(range(1, len(values) + 1), values, marker='o')
             plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
-            plt.title("Bayesian Optimization Results")
+            plt.title("Bayesian Optimization History")
             plt.xlabel("Trial")
             plt.ylabel("Performance")
             plt.legend()
+
+            # Plot parameter importances
+            plt.subplot(2, 2, 2)
+            importances = results['study'].get_param_importances()
+            sns.barplot(x=list(importances.values()), y=list(importances.keys()))
+            plt.title("Parameter Importances")
+            plt.xlabel("Importance")
+
+            # Plot parallel coordinates for top 10 trials
+            plt.subplot(2, 2, 3)
+            top_trials = sorted(trials, key=lambda t: t.value, reverse=True)[:10]
+            top_params = pd.DataFrame([t.params for t in top_trials])
+            top_params['performance'] = [t.value for t in top_trials]
+            pd.plotting.parallel_coordinates(top_params, 'performance')
+            plt.title("Top 10 Trials")
+            plt.xticks(rotation=45)
+
+            # Plot contour plot for top 2 important parameters
+            plt.subplot(2, 2, 4)
+            param_names = list(importances.keys())[:2]
+            results['study'].plot_contour(params=param_names)
+            plt.title(f"Contour Plot: {param_names[0]} vs {param_names[1]}")
+
         else:
             print("Error: 'study' not found in results for Bayesian optimization.")
             return
