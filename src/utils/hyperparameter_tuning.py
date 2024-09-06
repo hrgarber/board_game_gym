@@ -6,11 +6,11 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import optuna
+import optuna.visualization
 import pandas as pd
 import seaborn as sns
 from sklearn.model_selection import KFold
 from tqdm import tqdm
-import optuna.visualization
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -695,8 +695,8 @@ def visualize_tuning_results(results, method):
         method (str): The tuning method used ('grid', 'random', or 'bayesian').
     """
     import matplotlib.pyplot as plt
-    import seaborn as sns
     import pandas as pd
+    import seaborn as sns
 
     plt.figure(figsize=(15, 10))
     sns.set(style="whitegrid")
