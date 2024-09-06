@@ -124,6 +124,7 @@ def plot_training_results(rewards, win_rates, agent_name):
     ax2.set_title(f'{agent_name} Win Rate')
     ax2.set_xlabel('Episode')
     ax2.set_ylabel('Win Rate')
+    ax2.set_ylim(0, 1)  # Set y-axis limits for win rate between 0 and 1
 
     plt.tight_layout()
     plt.show()
