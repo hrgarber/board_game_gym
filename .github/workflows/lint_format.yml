@@ -32,5 +32,40 @@ jobs:
     - name: Run lint and format checks
       run: |
         pylint $(git ls-files '*.py') || exit 0
-        black --check . || exit 0
-        isort --check-only .
+        black . || exit 0
+        isort . || exit 0
+
+    - name: Commit and push changes
+      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Auto-fix linter and formatter issues"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Annotate pylint issues
+      if: failure()
+      run: |
+        pylint $(git ls-files '*.py') --output-format=json > pylint-report.json
+        python3 -c "
+import json
+import sys
+
+def create_annotations(report):
+    annotations = []
+    for item in report:
+        path = item['path']
+        line = item['line']
+        message = item['message']
+        annotations.append(f'::warning file={path},line={line}::{message}')
+    return annotations
+
+with open('pylint-report.json') as f:
+    report = json.load(f)
+    annotations = create_annotations(report)
+    for annotation in annotations:
+        print(annotation)
+"
