@@ -123,15 +123,17 @@ class BoardGameEnv(gym.Env):
         Returns:
             bool: True if the move blocks a winning move, False otherwise.
         """
-        # Temporarily change the player
+        # Temporarily change the player and the board
+        original_player = self.current_player
         self.current_player *= -1
-        self.board[row, col] *= -1
+        original_value = self.board[row, col]
+        self.board[row, col] = self.current_player
         
         blocked = self.check_win(row, col)
         
         # Revert the changes
-        self.current_player *= -1
-        self.board[row, col] *= -1
+        self.current_player = original_player
+        self.board[row, col] = original_value
         
         return blocked
 
@@ -182,11 +184,18 @@ class BoardGameEnv(gym.Env):
 
         Args:
             mode (str): The mode to render with (default is 'human').
+
+        Returns:
+            str: A string representation of the board state.
         """
-        print("  " + " ".join([str(i) for i in range(self.board_size)]))
+        board_str = "  " + " ".join([str(i) for i in range(self.board_size)]) + "\n"
         for i, row in enumerate(self.board):
-            print(f"{i} {' '.join(['X' if cell == 1 else 'O' if cell == -1 else '.' for cell in row])}")
-        print(f"Current player: {'X' if self.current_player == 1 else 'O'}")
+            board_str += f"{i} {' '.join(['X' if cell == 1 else 'O' if cell == -1 else '.' for cell in row])}\n"
+        board_str += f"Current player: {'X' if self.current_player == 1 else 'O'}"
+        
+        if mode == 'human':
+            print(board_str)
+        return board_str
 
     def get_valid_actions(self):
         """

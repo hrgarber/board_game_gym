@@ -10,3 +10,4 @@ pygame==2.6.0
 scikit-optimize==0.10.2
 optuna==4.0.0
 pandas==2.2.2
+seaborn==0.13.2

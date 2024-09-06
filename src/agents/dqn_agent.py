@@ -22,11 +22,12 @@ class DQN(nn.Module):
         return x
 
 class DQNAgent:
-    def __init__(self, state_size, action_size, device, learning_rate=1e-3, discount_factor=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
+    def __init__(self, state_size, action_size, device, learning_rate=1e-3, discount_factor=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32, update_target_every=100):
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
         self.memory = deque(maxlen=10000)
+        self.update_target_every = update_target_every
         self.discount_factor = discount_factor
         self.epsilon = epsilon
         self.epsilon_min = epsilon_min

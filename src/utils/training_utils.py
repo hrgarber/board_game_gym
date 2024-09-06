@@ -56,5 +56,7 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
 
         if isinstance(agent, QLearningAgent):
             agent.decay_epsilon()
+        elif isinstance(agent, DQNAgent):
+            agent.epsilon = max(agent.epsilon_min, agent.epsilon * agent.epsilon_decay)
 
     return rewards, win_rates
