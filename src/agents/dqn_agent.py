@@ -124,3 +124,6 @@ class DQNAgent:
         print("Final update of target model")
         self.update_target_model()  # Ensure the target model is updated at the end of training
 
+        if len(self.memory) > self.batch_size:
+            self.replay(self.batch_size)
+
