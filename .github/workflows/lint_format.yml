@@ -29,42 +29,62 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint black isort
 
-    - name: Run lint and format checks
+    - name: Run pylint
       run: |
-        pylint $(git ls-files '*.py')
-        black .
-        isort .
+        pylint $(git ls-files '*.py') --output-format=parseable --exit-zero > pylint-report.txt
+
+    - name: Annotate pylint issues
+      if: always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('pylint-report.txt', 'utf8');
+          const lines = report.split('\n');
+          for (const line of lines) {
+            const match = line.match(/^(.+):(\d+):(\d+): \[(.)\d+\((.+)\), .+\] (.+)$/);
+            if (match) {
+              const [, file, lineNum, col, severity, code, message] = match;
+              const level = severity === 'E' ? 'error' : 'warning';
+              core.info(`${file}:${lineNum}:${col} [${code}] ${message}`);
+              core.annotate({
+                title: `Pylint [${code}]`,
+                file,
+                startLine: parseInt(lineNum),
+                endLine: parseInt(lineNum),
+                startColumn: parseInt(col),
+                endColumn: parseInt(col),
+                annotationLevel: level,
+                message: message
+              });
+            }
+          }
+
+    - name: Check for linting errors
+      run: |
+        if grep -q "^.*:[0-9]\+:[0-9]\+: \[E" pylint-report.txt; then
+          echo "Linting errors found. Please fix them before proceeding."
+          exit 1
+        fi
+
+    - name: Run black
+      run: black .
+
+    - name: Run isort
+      run: isort .
+
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
 
     - name: Commit and push changes
-      if: github.event_name == 'pull_request' || github.event_name == 'push'
+      if: steps.git-check.outputs.changes == 'true' && (github.event_name == 'pull_request' || github.event_name == 'push')
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
-        git diff-index --quiet HEAD || git commit -m "Auto-fix linter and formatter issues"
+        git commit -m "Auto-fix formatter issues"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Annotate pylint issues
-      if: always()
-      run: |
-        pylint $(git ls-files '*.py') --output-format=json > pylint-report.json
-        python3 -c "
-import json
-
-def create_annotations(report):
-    annotations = []
-    for item in report:
-        path = item['path']
-        line = item['line']
-        message = item['message']
-        annotations.append(f'::warning file={path},line={line}::{message}')
-    return annotations
-
-with open('pylint-report.json') as f:
-    report = json.load(f)
-    annotations = create_annotations(report)
-    for annotation in annotations:
-        print(annotation)
-"
