@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint black isort
+        pip install pylint black[jupyter] isort
 
     - name: Run pylint
       run: |
@@ -70,14 +70,14 @@ jobs:
           exit 1
         fi
 
-    - name: Run black
-      run: black --check .
+    - name: Run black check
+      run: black --check --jupyter .
 
     - name: Run isort
       run: isort --check-only --diff .
 
-    - name: Run black
-      run: black .
+    - name: Run black formatting
+      run: black --jupyter .
 
     - name: Run isort
       run: isort .
