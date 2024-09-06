@@ -71,7 +71,10 @@ class DQNAgent:
         dones = torch.FloatTensor(dones).to(self.device)
 
         current_q_values = self.model(states).gather(1, actions.unsqueeze(1))
-        next_q_values = self.target_model(next_states).max(1)[0].detach()
+        
+        # Double DQN: use online network to select action, target network to evaluate it
+        next_actions = self.model(next_states).max(1)[1].unsqueeze(1)
+        next_q_values = self.target_model(next_states).gather(1, next_actions).squeeze(1).detach()
         target_q_values = rewards + (1 - dones) * self.discount_factor * next_q_values
 
         loss = nn.MSELoss()(current_q_values, target_q_values.unsqueeze(1))
