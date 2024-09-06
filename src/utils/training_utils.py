@@ -17,9 +17,11 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
     Returns:
         list: Episode rewards.
         list: Win rates.
+        list: Losses (only for DQN, empty list for Q-Learning).
     """
     episode_rewards = []
     win_rates = []
+    losses = []
 
     for episode in tqdm(range(num_episodes)):
         state = env.reset()
@@ -34,7 +36,8 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
             else:  # DQNAgent
                 agent.remember(state, action, reward, next_state, done)
                 if len(agent.memory) > batch_size:
-                    agent.replay(batch_size)
+                    loss = agent.replay(batch_size)
+                    losses.append(loss)
 
             state = next_state
             total_reward += reward
@@ -52,4 +55,4 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
         if isinstance(agent, DQNAgent) and episode % update_target_every == 0:
             agent.update_target_model()
 
-    return episode_rewards, win_rates
+    return episode_rewards, win_rates, losses

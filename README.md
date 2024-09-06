@@ -199,3 +199,26 @@ Contributions to improve the project are welcome. Please feel free to submit iss
 ## License
 
 This project is open-source and available under the MIT License.
+
+## In Progress: Agent Evaluation Framework
+
+We are currently working on implementing a comprehensive evaluation framework for Q-Learning and DQN agents. This framework will allow us to assess and compare the performance of these agents after training. Here's our plan:
+
+1. Create a new file `src/utils/agent_evaluation.py` with the following functions:
+   - `evaluate_agent`: Run the agent in the environment without exploration.
+   - `calculate_metrics`: Process evaluation results and calculate performance metrics.
+   - `plot_learning_curve`: Visualize episode rewards over time.
+   - `plot_average_reward`: Visualize average reward per episode.
+   - `plot_loss_curve`: Visualize the loss curve for DQN.
+
+2. Update `src/utils/training_utils.py` to track losses during DQN training.
+
+3. Modify the training notebook to include evaluation and visualization after training.
+
+4. Update `requirements.txt` to include matplotlib if needed.
+
+5. Implement error handling and logging in the new functions.
+
+6. Write unit tests for the new evaluation functions.
+
+This enhancement will provide valuable insights into agent performance and learning progress, facilitating easier comparison between different reinforcement learning approaches.
