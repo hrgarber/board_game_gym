@@ -4,6 +4,7 @@ import itertools
 import numpy as np
 from tqdm import tqdm
 import optuna
+from sklearn.model_selection import KFold
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -14,23 +15,65 @@ from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
 from src.utils.utils import evaluate_agent
 
-def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100):
+def cross_validate(agent_type, params, n_splits=5, num_episodes=1000, eval_episodes=100):
     """
-    Perform grid search for hyperparameter tuning.
+    Perform cross-validation for hyperparameter tuning.
+
+    Args:
+        agent_type (str): Type of agent ('q_learning' or 'dqn').
+        params (dict): Dictionary of hyperparameters.
+        n_splits (int): Number of splits for cross-validation.
+        num_episodes (int): Number of episodes to train for each fold.
+        eval_episodes (int): Number of episodes to evaluate each trained agent.
+
+    Returns:
+        float: Mean performance across all folds.
+    """
+    env = BoardGameEnv()
+    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
+    action_size = env.action_space.n
+
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+    performances = []
+
+    for train_index, val_index in kf.split(range(num_episodes)):
+        if agent_type == 'q_learning':
+            agent = QLearningAgent(state_size, action_size, **params)
+        elif agent_type == 'dqn':
+            agent = DQNAgent(state_size, action_size, **params)
+        else:
+            raise ValueError("Invalid agent type. Choose 'q_learning' or 'dqn'.")
+
+        # Train the agent
+        for episode in train_index:
+            state = env.reset()
+            done = False
+            while not done:
+                action = agent.act(state)
+                next_state, reward, done, _ = env.step(action)
+                agent.update(state, action, reward, next_state, done)
+                state = next_state
+
+        # Evaluate the agent
+        performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
+        performances.append(performance)
+
+    return np.mean(performances)
+
+def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_splits=5):
+    """
+    Perform grid search for hyperparameter tuning with cross-validation.
 
     Args:
         agent_type (str): Type of agent ('q_learning' or 'dqn').
         param_grid (dict): Dictionary of parameters and their possible values.
         num_episodes (int): Number of episodes to train for each combination.
         eval_episodes (int): Number of episodes to evaluate each trained agent.
+        n_splits (int): Number of splits for cross-validation.
 
     Returns:
         dict: Results of the grid search, including all parameter combinations and their performances.
     """
-    env = BoardGameEnv()
-    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
-    action_size = env.action_space.n
-
     results = {
         "params": [],
         "performances": []
@@ -40,25 +83,7 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100):
     for params in tqdm(param_combinations, desc="Grid Search Progress"):
         param_dict = dict(zip(param_grid.keys(), params))
         
-        if agent_type == 'q_learning':
-            agent = QLearningAgent(state_size, action_size, **param_dict)
-        elif agent_type == 'dqn':
-            agent = DQNAgent(state_size, action_size, **param_dict)
-        else:
-            raise ValueError("Invalid agent type. Choose 'q_learning' or 'dqn'.")
-
-        # Train the agent
-        for _ in range(num_episodes):
-            state = env.reset()
-            done = False
-            while not done:
-                action = agent.act(state)
-                next_state, reward, done, _ = env.step(action)
-                agent.update(state, action, reward, next_state, done)
-                state = next_state
-
-        # Evaluate the agent
-        performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
+        performance = cross_validate(agent_type, param_dict, n_splits, num_episodes, eval_episodes)
 
         results["params"].append(param_dict)
         results["performances"].append(performance)
@@ -69,9 +94,9 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100):
 
     return results
 
-def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=1000, eval_episodes=100):
+def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=1000, eval_episodes=100, n_splits=5):
     """
-    Perform random search for hyperparameter tuning.
+    Perform random search for hyperparameter tuning with cross-validation.
 
     Args:
         agent_type (str): Type of agent ('q_learning' or 'dqn').
@@ -79,14 +104,11 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
         num_iterations (int): Number of random combinations to try.
         num_episodes (int): Number of episodes to train for each combination.
         eval_episodes (int): Number of episodes to evaluate each trained agent.
+        n_splits (int): Number of splits for cross-validation.
 
     Returns:
         dict: Results of the random search, including all parameter combinations and their performances.
     """
-    env = BoardGameEnv()
-    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
-    action_size = env.action_space.n
-
     results = {
         "params": [],
         "performances": []
@@ -95,25 +117,7 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
     for _ in tqdm(range(num_iterations), desc="Random Search Progress"):
         param_dict = {k: np.random.uniform(v[0], v[1]) for k, v in param_ranges.items()}
         
-        if agent_type == 'q_learning':
-            agent = QLearningAgent(state_size, action_size, **param_dict)
-        elif agent_type == 'dqn':
-            agent = DQNAgent(state_size, action_size, **param_dict)
-        else:
-            raise ValueError("Invalid agent type. Choose 'q_learning' or 'dqn'.")
-
-        # Train the agent
-        for _ in range(num_episodes):
-            state = env.reset()
-            done = False
-            while not done:
-                action = agent.act(state)
-                next_state, reward, done, _ = env.step(action)
-                agent.update(state, action, reward, next_state, done)
-                state = next_state
-
-        # Evaluate the agent
-        performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
+        performance = cross_validate(agent_type, param_dict, n_splits, num_episodes, eval_episodes)
 
         results["params"].append(param_dict)
         results["performances"].append(performance)
@@ -124,9 +128,9 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
 
     return results
 
-def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1000, eval_episodes=100):
+def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1000, eval_episodes=100, n_splits=5):
     """
-    Perform Bayesian optimization for hyperparameter tuning using Optuna.
+    Perform Bayesian optimization for hyperparameter tuning using Optuna with cross-validation.
 
     Args:
         agent_type (str): Type of agent ('q_learning' or 'dqn').
@@ -134,14 +138,11 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
         n_trials (int): Number of trials for optimization.
         num_episodes (int): Number of episodes to train for each trial.
         eval_episodes (int): Number of episodes to evaluate each trained agent.
+        n_splits (int): Number of splits for cross-validation.
 
     Returns:
         dict: Results of the Bayesian optimization, including the study object and best parameters.
     """
-    env = BoardGameEnv()
-    state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
-    action_size = env.action_space.n
-
     def objective(trial):
         params = {
             'learning_rate': trial.suggest_loguniform('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1]),
@@ -153,25 +154,7 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
         if agent_type == 'dqn':
             params['batch_size'] = trial.suggest_int('batch_size', param_ranges['batch_size'][0], param_ranges['batch_size'][1])
 
-        if agent_type == 'q_learning':
-            agent = QLearningAgent(state_size, action_size, **params)
-        elif agent_type == 'dqn':
-            agent = DQNAgent(state_size, action_size, **params)
-        else:
-            raise ValueError("Invalid agent type. Choose 'q_learning' or 'dqn'.")
-
-        # Train the agent
-        for _ in range(num_episodes):
-            state = env.reset()
-            done = False
-            while not done:
-                action = agent.act(state)
-                next_state, reward, done, _ = env.step(action)
-                agent.update(state, action, reward, next_state, done)
-                state = next_state
-
-        # Evaluate the agent
-        performance = evaluate_agent(env, agent, num_episodes=eval_episodes)
+        performance = cross_validate(agent_type, params, n_splits, num_episodes, eval_episodes)
         return performance
 
     study = optuna.create_study(direction='maximize')
