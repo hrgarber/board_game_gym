@@ -71,16 +71,6 @@ def cross_validate(agent_type, params, n_splits=5, num_episodes=1000, eval_episo
 def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_splits=5):
     """
     Perform grid search for hyperparameter tuning with cross-validation.
-
-    Args:
-        agent_type (str): Type of agent ('q_learning' or 'dqn').
-        param_grid (dict): Dictionary of parameters and their possible values.
-        num_episodes (int): Number of episodes to train for each combination.
-        eval_episodes (int): Number of episodes to evaluate each trained agent.
-        n_splits (int): Number of splits for cross-validation.
-
-    Returns:
-        dict: Results of the grid search, including all parameter combinations and their performances.
     """
     logging.info(f"Starting grid search for {agent_type} agent")
     results = {
@@ -91,12 +81,9 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_
     param_combinations = list(itertools.product(*param_grid.values()))
     for params in tqdm(param_combinations, desc="Grid Search Progress"):
         param_dict = dict(zip(param_grid.keys(), params))
-        
         performance = cross_validate(agent_type, param_dict, n_splits, num_episodes, eval_episodes)
-
         results["params"].append(param_dict)
         results["performances"].append(performance)
-        logging.info(f"Parameters: {param_dict}, Performance: {performance}")
 
     best_idx = np.argmax(results["performances"])
     results["best_params"] = results["params"][best_idx]
