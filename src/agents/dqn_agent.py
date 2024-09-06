@@ -8,6 +8,7 @@ import random
 class DQN(nn.Module):
     def __init__(self, state_size, action_size):
         super(DQN, self).__init__()
+        assert state_size == 64, f"Unexpected state_size: {state_size}, should be 64."
         self.fc1 = nn.Linear(state_size, 128)
         self.fc2 = nn.Linear(128, 128)
         self.fc3 = nn.Linear(128, action_size)
@@ -15,10 +16,12 @@ class DQN(nn.Module):
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
-        return self.fc3(x)
+        x = self.fc3(x)
+        return x
 
 class DQNAgent:
     def __init__(self, state_size, action_size, device, learning_rate=1e-3, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995, batch_size=32):
+        assert state_size == 64, f"Unexpected state_size: {state_size}, should be 64."
         self.state_size = state_size
         self.action_size = action_size
         self.device = device
@@ -43,14 +46,13 @@ class DQNAgent:
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             return random.randrange(self.action_size)
-        state = torch.FloatTensor(state).unsqueeze(0).to(self.device) # Ensure correct shape
+        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)  # Ensure correct shape
         act_values = self.model(state)
         return np.argmax(act_values.cpu().data.numpy(), axis=1)[0]
 
     def replay(self, batch_size):
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
-
         states = torch.FloatTensor(np.array(states)).to(self.device)
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
@@ -65,7 +67,6 @@ class DQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 

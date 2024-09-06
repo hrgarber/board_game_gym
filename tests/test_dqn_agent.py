@@ -6,6 +6,8 @@ import os
 class TestDQNAgent(TestCase):
     def setUp(self):
         super().setUp()
+        self.state_size = 64  # Ensuring consistent state_size
+        self.action_size = 64   # Ensuring consistent action_size
         self.agent = self.create_dqn_agent()
 
     def test_dqn_initialization(self):
@@ -28,6 +30,7 @@ class TestDQNAgent(TestCase):
     def test_act(self):
         state = np.random.rand(self.state_size)
         action = self.agent.act(state)
+        print(f"Action: {action}")  # Debug print
         self.assert_valid_action(action)
 
     def test_replay(self):
@@ -81,3 +84,4 @@ class TestDQNAgent(TestCase):
 if __name__ == '__main__':
     from unittest import main
     main()
+

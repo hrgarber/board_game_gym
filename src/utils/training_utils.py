@@ -23,18 +23,19 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
 
     for episode in tqdm(range(num_episodes)):
         state = env.reset()
+        assert state.shape[0] == 64, f"Unexpected state shape: {state.shape[0]}, should be 64."
         total_reward = 0
         for step in range(max_steps):
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
-            
+
             if isinstance(agent, QLearningAgent):
                 agent.update_q_value(state, action, reward, next_state)
             else:  # DQNAgent
                 agent.remember(state, action, reward, next_state, done)
                 if len(agent.memory) > batch_size:
                     agent.replay(batch_size)
-            
+
             state = next_state
             total_reward += reward
 
@@ -42,7 +43,7 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
                 break
 
         episode_rewards.append(total_reward)
-        
+
         # Calculate win rate every 100 episodes
         if episode % 100 == 0:
             win_rate = evaluate_agent(env, agent)
