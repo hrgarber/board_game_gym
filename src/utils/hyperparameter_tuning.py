@@ -733,7 +733,9 @@ def visualize_tuning_results(results, method):
             plt.xticks(rotation=45)
 
         else:
-            print(f"Error: 'params' or 'performances' not found in results for {method} search.")
+            print(
+                f"Error: 'params' or 'performances' not found in results for {method} search."
+            )
             return
 
     elif method == "bayesian":
@@ -763,7 +765,9 @@ def visualize_tuning_results(results, method):
                 print("Error: No trials found in the study for Bayesian optimization.")
                 return
         else:
-            print("Error: 'study' not found or is None in results for Bayesian optimization.")
+            print(
+                "Error: 'study' not found or is None in results for Bayesian optimization."
+            )
             return
     else:
         print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")

@@ -46,12 +46,12 @@ def main():
     tuning_methods = {
         "grid": grid_search,
         "random": random_search,
-        "bayesian": bayesian_optimization
+        "bayesian": bayesian_optimization,
     }
 
     results = tuning_methods[args.method](
         args.agent,
-        config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"]
+        config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"],
     )
 
     output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
@@ -70,7 +70,7 @@ from typing import Dict, Any
 from src.utils.hyperparameter_tuning import (
     bayesian_optimization,
     grid_search,
-    random_search
+    random_search,
 )
 
 
@@ -111,12 +111,12 @@ def main():
     tuning_methods = {
         "grid": grid_search,
         "random": random_search,
-        "bayesian": bayesian_optimization
+        "bayesian": bayesian_optimization,
     }
 
     results = tuning_methods[args.method](
         args.agent,
-        config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"]
+        config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"],
     )
 
     output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")

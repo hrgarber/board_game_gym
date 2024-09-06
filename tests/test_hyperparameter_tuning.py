@@ -112,9 +112,12 @@ import numpy as np
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
-from src.utils.hyperparameter_tuning import (bayesian_optimization,
-                                             grid_search, random_search,
-                                             visualize_tuning_results)
+from src.utils.hyperparameter_tuning import (
+    bayesian_optimization,
+    grid_search,
+    random_search,
+    visualize_tuning_results,
+)
 
 
 class TestHyperparameterTuning(unittest.TestCase):
