@@ -342,62 +342,6 @@ if __name__ == "__main__":
     dqn_bayesian_results = bayesian_optimization('dqn', dqn_param_ranges)
     print(dqn_bayesian_results)
     visualize_tuning_results(dqn_bayesian_results, 'bayesian')
-    """
-    Visualize the results of hyperparameter tuning.
-
-    Args:
-        results (dict): Dictionary containing tuning results.
-        method (str): The tuning method used ('grid', 'random', or 'bayesian').
-    """
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-
-    plt.figure(figsize=(12, 6))
-    sns.set(style="whitegrid")
-
-    if method in ['grid', 'random']:
-        data = [(params, perf) for params, perf in zip(results['params'], results['performances'])]
-        data.sort(key=lambda x: x[1], reverse=True)
-        params, performances = zip(*data)
-
-        plt.bar(range(len(performances)), performances)
-        plt.title(f"{method.capitalize()} Search Results")
-        plt.xlabel("Hyperparameter Set")
-        plt.ylabel("Performance")
-        plt.xticks([])
-
-        for i, (param, perf) in enumerate(zip(params[:5], performances[:5])):
-            plt.text(i, perf, f"{perf:.3f}", ha='center', va='bottom')
-            plt.text(i, 0, str(param), ha='center', va='top', rotation=90, fontsize=8)
-
-    elif method == 'bayesian':
-        if 'study' in results and results['study'] is not None:
-            study = results['study']
-            trials = study.trials
-            values = [t.value for t in trials if t.value is not None]
-            best_value = study.best_value
-
-            plt.plot(range(1, len(values) + 1), values, marker='o')
-            plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
-            plt.title("Bayesian Optimization Results")
-            plt.xlabel("Trial")
-            plt.ylabel("Performance")
-            plt.legend()
-
-            # Plot parameter importances
-            plt.figure(figsize=(10, 6))
-            importances = optuna.importance.get_param_importances(study)
-            plt.bar(importances.keys(), importances.values())
-            plt.title("Parameter Importances")
-            plt.xlabel("Parameter")
-            plt.ylabel("Importance")
-            plt.xticks(rotation=45)
-        else:
-            print("Error: 'study' not found or is None in results for Bayesian optimization.")
-            return
-
-    plt.tight_layout()
-    plt.show()
 
 if __name__ == "__main__":
     q_learning_param_grid = {
