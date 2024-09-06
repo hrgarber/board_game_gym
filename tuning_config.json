@@ -1,0 +1,32 @@
+{
+  "q_learning": {
+    "param_grid": {
+      "learning_rate": [0.001, 0.01, 0.1],
+      "discount_factor": [0.9, 0.95, 0.99],
+      "epsilon": [0.1, 0.2, 0.3],
+      "epsilon_decay": [0.99, 0.995, 0.999]
+    },
+    "param_ranges": {
+      "learning_rate": [0.001, 0.1],
+      "discount_factor": [0.9, 0.99],
+      "epsilon": [0.1, 0.5],
+      "epsilon_decay": [0.99, 0.9999]
+    }
+  },
+  "dqn": {
+    "param_grid": {
+      "learning_rate": [0.001, 0.01, 0.1],
+      "discount_factor": [0.9, 0.95, 0.99],
+      "epsilon": [0.1, 0.2, 0.3],
+      "epsilon_decay": [0.99, 0.995, 0.999],
+      "batch_size": [32, 64, 128]
+    },
+    "param_ranges": {
+      "learning_rate": [0.001, 0.1],
+      "discount_factor": [0.9, 0.99],
+      "epsilon": [0.1, 0.5],
+      "epsilon_decay": [0.99, 0.9999],
+      "batch_size": [32, 256]
+    }
+  }
+}
