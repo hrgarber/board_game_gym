@@ -2,6 +2,9 @@ name: Lint and Format
 
 on: [push, pull_request]
 
+permissions:
+  contents: write
+
 jobs:
   lint-and-format:
     runs-on: ubuntu-latest

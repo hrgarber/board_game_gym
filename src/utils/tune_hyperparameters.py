@@ -54,8 +54,11 @@ def main():
         config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"]
     )
 
-    save_results(results, args.output)
-    print(f"Tuning completed. Results saved to {args.output}")
+    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, args.output)
+    save_results(results, output_file)
+    print(f"Tuning completed. Results saved to {output_file}")
 
 
 if __name__ == "__main__":
