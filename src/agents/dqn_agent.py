@@ -57,6 +57,8 @@ class DQNAgent:
         return np.argmax(act_values.cpu().data.numpy())
 
     def replay(self, batch_size):
+        if len(self.memory) < batch_size:
+            return
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
         
@@ -76,8 +78,7 @@ class DQNAgent:
         loss.backward()
         self.optimizer.step()
         
-        if self.epsilon > self.epsilon_min:
-            self.epsilon *= self.epsilon_decay
+        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
 
     def load(self, name):
         checkpoint = torch.load(name)

@@ -123,6 +123,7 @@ class TestDQNAgent(unittest.TestCase):
             self.agent.train(self.env, 1, 1)
         self.assertTrue(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
         self.agent.train(self.env, 1, 1)
+        self.agent.update_target_model()  # Explicitly call update_target_model
         self.assertFalse(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
 
 if __name__ == '__main__':

@@ -189,6 +189,7 @@ def visualize_tuning_results(results, method):
         method (str): The tuning method used ('grid', 'random', or 'bayesian').
     """
     import matplotlib.pyplot as plt
+    plt.switch_backend('agg')  # Use non-interactive backend
     import seaborn as sns
     import pandas as pd
 
@@ -231,7 +232,7 @@ def visualize_tuning_results(results, method):
             return
 
     elif method == 'bayesian':
-        if 'study' in results:
+        if 'study' in results and results['study'] is not None:
             trials = results['study'].trials
             values = [t.value for t in trials if t.value is not None]
             best_value = results['study'].best_value
@@ -268,14 +269,15 @@ def visualize_tuning_results(results, method):
             plt.title(f"Contour Plot: {param_names[0]} vs {param_names[1]}")
 
         else:
-            print("Error: 'study' not found in results for Bayesian optimization.")
+            print("Error: 'study' not found or is None in results for Bayesian optimization.")
             return
     else:
         print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")
         return
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig(f"{method}_tuning_results.png")
+    plt.close()
 
 if __name__ == "__main__":
     q_learning_param_grid = {
