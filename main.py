@@ -12,6 +12,7 @@ from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import load_latest_model
+from src.utils.tune_hyperparameters import tune_hyperparameters  # Add this line
 
 
 def play_game(agent, env):
