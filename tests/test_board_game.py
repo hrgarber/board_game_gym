@@ -55,6 +55,11 @@ class TestBoardGameEnv(TestCase):
         self.env.board = np.zeros((self.env.board_size, self.env.board_size))
         self.env.board[0, :4] = -1  # Opponent's pieces
         self.assertTrue(self.env.check_blocking_move(0, 4))
+        
+        # Test blocking a potential win
+        self.env.board = np.zeros((self.env.board_size, self.env.board_size))
+        self.env.board[0, :4] = 1
+        self.assertTrue(self.env.check_blocking_move(0, 4))
 
     def test_check_line(self):
         self.env.board[0, :4] = 1

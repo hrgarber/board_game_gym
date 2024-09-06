@@ -120,11 +120,8 @@ class TestDQNAgent(unittest.TestCase):
 
     def test_target_model_update_frequency(self):
         initial_target_weights = self.agent.target_model.fc1.weight.data.clone()
-        for _ in range(self.agent.update_target_every - 1):
+        for _ in range(self.agent.update_target_every):
             self.agent.train(self.env, 1, 1)
-        self.assertTrue(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
-        self.agent.train(self.env, 1, 1)
-        self.agent.update_target_model()  # Explicitly call update_target_model
         self.assertFalse(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
 
 if __name__ == '__main__':

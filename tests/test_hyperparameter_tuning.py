@@ -148,10 +148,17 @@ class TestHyperparameterTuning(unittest.TestCase):
             'performances': [0.55, 0.65]
         }
         bayesian_results = {
-            'study': None,  # Mock study object
+            'study': optuna.create_study(direction='maximize'),
             'best_params': {'learning_rate': 0.075},
             'best_performance': 0.7
         }
+        
+        # Add a trial to the study
+        bayesian_results['study'].add_trial(optuna.trial.create_trial(
+            params={'learning_rate': 0.075},
+            distributions={'learning_rate': optuna.distributions.UniformDistribution(0.001, 0.1)},
+            value=0.7
+        ))
 
         # Test visualization functions
         try:

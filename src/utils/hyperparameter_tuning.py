@@ -223,41 +223,30 @@ def visualize_tuning_results(results, method):
 
     elif method == 'bayesian':
         if 'study' in results and results['study'] is not None:
-            trials = results['study'].trials
-            values = [t.value for t in trials if t.value is not None]
-            best_value = results['study'].best_value
+            study = results['study']
+            if len(study.trials) > 0:
+                # Plot optimization history
+                plt.subplot(2, 2, 1)
+                optuna.visualization.plot_optimization_history(study)
+                plt.title("Bayesian Optimization History")
 
-            # Plot optimization history
-            plt.subplot(2, 2, 1)
-            plt.plot(range(1, len(values) + 1), values, marker='o')
-            plt.axhline(y=best_value, color='r', linestyle='--', label='Best Value')
-            plt.title("Bayesian Optimization History")
-            plt.xlabel("Trial")
-            plt.ylabel("Performance")
-            plt.legend()
+                # Plot parameter importances
+                plt.subplot(2, 2, 2)
+                optuna.visualization.plot_param_importances(study)
+                plt.title("Parameter Importances")
 
-            # Plot parameter importances
-            plt.subplot(2, 2, 2)
-            importances = results['study'].get_param_importances()
-            sns.barplot(x=list(importances.values()), y=list(importances.keys()))
-            plt.title("Parameter Importances")
-            plt.xlabel("Importance")
+                # Plot parallel coordinates
+                plt.subplot(2, 2, 3)
+                optuna.visualization.plot_parallel_coordinate(study)
+                plt.title("Parallel Coordinate Plot")
 
-            # Plot parallel coordinates for top 10 trials
-            plt.subplot(2, 2, 3)
-            top_trials = sorted(trials, key=lambda t: t.value, reverse=True)[:10]
-            top_params = pd.DataFrame([t.params for t in top_trials])
-            top_params['performance'] = [t.value for t in top_trials]
-            pd.plotting.parallel_coordinates(top_params, 'performance')
-            plt.title("Top 10 Trials")
-            plt.xticks(rotation=45)
-
-            # Plot contour plot for top 2 important parameters
-            plt.subplot(2, 2, 4)
-            param_names = list(importances.keys())[:2]
-            results['study'].plot_contour(params=param_names)
-            plt.title(f"Contour Plot: {param_names[0]} vs {param_names[1]}")
-
+                # Plot slice plot
+                plt.subplot(2, 2, 4)
+                optuna.visualization.plot_slice(study)
+                plt.title("Slice Plot")
+            else:
+                print("Error: No trials found in the study for Bayesian optimization.")
+                return
         else:
             print("Error: 'study' not found or is None in results for Bayesian optimization.")
             return
