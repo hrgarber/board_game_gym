@@ -1,6 +1,7 @@
 from tests.test_utils import TestCase
 import numpy as np
-from src.utils.utils import evaluate_agent, plot_training_results
+from src.utils.utils import evaluate_agent, plot_training_results, compare_agents, plot_agent_comparison
+from src.utils.training_utils import train_agent
 import matplotlib.pyplot as plt
 
 class TestTraining(TestCase):
@@ -99,13 +100,28 @@ class TestTraining(TestCase):
         q_win_rate, dqn_win_rate = 0.6, 0.7
         
         # Mock plt.show to avoid displaying the plot during testing
-        import matplotlib.pyplot as plt
         plt.show = lambda: None
 
         try:
             plot_agent_comparison(q_win_rate, dqn_win_rate)
         except Exception as e:
             self.fail(f"plot_agent_comparison raised an exception: {e}")
+
+    def test_train_agent(self):
+        num_episodes = 10
+        max_steps = 100
+        batch_size = 32
+        update_target_every = 5
+
+        # Test Q-Learning agent training
+        q_rewards, q_win_rates = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        self.assertEqual(len(q_rewards), num_episodes)
+        self.assertEqual(len(q_win_rates), num_episodes // 100 + 1)
+
+        # Test DQN agent training
+        dqn_rewards, dqn_win_rates = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        self.assertEqual(len(dqn_rewards), num_episodes)
+        self.assertEqual(len(dqn_win_rates), num_episodes // 100 + 1)
 
 if __name__ == "__main__":
     from unittest import main

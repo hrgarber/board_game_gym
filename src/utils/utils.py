@@ -170,50 +170,24 @@ def plot_version_comparison(env, models_dir):
     plt.legend()
     plt.show()
 
-
-def evaluate_agent(env, agent, num_episodes=100):
-    """
-    Evaluate an agent's performance over a number of episodes.
+def play_test_game(env, agent, agent_name):
+    """Play a test game using the trained agent.
 
     Args:
-        env: The game environment.
-        agent: The agent to evaluate.
-        num_episodes (int): The number of episodes to evaluate over.
-
-    Returns:
-        float: The win rate of the agent.
+        env (BoardGameEnv): The game environment.
+        agent (QLearningAgent or DQNAgent): The trained agent.
+        agent_name (str): The name of the agent (for display purposes).
     """
-    wins = 0
-    for _ in range(num_episodes):
-        state = env.reset()
-        done = False
-        while not done:
-            action = agent.act(state)
-            state, reward, done, _ = env.step(action)
-            if reward == 1:
-                wins += 1
-    return wins / num_episodes
+    state = env.reset()
+    done = False
+    total_reward = 0
 
-def load_latest_model(agent, models_dir):
-    """
-    Load the latest model for the given agent from the models directory.
+    print(f"\nPlaying a test game with {agent_name} agent:")
+    while not done:
+        env.render()
+        action = agent.act(state)
+        state, reward, done, _ = env.step(action)
+        total_reward += reward
 
-    Args:
-        agent: The agent (either DQNAgent or QLearningAgent) to load the model for.
-        models_dir (str): The directory containing the saved models.
-    """
-    if isinstance(agent, DQNAgent):
-        model_files = [f for f in os.listdir(models_dir) if f.endswith('.pth')]
-    else:
-        model_files = [f for f in os.listdir(models_dir) if f.endswith('.json')]
-
-    if model_files:
-        latest_model = max(model_files, key=lambda x: int(x.split('_v')[1].split('.')[0]))
-        model_path = os.path.join(models_dir, latest_model)
-        if isinstance(agent, DQNAgent):
-            agent.load(model_path)
-        else:
-            agent.load_model(model_path)
-        print(f"Loaded model: {latest_model}")
-    else:
-        print("No saved models found.")
+    env.render()
+    print(f"Game over. Total reward: {total_reward}")
