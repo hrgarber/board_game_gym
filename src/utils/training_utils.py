@@ -17,20 +17,15 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
         update_target_every (int): Number of episodes between target network updates for DQN (ignored for Q-Learning).
 
     Returns:
-        dict: Training statistics including episode rewards, win rates, losses, and average Q-values.
+        tuple: A tuple containing two lists (rewards, win_rates).
     """
-    stats = {
-        'episode_rewards': [],
-        'win_rates': [],
-        'losses': [],
-        'avg_q_values': [],
-    }
+    rewards = []
+    win_rates = []
 
     for episode in tqdm(range(num_episodes)):
         state = env.reset()
         assert state.shape[0] == 64, f"Unexpected state shape: {state.shape[0]}, should be 64."
         total_reward = 0
-        episode_q_values = []
 
         for step in range(max_steps):
             action = agent.act(state)
@@ -38,15 +33,10 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
 
             if isinstance(agent, QLearningAgent):
                 agent.update_q_value(state, action, reward, next_state)
-                q_value = agent.get_q_value(state, action)
-                episode_q_values.append(q_value)
             else:  # DQNAgent
                 agent.remember(state, action, reward, next_state, done)
                 if len(agent.memory) > batch_size:
-                    loss = agent.replay(batch_size)
-                    stats['losses'].append(loss)
-                q_values = agent.model(torch.FloatTensor(state).unsqueeze(0).to(agent.device)).detach().cpu().numpy()
-                episode_q_values.append(np.mean(q_values))
+                    agent.replay(batch_size)
 
             state = next_state
             total_reward += reward
@@ -54,13 +44,12 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
             if done:
                 break
 
-        stats['episode_rewards'].append(total_reward)
-        stats['avg_q_values'].append(np.mean(episode_q_values))
+        rewards.append(total_reward)
 
         # Calculate win rate every 100 episodes
         if episode % 100 == 0:
             win_rate = evaluate_agent(env, agent)
-            stats['win_rates'].append(win_rate)
+            win_rates.append(win_rate)
 
         if isinstance(agent, DQNAgent) and episode % update_target_every == 0:
             agent.update_target_model()
@@ -68,4 +57,4 @@ def train_agent(env, agent, num_episodes, max_steps, batch_size=None, update_tar
         if isinstance(agent, QLearningAgent):
             agent.decay_epsilon()
 
-    return stats
+    return rewards, win_rates

@@ -42,13 +42,18 @@ class TestNotebookCode(unittest.TestCase):
         batch_size = 4
         update_target_every = 5
 
-        q_rewards, q_win_rates = train_agent(self.env, q_agent, num_episodes, max_steps)
-        dqn_rewards, dqn_win_rates = train_agent(self.env, dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        q_results = train_agent(self.env, q_agent, num_episodes, max_steps)
+        dqn_results = train_agent(self.env, dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
         
-        self.assertIsInstance(q_rewards, list)
-        self.assertIsInstance(q_win_rates, list)
-        self.assertIsInstance(dqn_rewards, list)
-        self.assertIsInstance(dqn_win_rates, list)
+        self.assertIsInstance(q_results, tuple)
+        self.assertEqual(len(q_results), 2)
+        self.assertIsInstance(q_results[0], list)
+        self.assertIsInstance(q_results[1], list)
+        
+        self.assertIsInstance(dqn_results, tuple)
+        self.assertEqual(len(dqn_results), 2)
+        self.assertIsInstance(dqn_results[0], list)
+        self.assertIsInstance(dqn_results[1], list)
 
     def test_evaluate_agent(self):
         q_agent = QLearningAgent(self.state_size, self.action_size)

@@ -114,14 +114,18 @@ class TestTraining(TestCase):
         update_target_every = 5
 
         # Test Q-Learning agent training
-        q_rewards, q_win_rates = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
-        self.assertEqual(len(q_rewards), num_episodes)
-        self.assertEqual(len(q_win_rates), num_episodes // 100 + 1)
+        q_results = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        self.assertIsInstance(q_results, tuple)
+        self.assertEqual(len(q_results), 2)
+        self.assertEqual(len(q_results[0]), num_episodes)
+        self.assertEqual(len(q_results[1]), num_episodes // 100 + 1)
 
         # Test DQN agent training
-        dqn_rewards, dqn_win_rates = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
-        self.assertEqual(len(dqn_rewards), num_episodes)
-        self.assertEqual(len(dqn_win_rates), num_episodes // 100 + 1)
+        dqn_results = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        self.assertIsInstance(dqn_results, tuple)
+        self.assertEqual(len(dqn_results), 2)
+        self.assertEqual(len(dqn_results[0]), num_episodes)
+        self.assertEqual(len(dqn_results[1]), num_episodes // 100 + 1)
 
 if __name__ == "__main__":
     from unittest import main
