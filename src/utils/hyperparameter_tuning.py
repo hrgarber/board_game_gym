@@ -290,3 +290,62 @@ def visualize_tuning_results(results, method):
     plt.show()
 
 if __name__ == "__main__":
+    q_learning_param_grid = {
+        'learning_rate': [0.001, 0.01, 0.1],
+        'discount_factor': [0.9, 0.95, 0.99],
+        'epsilon': [0.1, 0.2, 0.3],
+        'epsilon_decay': [0.99, 0.995, 0.999]
+    }
+
+    dqn_param_grid = {
+        'learning_rate': [0.001, 0.01, 0.1],
+        'discount_factor': [0.9, 0.95, 0.99],
+        'epsilon': [0.1, 0.2, 0.3],
+        'epsilon_decay': [0.99, 0.995, 0.999],
+        'batch_size': [32, 64, 128]
+    }
+
+    print("Grid Search for Q-Learning:")
+    q_learning_results = grid_search('q_learning', q_learning_param_grid)
+    print(q_learning_results)
+    visualize_tuning_results(q_learning_results, 'grid')
+
+    print("\nGrid Search for DQN:")
+    dqn_results = grid_search('dqn', dqn_param_grid)
+    print(dqn_results)
+    visualize_tuning_results(dqn_results, 'grid')
+
+    q_learning_param_ranges = {
+        'learning_rate': (0.001, 0.1),
+        'discount_factor': (0.9, 0.99),
+        'epsilon': (0.1, 0.5),
+        'epsilon_decay': (0.99, 0.9999)
+    }
+
+    dqn_param_ranges = {
+        'learning_rate': (0.001, 0.1),
+        'discount_factor': (0.9, 0.99),
+        'epsilon': (0.1, 0.5),
+        'epsilon_decay': (0.99, 0.9999),
+        'batch_size': (32, 256)
+    }
+
+    print("\nRandom Search for Q-Learning:")
+    q_learning_random_results = random_search('q_learning', q_learning_param_ranges)
+    print(q_learning_random_results)
+    visualize_tuning_results(q_learning_random_results, 'random')
+
+    print("\nRandom Search for DQN:")
+    dqn_random_results = random_search('dqn', dqn_param_ranges)
+    print(dqn_random_results)
+    visualize_tuning_results(dqn_random_results, 'random')
+
+    print("\nBayesian Optimization for Q-Learning:")
+    q_learning_bayesian_results = bayesian_optimization('q_learning', q_learning_param_ranges)
+    print(q_learning_bayesian_results)
+    visualize_tuning_results(q_learning_bayesian_results, 'bayesian')
+
+    print("\nBayesian Optimization for DQN:")
+    dqn_bayesian_results = bayesian_optimization('dqn', dqn_param_ranges)
+    print(dqn_bayesian_results)
+    visualize_tuning_results(dqn_bayesian_results, 'bayesian')
