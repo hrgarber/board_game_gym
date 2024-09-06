@@ -7,4 +7,5 @@ tqdm
 gym
 torch
 pygame
-matplotlib
+scikit-optimize
+optuna
