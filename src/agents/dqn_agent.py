@@ -82,8 +82,10 @@ class DQNAgent:
         loss.backward()
         self.optimizer.step()
         
-        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
         return loss.item()  # Return the loss value for monitoring
+
+    def decay_epsilon(self):
+        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
 
     def load(self, name):
         checkpoint = torch.load(name)
@@ -112,9 +114,13 @@ class DQNAgent:
                 state = next_state
                 if done:
                     break
-            if episode % self.update_target_every == 0:
-                print(f"Updating target model at episode {episode}")
+            
+            self.decay_epsilon()
+            
+            if (episode + 1) % self.update_target_every == 0:
+                print(f"Updating target model at episode {episode + 1}")
                 self.update_target_model()
+        
         print("Final update of target model")
         self.update_target_model()  # Ensure the target model is updated at the end of training
 

@@ -132,6 +132,16 @@ class BoardGameEnv(gym.Env):
         blocked_win = self.check_win(row, col)
         blocked_line_of_4 = self.check_line(row, col, 4)
         
+        # Check for potential winning moves in all directions
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for dr, dc in directions:
+            for i in range(-4, 1):  # Check 5 positions in each direction
+                r, c = row + i * dr, col + i * dc
+                if 0 <= r < self.board_size and 0 <= c < self.board_size:
+                    if self.check_win(r, c):
+                        blocked_win = True
+                        break
+        
         # Revert the changes
         self.current_player = original_player
         self.board[row, col] = original_value
