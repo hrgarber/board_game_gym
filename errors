@@ -30,3 +30,4 @@ Next steps:
 2. Fix the issues in the order listed above, starting with the BoardGameEnv class.
 3. Re-run tests after each fix to ensure the issue is resolved and no new issues are introduced.
 4. If any issues persist, perform more in-depth debugging and possibly add logging to track the problematic values.
+5. After fixing all issues, conduct a thorough review of the entire codebase to ensure no new issues have been introduced and all components are working as expected.
