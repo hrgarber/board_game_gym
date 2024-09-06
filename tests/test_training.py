@@ -127,6 +127,42 @@ class TestTraining(TestCase):
         self.assertEqual(len(dqn_results[0]), num_episodes)
         self.assertEqual(len(dqn_results[1]), num_episodes // 100 + 1)
 
+    def test_training_improvement(self):
+        num_episodes = 100
+        max_steps = 100
+        batch_size = 32
+        update_target_every = 5
+
+        # Train Q-Learning agent
+        q_results = train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        q_initial_performance = np.mean(q_results[0][:10])
+        q_final_performance = np.mean(q_results[0][-10:])
+        self.assertGreater(q_final_performance, q_initial_performance)
+
+        # Train DQN agent
+        dqn_results = train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        dqn_initial_performance = np.mean(dqn_results[0][:10])
+        dqn_final_performance = np.mean(dqn_results[0][-10:])
+        self.assertGreater(dqn_final_performance, dqn_initial_performance)
+
+    def test_epsilon_decay_during_training(self):
+        num_episodes = 100
+        max_steps = 100
+        initial_epsilon = self.q_learning_agent.epsilon
+
+        train_agent(self.env, self.q_learning_agent, num_episodes, max_steps)
+        self.assertLess(self.q_learning_agent.epsilon, initial_epsilon)
+
+    def test_memory_growth_dqn(self):
+        num_episodes = 10
+        max_steps = 100
+        batch_size = 32
+        update_target_every = 5
+        initial_memory_size = len(self.dqn_agent.memory)
+
+        train_agent(self.env, self.dqn_agent, num_episodes, max_steps, batch_size, update_target_every)
+        self.assertGreater(len(self.dqn_agent.memory), initial_memory_size)
+
 if __name__ == "__main__":
     from unittest import main
     main()

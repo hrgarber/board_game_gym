@@ -106,6 +106,25 @@ class TestDQNAgent(unittest.TestCase):
         self.agent.train(self.env, num_episodes, max_steps)
         self.assertGreater(len(self.agent.memory), 0)
 
+    def test_epsilon_decay(self):
+        initial_epsilon = self.agent.epsilon
+        for _ in range(100):
+            self.agent.replay(self.agent.batch_size)
+        self.assertLess(self.agent.epsilon, initial_epsilon)
+
+    def test_model_output(self):
+        state = torch.randn(1, self.state_size).to(self.device)
+        output = self.agent.model(state)
+        self.assertEqual(output.shape, (1, self.action_size))
+
+    def test_target_model_update_frequency(self):
+        initial_target_weights = self.agent.target_model.fc1.weight.data.clone()
+        for _ in range(self.agent.update_target_every - 1):
+            self.agent.train(self.env, 1, 1)
+        self.assertTrue(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
+        self.agent.train(self.env, 1, 1)
+        self.assertFalse(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
+
 if __name__ == '__main__':
     unittest.main()
 

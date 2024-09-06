@@ -62,5 +62,27 @@ class TestQLearningAgent(unittest.TestCase):
         self.assertEqual(self.agent.training_episodes, num_episodes)
         self.assertGreater(len(self.agent.q_table), 0)
 
+    def test_save_load_model(self):
+        self.agent.q_table[(0, 0)] = 1.0
+        self.agent.save_model("test_q_model.json")
+        self.assertTrue(os.path.exists("test_q_model.json"))
+
+        new_agent = QLearningAgent(self.state_size, self.action_size)
+        new_agent.load_model("test_q_model.json")
+        self.assertEqual(new_agent.q_table[(0, 0)], 1.0)
+
+        os.remove("test_q_model.json")
+
+    def test_get_state_key(self):
+        state = np.array([0, 1, 0, 1])
+        state_key = self.agent._get_state_key(state)
+        self.assertIsInstance(state_key, tuple)
+        self.assertEqual(len(state_key), len(state))
+
+    def test_epsilon_decay_limit(self):
+        for _ in range(1000):
+            self.agent.decay_epsilon()
+        self.assertGreaterEqual(self.agent.epsilon, self.agent.epsilon_min)
+
 if __name__ == '__main__':
     unittest.main()

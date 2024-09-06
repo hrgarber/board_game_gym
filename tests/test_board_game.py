@@ -40,6 +40,31 @@ class TestBoardGameEnv(TestCase):
         self.assertNotIn(0, valid_actions)
         self.assertEqual(len(valid_actions), 63)
 
+    def test_is_draw(self):
+        self.env.board = np.ones((self.env.board_size, self.env.board_size))
+        self.assertTrue(self.env.is_draw())
+        self.env.board[0, 0] = 0
+        self.assertFalse(self.env.is_draw())
+
+    def test_check_blocking_move(self):
+        self.env.board[0, :4] = 1
+        self.assertTrue(self.env.check_blocking_move(0, 4))
+        self.assertFalse(self.env.check_blocking_move(1, 0))
+
+    def test_check_line(self):
+        self.env.board[0, :4] = 1
+        self.assertTrue(self.env.check_line(0, 3, 4))
+        self.assertFalse(self.env.check_line(0, 3, 5))
+
+    def test_render(self):
+        self.env.reset()
+        self.env.board[0, 0] = 1
+        self.env.board[1, 1] = -1
+        rendered_output = self.env.render(mode='ansi')
+        self.assertIsInstance(rendered_output, str)
+        self.assertIn('X', rendered_output)
+        self.assertIn('O', rendered_output)
+
 class TestAlphaBetaPruning(TestCase):
     def setUp(self):
         super().setUp()
