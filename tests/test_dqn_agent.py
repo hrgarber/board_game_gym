@@ -125,5 +125,5 @@ class TestDQNAgent(unittest.TestCase):
         self.assertFalse(torch.equal(initial_target_weights, self.agent.target_model.fc1.weight.data))
 
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main()
 
