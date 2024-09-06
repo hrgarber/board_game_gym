@@ -5,7 +5,7 @@ import torch
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(project_root)
+sys.path.insert(0, project_root)
 
 from src.environments.board_game_env import BoardGameEnv
 from src.agents.q_learning_agent import QLearningAgent
