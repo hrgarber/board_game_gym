@@ -90,3 +90,21 @@ class DQNAgent:
         }, name)
         self.version += 1
 
+    def update(self, state, action, reward, next_state, done):
+        self.remember(state, action, reward, next_state, done)
+        if len(self.memory) > self.batch_size:
+            self.replay(self.batch_size)
+
+    def train(self, env, num_episodes, max_steps):
+        for episode in range(num_episodes):
+            state = env.reset()
+            for step in range(max_steps):
+                action = self.act(state)
+                next_state, reward, done, _ = env.step(action)
+                self.update(state, action, reward, next_state, done)
+                state = next_state
+                if done:
+                    break
+            if episode % 10 == 0:
+                self.update_target_model()
+

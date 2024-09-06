@@ -1,20 +1,28 @@
-from tests.test_utils import TestCase
+import unittest
 import torch
 import numpy as np
-import os
+from src.agents.dqn_agent import DQNAgent
+from src.environments.board_game_env import BoardGameEnv
 
-class TestDQNAgent(TestCase):
+class TestDQNAgent(unittest.TestCase):
     def setUp(self):
-        super().setUp()
-        self.state_size = 64  # Ensuring consistent state_size
-        self.action_size = 64   # Ensuring consistent action_size
-        self.agent = self.create_dqn_agent()
+        self.env = BoardGameEnv()
+        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        self.action_size = self.env.action_space.n
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.agent = DQNAgent(self.state_size, self.action_size, self.device)
 
-    def test_dqn_initialization(self):
+    def test_initialization(self):
         self.assertIsInstance(self.agent.model, torch.nn.Module)
         self.assertIsInstance(self.agent.target_model, torch.nn.Module)
         self.assertEqual(self.agent.state_size, self.state_size)
         self.assertEqual(self.agent.action_size, self.action_size)
+
+    def test_preprocess_state(self):
+        state = np.random.rand(self.state_size)
+        processed_state = self.agent.preprocess_state(state)
+        self.assertIsInstance(processed_state, torch.FloatTensor)
+        self.assertEqual(processed_state.device, self.device)
 
     def test_remember(self):
         initial_memory_length = len(self.agent.memory)
@@ -23,15 +31,14 @@ class TestDQNAgent(TestCase):
         reward = np.random.rand()
         next_state = np.random.rand(self.state_size)
         done = False
-
         self.agent.remember(state, action, reward, next_state, done)
         self.assertEqual(len(self.agent.memory), initial_memory_length + 1)
 
     def test_act(self):
         state = np.random.rand(self.state_size)
         action = self.agent.act(state)
-        print(f"Action: {action}")  # Debug print
-        self.assert_valid_action(action)
+        self.assertIsInstance(action, int)
+        self.assertTrue(0 <= action < self.action_size)
 
     def test_replay(self):
         # Fill the memory with some sample experiences
@@ -71,7 +78,7 @@ class TestDQNAgent(TestCase):
         self.assertTrue(os.path.exists("test_dqn_model.pth"))
 
         # Create a new agent and load the saved model
-        new_agent = self.create_dqn_agent()
+        new_agent = DQNAgent(self.state_size, self.action_size, self.device)
         new_agent.load("test_dqn_model.pth")
 
         # Check if the loaded model has the same weights as the original model
@@ -81,7 +88,23 @@ class TestDQNAgent(TestCase):
         # Clean up
         os.remove("test_dqn_model.pth")
 
+    def test_update(self):
+        state = np.random.rand(self.state_size)
+        action = np.random.randint(self.action_size)
+        reward = np.random.rand()
+        next_state = np.random.rand(self.state_size)
+        done = False
+
+        initial_memory_length = len(self.agent.memory)
+        self.agent.update(state, action, reward, next_state, done)
+        self.assertEqual(len(self.agent.memory), initial_memory_length + 1)
+
+    def test_train(self):
+        num_episodes = 5
+        max_steps = 10
+        self.agent.train(self.env, num_episodes, max_steps)
+        self.assertGreater(len(self.agent.memory), 0)
+
 if __name__ == '__main__':
-    from unittest import main
-    main()
+    unittest.main()
 
