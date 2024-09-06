@@ -45,6 +45,29 @@ def load_latest_model(agent, models_dir):
     else:
         print("No saved models found.")
 
+def evaluate_agent(env, agent, num_episodes=100):
+    """
+    Evaluate an agent's performance over a number of episodes.
+
+    Args:
+        env: The game environment.
+        agent: The agent to evaluate.
+        num_episodes (int): The number of episodes to evaluate over.
+
+    Returns:
+        float: The win rate of the agent.
+    """
+    wins = 0
+    for _ in range(num_episodes):
+        state = env.reset()
+        done = False
+        while not done:
+            action = agent.act(state)
+            state, reward, done, _ = env.step(action)
+            if reward == 1:
+                wins += 1
+    return wins / num_episodes
+
 
 def plot_training_results(rewards, win_rates, agent_name):
     """
