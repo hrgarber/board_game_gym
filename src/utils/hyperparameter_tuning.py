@@ -5,6 +5,7 @@ import numpy as np
 from tqdm import tqdm
 import optuna
 from sklearn.model_selection import KFold
+import logging
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -14,6 +15,10 @@ from src.environments.board_game_env import BoardGameEnv
 from src.agents.q_learning_agent import QLearningAgent
 from src.agents.dqn_agent import DQNAgent
 from src.utils.utils import evaluate_agent
+
+# Set up logging
+logging.basicConfig(filename='hyperparameter_tuning.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 def cross_validate(agent_type, params, n_splits=5, num_episodes=1000, eval_episodes=100):
     """
@@ -74,6 +79,7 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_
     Returns:
         dict: Results of the grid search, including all parameter combinations and their performances.
     """
+    logging.info(f"Starting grid search for {agent_type} agent")
     results = {
         "params": [],
         "performances": []
@@ -87,11 +93,13 @@ def grid_search(agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_
 
         results["params"].append(param_dict)
         results["performances"].append(performance)
+        logging.info(f"Parameters: {param_dict}, Performance: {performance}")
 
     best_idx = np.argmax(results["performances"])
     results["best_params"] = results["params"][best_idx]
     results["best_performance"] = results["performances"][best_idx]
 
+    logging.info(f"Grid search completed. Best parameters: {results['best_params']}, Best performance: {results['best_performance']}")
     return results
 
 def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=1000, eval_episodes=100, n_splits=5):
@@ -109,6 +117,7 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
     Returns:
         dict: Results of the random search, including all parameter combinations and their performances.
     """
+    logging.info(f"Starting random search for {agent_type} agent")
     results = {
         "params": [],
         "performances": []
@@ -121,11 +130,13 @@ def random_search(agent_type, param_ranges, num_iterations=100, num_episodes=100
 
         results["params"].append(param_dict)
         results["performances"].append(performance)
+        logging.info(f"Parameters: {param_dict}, Performance: {performance}")
 
     best_idx = np.argmax(results["performances"])
     results["best_params"] = results["params"][best_idx]
     results["best_performance"] = results["performances"][best_idx]
 
+    logging.info(f"Random search completed. Best parameters: {results['best_params']}, Best performance: {results['best_performance']}")
     return results
 
 def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1000, eval_episodes=100, n_splits=5):
@@ -143,6 +154,7 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
     Returns:
         dict: Results of the Bayesian optimization, including the study object and best parameters.
     """
+    logging.info(f"Starting Bayesian optimization for {agent_type} agent")
     def objective(trial):
         params = {
             'learning_rate': trial.suggest_loguniform('learning_rate', param_ranges['learning_rate'][0], param_ranges['learning_rate'][1]),
@@ -155,11 +167,13 @@ def bayesian_optimization(agent_type, param_ranges, n_trials=100, num_episodes=1
             params['batch_size'] = trial.suggest_int('batch_size', param_ranges['batch_size'][0], param_ranges['batch_size'][1])
 
         performance = cross_validate(agent_type, params, n_splits, num_episodes, eval_episodes)
+        logging.info(f"Trial {trial.number}: Parameters: {params}, Performance: {performance}")
         return performance
 
     study = optuna.create_study(direction='maximize')
     study.optimize(objective, n_trials=n_trials)
 
+    logging.info(f"Bayesian optimization completed. Best parameters: {study.best_params}, Best performance: {study.best_value}")
     return {
         "study": study,
         "best_params": study.best_params,
