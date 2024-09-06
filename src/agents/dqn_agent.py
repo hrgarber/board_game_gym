@@ -47,7 +47,8 @@ class DQNAgent:
         self.memory.append((state, action, reward, next_state, done))
 
     def update_target_model(self):
-        self.target_model.load_state_dict(self.model.state_dict())
+        for target_param, param in zip(self.target_model.parameters(), self.model.parameters()):
+            target_param.data.copy_(param.data)
 
     def act(self, state):
         if np.random.rand() <= self.epsilon:

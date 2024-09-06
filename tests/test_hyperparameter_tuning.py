@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+import optuna
 from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization, visualize_tuning_results
 from src.environments.board_game_env import BoardGameEnv
 from src.agents.q_learning_agent import QLearningAgent
