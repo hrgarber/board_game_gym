@@ -6,6 +6,17 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+from config import (
+    LEARNING_RATE,
+    DISCOUNT_FACTOR,
+    EPSILON,
+    EPSILON_MIN,
+    EPSILON_DECAY,
+    BATCH_SIZE,
+    UPDATE_TARGET_EVERY,
+    DEVICE,
+)
+
 
 class DQN(nn.Module):
     def __init__(self, state_size, action_size):
@@ -29,14 +40,14 @@ class DQNAgent:
         self,
         state_size,
         action_size,
-        device,
-        learning_rate=1e-3,
-        discount_factor=0.99,
-        epsilon=1.0,
-        epsilon_min=0.01,
-        epsilon_decay=0.995,
-        batch_size=32,
-        update_target_every=100,
+        device=DEVICE,
+        learning_rate=LEARNING_RATE,
+        discount_factor=DISCOUNT_FACTOR,
+        epsilon=EPSILON,
+        epsilon_min=EPSILON_MIN,
+        epsilon_decay=EPSILON_DECAY,
+        batch_size=BATCH_SIZE,
+        update_target_every=UPDATE_TARGET_EVERY,
     ):
         self.state_size = state_size
         self.action_size = action_size
