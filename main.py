@@ -2,8 +2,6 @@ import argparse
 import os
 import sys
 
-import torch
-
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, project_root)
@@ -11,8 +9,8 @@ sys.path.insert(0, project_root)
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
-from src.utils.tune_hyperparameters import tune_hyperparameters
 from src.utils.utils import load_latest_model
+from config import DEVICE, MODEL_DIR
 
 
 def play_game(agent, env):
@@ -57,16 +55,13 @@ def main():
     state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
     action_size = env.action_space.n
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
     if args.agent == "q_learning":
         agent = QLearningAgent(state_size, action_size)
-        model_path = args.model or os.path.join(project_root, "models")
-        load_latest_model(agent, model_path)
     elif args.agent == "dqn":
-        agent = DQNAgent(state_size, action_size, device)
-        model_path = args.model or os.path.join(project_root, "models")
-        load_latest_model(agent, model_path)
+        agent = DQNAgent(state_size, action_size, DEVICE)
+
+    model_path = args.model or os.path.join(project_root, MODEL_DIR)
+    load_latest_model(agent, model_path)
 
     play_game(agent, env)
 
