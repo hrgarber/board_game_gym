@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+from typing import Union
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.dirname(__file__))
@@ -12,14 +13,18 @@ from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import load_latest_model
 from config import DEVICE, MODEL_DIR
 
+Agent = Union[QLearningAgent, DQNAgent]
 
-def play_game(agent, env):
+def play_game(agent: Agent, env: BoardGameEnv) -> None:
     """
     Play a game using the given agent and environment.
 
     Args:
         agent: The AI agent (either QLearningAgent or DQNAgent).
         env: The game environment (BoardGameEnv).
+
+    Returns:
+        None
     """
     state = env.reset()
     done = False
@@ -35,9 +40,15 @@ def play_game(agent, env):
     print(f"Game over. Total reward: {total_reward}")
 
 
-def main():
+def main() -> None:
     """
     Main function to set up and run the game.
+
+    This function parses command-line arguments, initializes the game environment
+    and AI agent, loads the trained model, and starts the game.
+
+    Returns:
+        None
     """
     parser = argparse.ArgumentParser(
         description="Play the board game against a trained AI."
@@ -56,8 +67,8 @@ def main():
     action_size = env.action_space.n
 
     if args.agent == "q_learning":
-        agent = QLearningAgent(state_size, action_size)
-    elif args.agent == "dqn":
+        agent: Agent = QLearningAgent(state_size, action_size)
+    else:  # args.agent == "dqn"
         agent = DQNAgent(state_size, action_size, DEVICE)
 
     model_path = args.model or os.path.join(project_root, MODEL_DIR)
