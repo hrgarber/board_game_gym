@@ -12,12 +12,6 @@ class BoardGame {
         this.winner = null;
     }
 
-    // ... rest of the class implementation ...
-}
-
-console.log("Exporting BoardGame");
-module.exports = BoardGame;
-
     initializeBoard() {
         return Array(this.boardSize).fill().map(() => Array(this.boardSize).fill(0));
     }
@@ -30,8 +24,9 @@ module.exports = BoardGame;
         if (this.checkWin(row, col)) {
             this.gameOver = true;
             this.winner = this.currentPlayer;
-        } else if (this.isBoardFull()) {
+        } else if (this.isBoardFull() || !this.isWinPossible()) {
             this.gameOver = true;
+            this.winner = null; // It's a draw
         } else {
             this.currentPlayer *= -1; // Switch player
         }
@@ -68,6 +63,40 @@ module.exports = BoardGame;
         return this.board.every(row => row.every(cell => cell !== 0));
     }
 
+    isWinPossible() {
+        const directions = [
+            [0, 1], [1, 0], [1, 1], [1, -1] // horizontal, vertical, diagonal
+        ];
+        
+        for (let row = 0; row < this.boardSize; row++) {
+            for (let col = 0; col < this.boardSize; col++) {
+                if (this.board[row][col] !== 0) continue; // Skip occupied cells
+                
+                for (const [dx, dy] of directions) {
+                    let xCount = 0, oCount = 0, emptyCount = 1; // Start with 1 empty (current cell)
+                    
+                    for (let i = -4; i <= 4; i++) {
+                        const newRow = row + i * dx;
+                        const newCol = col + i * dy;
+                        
+                        if (newRow < 0 || newRow >= this.boardSize || newCol < 0 || newCol >= this.boardSize) {
+                            continue;
+                        }
+                        
+                        if (this.board[newRow][newCol] === 1) xCount++;
+                        else if (this.board[newRow][newCol] === -1) oCount++;
+                        else emptyCount++;
+                        
+                        if (xCount + emptyCount >= 5 || oCount + emptyCount >= 5) {
+                            return true; // A win is still possible
+                        }
+                    }
+                }
+            }
+        }
+        return false; // No win is possible
+    }
+
     resetGame() {
         this.board = this.initializeBoard();
         this.currentPlayer = 1;
@@ -87,3 +116,6 @@ module.exports = BoardGame;
         }
     }
 }
+
+console.log("Exporting BoardGame");
+module.exports = BoardGame;
