@@ -62,6 +62,14 @@ This strategic game revolves around path-building, blocking the opponent, and th
    pip install -r scripts/requirements.txt
    ```
 
+4. For the Node.js part of the project, install dependencies:
+   ```
+   cd game_files
+   npm install
+   ```
+
+Note: This project uses a .gitignore file to exclude unnecessary files from version control. Make sure to review it if you're adding new file types or dependencies to the project.
+
 ## Project Structure
 
 ```
