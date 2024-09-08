@@ -44,3 +44,9 @@ models/
 *.json
 notebooks/
 logs/
+*.txt
+*.log
+*.png
+*.json
+notebooks/
+logs/
