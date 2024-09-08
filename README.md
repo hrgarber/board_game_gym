@@ -55,13 +55,24 @@ board_game_gym/
 │   │   └── dqn_agent.py
 │   ├── environments/
 │   │   └── board_game_env.py
-│   └── utils/
-│       └── hyperparameter_tuning.py
+│   ├── utils/
+│   │   └── hyperparameter_tuning.py
+│   └── game.py
 └── tests/
     ├── test_board_game.py
     ├── test_dqn_agent.py
     └── test_training.py
 ```
+
+## Game Logic
+
+The `src/game.py` file contains the core game logic for the board game. It includes:
+
+- A `BoardGame` class that represents the game state
+- Methods for making moves, checking for winners, and resetting the game
+- A flexible board size (default is 3x3 for Tic-Tac-Toe)
+
+To play the game or integrate it with AI agents, you can import and use the `BoardGame` class from `src/game.py`.
 
 ## Usage
 
