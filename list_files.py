@@ -1,9 +1,13 @@
 import os
 
 def list_first_layer():
+    ignore_dirs = {
+        '__pycache__',
+        'output'
+    }
+    
     ignore_files = {
         'list_files.py',
-        '__pycache__',
         'error_log.txt',
         'errors.txt',
         'hyperparameter_tuning_20240906_001503.log',
@@ -13,7 +17,7 @@ def list_first_layer():
     for root, dirs, files in os.walk('.', topdown=True):
         print("Directories:")
         for name in sorted(dirs):
-            if not name.startswith('.') and name not in ignore_files:
+            if not name.startswith('.') and name not in ignore_dirs:
                 print(f"  {name}")
         
         print("\nFiles:")

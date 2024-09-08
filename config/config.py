@@ -20,3 +20,4 @@ NUM_EPISODES = 1000
 
 # File paths
 MODEL_DIR = "models"
+IMAGE_DIR = "output/images"
