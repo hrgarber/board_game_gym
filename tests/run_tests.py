@@ -1,6 +1,7 @@
 import unittest
 import sys
 import os
+import logging
 
 # Add the parent directory to sys.path to allow importing from sibling directories
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -8,6 +9,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from tests.test_board_game import create_suite as create_board_game_suite
 from tests.test_dqn_agent import create_suite as create_dqn_agent_suite
 from tests.test_training import create_suite as create_training_suite
+
+# Configure logging
+logging.basicConfig(level=logging.WARNING)  # Set to WARNING to suppress debug messages
 
 
 class DetailedTestResult(unittest.TextTestResult):
