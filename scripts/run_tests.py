@@ -20,6 +20,8 @@ if __name__ == "__main__":
         elif test_type == "training":
             run_specific_tests(create_training_suite)
         else:
-            print("Invalid test type. Available options: board_game, dqn_agent, training")
+            print(
+                "Invalid test type. Available options: board_game, dqn_agent, training"
+            )
     else:
         run_all_tests()

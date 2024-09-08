@@ -170,21 +170,51 @@ class TestTraining(TestCase):
         print(f"DQN results: {dqn_results}")
 
         # Test that the results are in the expected format
-        self.assertEqual(len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}")
-        self.assertEqual(len(dqn_results), 2, f"Expected 2 items in dqn_results, got {len(dqn_results)}")
-        self.assertEqual(len(q_results[0]), num_episodes, f"Expected {num_episodes} items in q_results[0], got {len(q_results[0])}")
-        self.assertEqual(len(q_results[1]), 1, f"Expected 1 item in q_results[1], got {len(q_results[1])}")
-        self.assertEqual(len(dqn_results[0]), num_episodes, f"Expected {num_episodes} items in dqn_results[0], got {len(dqn_results[0])}")
-        self.assertEqual(len(dqn_results[1]), 1, f"Expected 1 item in dqn_results[1], got {len(dqn_results[1])}")
+        self.assertEqual(
+            len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}"
+        )
+        self.assertEqual(
+            len(dqn_results),
+            2,
+            f"Expected 2 items in dqn_results, got {len(dqn_results)}",
+        )
+        self.assertEqual(
+            len(q_results[0]),
+            num_episodes,
+            f"Expected {num_episodes} items in q_results[0], got {len(q_results[0])}",
+        )
+        self.assertEqual(
+            len(q_results[1]),
+            1,
+            f"Expected 1 item in q_results[1], got {len(q_results[1])}",
+        )
+        self.assertEqual(
+            len(dqn_results[0]),
+            num_episodes,
+            f"Expected {num_episodes} items in dqn_results[0], got {len(dqn_results[0])}",
+        )
+        self.assertEqual(
+            len(dqn_results[1]),
+            1,
+            f"Expected 1 item in dqn_results[1], got {len(dqn_results[1])}",
+        )
 
         # Test that the training process runs without errors
-        self.assertIsNotNone(q_results[1][0], "Q-Learning agent training failed to complete")
+        self.assertIsNotNone(
+            q_results[1][0], "Q-Learning agent training failed to complete"
+        )
         self.assertIsNotNone(dqn_results[1][0], "DQN agent training failed to complete")
 
         # Test that the win rates are within the expected range
-        self.assertGreaterEqual(q_results[1][0], 0, "Q-Learning win rate should be non-negative")
-        self.assertLessEqual(q_results[1][0], 1, "Q-Learning win rate should not exceed 1")
-        self.assertGreaterEqual(dqn_results[1][0], 0, "DQN win rate should be non-negative")
+        self.assertGreaterEqual(
+            q_results[1][0], 0, "Q-Learning win rate should be non-negative"
+        )
+        self.assertLessEqual(
+            q_results[1][0], 1, "Q-Learning win rate should not exceed 1"
+        )
+        self.assertGreaterEqual(
+            dqn_results[1][0], 0, "DQN win rate should be non-negative"
+        )
         self.assertLessEqual(dqn_results[1][0], 1, "DQN win rate should not exceed 1")
 
         # Note: We're not testing for improvement or specific performance thresholds in this quick test
@@ -217,6 +247,7 @@ class TestTraining(TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 def create_suite():
     suite = unittest.TestSuite()
