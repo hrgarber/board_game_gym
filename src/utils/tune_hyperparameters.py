@@ -8,7 +8,7 @@ from typing import Any, Dict
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(project_root)
 
-from utils.hyperparameter_tuning import (
+from src.utils.hyperparameter_tuning import (
     bayesian_optimization,
     grid_search,
     random_search,
