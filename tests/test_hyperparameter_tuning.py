@@ -225,3 +225,77 @@ class TestHyperparameterTuning(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+import unittest
+from unittest.mock import patch, MagicMock
+import numpy as np
+from src.utils.hyperparameter_tuning import cross_validate, grid_search, random_search, bayesian_optimization
+from src.environments.board_game_env import BoardGameEnv
+from src.agents.q_learning_agent import QLearningAgent
+from src.agents.dqn_agent import DQNAgent
+
+class TestHyperparameterTuning(unittest.TestCase):
+
+    def setUp(self):
+        self.env = BoardGameEnv()
+        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
+        self.action_size = self.env.action_space.n
+
+    @patch('src.utils.hyperparameter_tuning.evaluate_agent')
+    def test_cross_validate(self, mock_evaluate_agent):
+        mock_evaluate_agent.return_value = 0.5
+        params = {
+            "learning_rate": 0.01,
+            "discount_factor": 0.99,
+            "epsilon": 0.1,
+            "epsilon_decay": 0.995
+        }
+        result = cross_validate("q_learning", params, n_splits=2, num_episodes=10, eval_episodes=5)
+        self.assertIsInstance(result, float)
+        self.assertEqual(result, 0.5)
+
+    @patch('src.utils.hyperparameter_tuning.cross_validate')
+    def test_grid_search(self, mock_cross_validate):
+        mock_cross_validate.return_value = 0.5
+        param_grid = {
+            "learning_rate": [0.01, 0.1],
+            "discount_factor": [0.9, 0.99],
+            "epsilon": [0.1],
+            "epsilon_decay": [0.995]
+        }
+        results = grid_search("q_learning", param_grid, num_episodes=10, eval_episodes=5, n_splits=2)
+        self.assertIn("params", results)
+        self.assertIn("performances", results)
+        self.assertIn("best_params", results)
+        self.assertIn("best_performance", results)
+
+    @patch('src.utils.hyperparameter_tuning.cross_validate')
+    def test_random_search(self, mock_cross_validate):
+        mock_cross_validate.return_value = 0.5
+        param_ranges = {
+            "learning_rate": (0.001, 0.1),
+            "discount_factor": (0.9, 0.99),
+            "epsilon": (0.1, 0.5),
+            "epsilon_decay": (0.99, 0.9999)
+        }
+        results = random_search("q_learning", param_ranges, num_iterations=5, num_episodes=10, eval_episodes=5, n_splits=2)
+        self.assertIn("params", results)
+        self.assertIn("performances", results)
+        self.assertIn("best_params", results)
+        self.assertIn("best_performance", results)
+
+    @patch('src.utils.hyperparameter_tuning.cross_validate')
+    def test_bayesian_optimization(self, mock_cross_validate):
+        mock_cross_validate.return_value = 0.5
+        param_ranges = {
+            "learning_rate": (0.001, 0.1),
+            "discount_factor": (0.9, 0.99),
+            "epsilon": (0.1, 0.5),
+            "epsilon_decay": (0.99, 0.9999)
+        }
+        results = bayesian_optimization("q_learning", param_ranges, n_trials=5, num_episodes=10, eval_episodes=5, n_splits=2)
+        self.assertIn("study", results)
+        self.assertIn("best_params", results)
+        self.assertIn("best_performance", results)
+
+if __name__ == '__main__':
+    unittest.main()
