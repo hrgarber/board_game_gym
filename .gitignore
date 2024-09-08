@@ -48,3 +48,4 @@ logs/
 *.json
 notebooks/
 logs/
+config/
