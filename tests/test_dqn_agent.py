@@ -137,13 +137,7 @@ class TestDQNAgent(unittest.TestCase):
         print(f"Update target every: {self.agent.update_target_every}")
         
         # Train for update_target_every + 1 episodes to ensure an update occurs
-        for episode in range(self.agent.update_target_every + 1):
-            print(f"Training episode: {episode}")
-            self.agent.train(self.env, 1, 1)
-            
-            # Force an update of the target network
-            if episode == self.agent.update_target_every:
-                self.agent.update_target_model()
+        self.agent.train(self.env, self.agent.update_target_every + 1, 10)
         
         updated_weights = self.agent.target_model.fc1.weight.data
         weight_difference = torch.sum(torch.abs(initial_target_weights - updated_weights))
