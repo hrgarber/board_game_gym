@@ -26,7 +26,7 @@ from src.utils.utils import evaluate_agent
 log_dir = os.path.join(project_root, "logs")
 os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
-    filename=os.path.join(log_dir, "hyperparameter_tuning.log"),
+    filename=os.path.join(log_dir, f"hyperparameter_tuning_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -339,7 +339,9 @@ def visualize_tuning_results(results, method):
         return
 
     plt.tight_layout()
-    save_tuning_results(plt.gcf(), f"{method}_tuning_results.png")
+    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, f"{method}_tuning_results.png"))
     plt.close()
 
 

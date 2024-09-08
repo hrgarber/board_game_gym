@@ -3,15 +3,12 @@ import os
 def list_first_layer():
     ignore_dirs = {
         '__pycache__',
-        'output'
+        'output',
+        'logs'
     }
     
     ignore_files = {
         'list_files.py',
-        'error_log.txt',
-        'errors.txt',
-        'hyperparameter_tuning_20240906_001503.log',
-        'pylint-report.txt'
     }
     
     for root, dirs, files in os.walk('.', topdown=True):
