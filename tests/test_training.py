@@ -1,6 +1,8 @@
 import unittest
 import matplotlib.pyplot as plt
 import numpy as np
+import io
+import sys
 
 from src.utils.training_utils import train_agent
 from src.utils.utils import (
@@ -13,6 +15,14 @@ from tests.test_utils import TestCase  # Changed this line
 
 
 class TestTraining(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.original_stdout = sys.stdout
+        sys.stdout = io.StringIO()
+
+    @classmethod
+    def tearDownClass(cls):
+        sys.stdout = cls.original_stdout
     def setUp(self):
         super().setUp()
         self.q_learning_agent = self.create_q_learning_agent()
@@ -156,7 +166,6 @@ class TestTraining(TestCase):
         q_results = train_agent(
             self.env, self.q_learning_agent, num_episodes, max_steps
         )
-        print(f"Q-Learning results: {q_results}")
 
         # Train DQN agent
         dqn_results = train_agent(
@@ -167,57 +176,28 @@ class TestTraining(TestCase):
             batch_size,
             update_target_every,
         )
-        print(f"DQN results: {dqn_results}")
+
+        # Print only the final results
+        print(f"\nQ-Learning final win rate: {q_results[1][-1]:.2f}")
+        print(f"DQN final win rate: {dqn_results[1][-1]:.2f}")
 
         # Test that the results are in the expected format
-        self.assertEqual(
-            len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}"
-        )
-        self.assertEqual(
-            len(dqn_results),
-            2,
-            f"Expected 2 items in dqn_results, got {len(dqn_results)}",
-        )
-        self.assertEqual(
-            len(q_results[0]),
-            num_episodes,
-            f"Expected {num_episodes} items in q_results[0], got {len(q_results[0])}",
-        )
-        self.assertEqual(
-            len(q_results[1]),
-            1,
-            f"Expected 1 item in q_results[1], got {len(q_results[1])}",
-        )
-        self.assertEqual(
-            len(dqn_results[0]),
-            num_episodes,
-            f"Expected {num_episodes} items in dqn_results[0], got {len(dqn_results[0])}",
-        )
-        self.assertEqual(
-            len(dqn_results[1]),
-            1,
-            f"Expected 1 item in dqn_results[1], got {len(dqn_results[1])}",
-        )
+        self.assertEqual(len(q_results), 2)
+        self.assertEqual(len(dqn_results), 2)
+        self.assertEqual(len(q_results[0]), num_episodes)
+        self.assertEqual(len(q_results[1]), 1)
+        self.assertEqual(len(dqn_results[0]), num_episodes)
+        self.assertEqual(len(dqn_results[1]), 1)
 
         # Test that the training process runs without errors
-        self.assertIsNotNone(
-            q_results[1][0], "Q-Learning agent training failed to complete"
-        )
-        self.assertIsNotNone(dqn_results[1][0], "DQN agent training failed to complete")
+        self.assertIsNotNone(q_results[1][0])
+        self.assertIsNotNone(dqn_results[1][0])
 
         # Test that the win rates are within the expected range
-        self.assertGreaterEqual(
-            q_results[1][0], 0, "Q-Learning win rate should be non-negative"
-        )
-        self.assertLessEqual(
-            q_results[1][0], 1, "Q-Learning win rate should not exceed 1"
-        )
-        self.assertGreaterEqual(
-            dqn_results[1][0], 0, "DQN win rate should be non-negative"
-        )
-        self.assertLessEqual(dqn_results[1][0], 1, "DQN win rate should not exceed 1")
-
-        # Note: We're not testing for improvement or specific performance thresholds in this quick test
+        self.assertGreaterEqual(q_results[1][0], 0)
+        self.assertLessEqual(q_results[1][0], 1)
+        self.assertGreaterEqual(dqn_results[1][0], 0)
+        self.assertLessEqual(dqn_results[1][0], 1)
 
     def test_epsilon_decay_during_training(self):
         num_episodes = 100

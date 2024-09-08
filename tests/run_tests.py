@@ -31,10 +31,13 @@ def print_summary(result):
     print(f"Failures: {len(result.failures)}")
     print(f"Errors: {len(result.errors)}")
 
-    if result.failures or result.errors:
+    if result.wasSuccessful():
+        print("\nAll tests passed successfully!")
+    else:
         print("\nFailed tests:")
         for test, error in result.failures + result.errors:
             print(f"  {test}")
+            print(f"    {error}\n")
 
 
 def run_all_tests():
