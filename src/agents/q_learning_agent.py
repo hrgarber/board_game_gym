@@ -1,8 +1,14 @@
 import json
+import sys
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = Path(__file__).parents[3]
+sys.path.insert(0, str(project_root))
 
 import numpy as np
 
-from config import (
+from board_game_gym.config import (
     LEARNING_RATE,
     DISCOUNT_FACTOR,
     EPSILON,
