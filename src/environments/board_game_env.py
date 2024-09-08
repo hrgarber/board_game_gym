@@ -124,7 +124,9 @@ class BoardGameEnv(gym.Env):
 
         # Check if the move blocks a potential future winning move for the opponent
         original_value = self.board[row, col]
-        self.board[row, col] = -self.current_player  # Temporarily place opponent's piece
+        self.board[
+            row, col
+        ] = -self.current_player  # Temporarily place opponent's piece
         if self.check_win(row, col):
             self.board[row, col] = original_value  # Reset the board
             return True
