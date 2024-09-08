@@ -38,3 +38,9 @@ models/
 *.log
 
 # Any other project-specific files to ignore
+*.txt
+*.log
+*.png
+*.json
+notebooks/
+logs/
