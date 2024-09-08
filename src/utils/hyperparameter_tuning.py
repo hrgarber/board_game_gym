@@ -454,8 +454,12 @@ import logging
 import os
 import sys
 
+import matplotlib.pyplot as plt
 import numpy as np
 import optuna
+import optuna.visualization
+import pandas as pd
+import seaborn as sns
 from sklearn.model_selection import KFold
 from tqdm import tqdm
 
@@ -469,8 +473,10 @@ from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import evaluate_agent
 
 # Set up logging
+log_dir = os.path.join(project_root, "logs")
+os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
-    filename="hyperparameter_tuning.log",
+    filename=os.path.join(log_dir, "hyperparameter_tuning.log"),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -529,16 +535,6 @@ def grid_search(
 ):
     """
     Perform grid search for hyperparameter tuning with cross-validation.
-
-    Args:
-        agent_type (str): Type of agent ('q_learning' or 'dqn').
-        param_grid (dict): Dictionary of parameters and their possible values.
-        num_episodes (int): Number of episodes to train for each combination.
-        eval_episodes (int): Number of episodes to evaluate each trained agent.
-        n_splits (int): Number of splits for cross-validation.
-
-    Returns:
-        dict: Results of the grid search, including all parameter combinations and their performances.
     """
     logging.info(f"Starting grid search for {agent_type} agent")
     results = {"params": [], "performances": []}
@@ -546,14 +542,11 @@ def grid_search(
     param_combinations = list(itertools.product(*param_grid.values()))
     for params in tqdm(param_combinations, desc="Grid Search Progress"):
         param_dict = dict(zip(param_grid.keys(), params))
-
         performance = cross_validate(
             agent_type, param_dict, n_splits, num_episodes, eval_episodes
         )
-
         results["params"].append(param_dict)
         results["performances"].append(performance)
-        logging.info(f"Parameters: {param_dict}, Performance: {performance}")
 
     best_idx = np.argmax(results["performances"])
     results["best_params"] = results["params"][best_idx]
@@ -694,9 +687,7 @@ def visualize_tuning_results(results, method):
         results (dict): Dictionary containing tuning results.
         method (str): The tuning method used ('grid', 'random', or 'bayesian').
     """
-    import matplotlib.pyplot as plt
-    import pandas as pd
-    import seaborn as sns
+    plt.switch_backend("agg")  # Use non-interactive backend
 
     plt.figure(figsize=(15, 10))
     sns.set(style="whitegrid")
@@ -774,7 +765,9 @@ def visualize_tuning_results(results, method):
         return
 
     plt.tight_layout()
-    plt.savefig(f"{method}_tuning_results.png")
+    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, f"{method}_tuning_results.png"))
     plt.close()
 
 

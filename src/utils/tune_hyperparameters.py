@@ -1,12 +1,17 @@
 import argparse
 import json
+import os
 from typing import Any, Dict
 
 from src.utils.hyperparameter_tuning import (
     bayesian_optimization,
     grid_search,
     random_search,
+    visualize_tuning_results,
 )
+
+# Add the project root directory to the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 
 def load_config(config_path: str) -> Dict[str, Any]:
@@ -21,8 +26,6 @@ def save_results(results: Dict[str, Any], output_path: str) -> None:
         json.dump(results, f, indent=2)
 
 
-from src.main import main
-
 def main():
     parser = argparse.ArgumentParser(
         description="Hyperparameter tuning for Board Game AI"
@@ -35,7 +38,7 @@ def main():
     )
     parser.add_argument(
         "--config",
-        default="tuning_config.json",
+        default="config/tuning_config.json",
         help="Path to tuning configuration file",
     )
     parser.add_argument(
@@ -61,6 +64,10 @@ def main():
     output_file = os.path.join(output_dir, args.output)
     save_results(results, output_file)
     print(f"Tuning completed. Results saved to {output_file}")
+
+    # Visualize the results
+    visualize_tuning_results(results, args.method)
+    print(f"Visualization saved to {output_dir}/{args.method}_tuning_results.png")
 
 
 if __name__ == "__main__":
