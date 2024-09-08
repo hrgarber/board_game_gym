@@ -18,6 +18,7 @@ function updateBoard() {
             boardElement.appendChild(cell);
         }
     }
+    statusElement.textContent = game.getGameStatus();
 }
 
 function handleCellClick(event) {
@@ -26,22 +27,13 @@ function handleCellClick(event) {
     
     if (game.makeMove(row, col)) {
         updateBoard();
-        if (game.checkWin(row, col)) {
-            statusElement.textContent = `Player ${game.currentPlayer === 1 ? 'O' : 'X'} wins!`;
-        } else if (game.isBoardFull()) {
-            statusElement.textContent = "It's a draw!";
-        } else {
-            statusElement.textContent = `Current player: ${game.currentPlayer === 1 ? 'X' : 'O'}`;
-        }
     }
 }
 
 resetBtn.addEventListener('click', () => {
     game.resetGame();
     updateBoard();
-    statusElement.textContent = 'New game started. X plays first.';
 });
 
 // Initialize the game
 updateBoard();
-statusElement.textContent = 'Game started. X plays first.';

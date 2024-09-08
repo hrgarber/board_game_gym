@@ -5,6 +5,8 @@ class BoardGame {
         this.boardSize = boardSize;
         this.board = this.initializeBoard();
         this.currentPlayer = 1; // 1 for X, -1 for O
+        this.gameOver = false;
+        this.winner = null;
     }
 
     initializeBoard() {
@@ -12,12 +14,19 @@ class BoardGame {
     }
 
     makeMove(row, col) {
-        if (this.board[row][col] === 0) {
-            this.board[row][col] = this.currentPlayer;
-            this.currentPlayer *= -1; // Switch player
-            return true;
+        if (this.gameOver || this.board[row][col] !== 0) {
+            return false;
         }
-        return false;
+        this.board[row][col] = this.currentPlayer;
+        if (this.checkWin(row, col)) {
+            this.gameOver = true;
+            this.winner = this.currentPlayer;
+        } else if (this.isBoardFull()) {
+            this.gameOver = true;
+        } else {
+            this.currentPlayer *= -1; // Switch player
+        }
+        return true;
     }
 
     checkWin(row, col) {
@@ -53,5 +62,19 @@ class BoardGame {
     resetGame() {
         this.board = this.initializeBoard();
         this.currentPlayer = 1;
+        this.gameOver = false;
+        this.winner = null;
+    }
+
+    getGameStatus() {
+        if (this.gameOver) {
+            if (this.winner) {
+                return `Player ${this.winner === 1 ? 'X' : 'O'} wins!`;
+            } else {
+                return "It's a draw!";
+            }
+        } else {
+            return `Current player: ${this.currentPlayer === 1 ? 'X' : 'O'}`;
+        }
     }
 }
