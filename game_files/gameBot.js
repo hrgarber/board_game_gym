@@ -16,7 +16,7 @@ class BoardGame {
 }
 
 console.log("Exporting BoardGame");
-module.exports = { BoardGame };
+module.exports = BoardGame;
 
     initializeBoard() {
         return Array(this.boardSize).fill().map(() => Array(this.boardSize).fill(0));
