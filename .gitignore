@@ -1,8 +1,5 @@
 # Aider-specific files
 .aider*
-.aider.chat.history.md
-.aider.input.history
-.aider.tags.cache.v3/
 
 # Python
 __pycache__/
@@ -32,11 +29,6 @@ output/
 
 # Ignore all __pycache__ directories
 **/__pycache__/
-
-# Ignore .aider files
-.aider.chat.history.md
-.aider.input.history
-.aider.tags.cache.v3/
 
 # Ignore compiled Python files
 *.pyc
