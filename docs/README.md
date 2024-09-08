@@ -16,34 +16,22 @@ The project consists of several components:
 
 ```
 .
+├── README.md
 ├── config/
-│   └── config.py
+│   ├── config.py
+│   └── pytest.ini
 ├── docs/
 │   └── README.md
 ├── game_files/
+├── hyperparameter_config.json
+├── list_files.py
 ├── logs/
 ├── notebooks/
-│   ├── train_q_learning_ai.ipynb
-│   ├── train_dqn_ai.ipynb
-│   └── hyperparameter_tuning.ipynb
 ├── output/
+├── refactor_plan.md
 ├── scripts/
 ├── src/
-│   ├── environments/
-│   │   └── board_game_env.py
-│   ├── agents/
-│   │   ├── q_learning_agent.py
-│   │   └── dqn_agent.py
-│   └── utils/
-│       ├── utils.py
-│       ├── hyperparameter_tuning.py
-│       ├── agent_evaluation.py
-│       └── training_utils.py
-├── tests/
-├── list_files.py
-├── main.py
-├── pytest.ini
-└── requirements.txt
+└── tests/
 ```
 
 ## Installation
