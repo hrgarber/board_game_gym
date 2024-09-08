@@ -73,10 +73,7 @@ class DQNAgent:
         self.memory.append((state, action, reward, next_state, done))
 
     def update_target_model(self):
-        for target_param, param in zip(
-            self.target_model.parameters(), self.model.parameters()
-        ):
-            target_param.data.copy_(param.data)
+        self.target_model.load_state_dict(self.model.state_dict())
 
     def act(self, state):
         if np.random.rand() <= self.epsilon:
@@ -150,11 +147,7 @@ class DQNAgent:
             self.decay_epsilon()
 
             if (episode + 1) % self.update_target_every == 0:
-                print(f"Updating target model at episode {episode + 1}")
                 self.update_target_model()
-
-        print("Final update of target model")
-        self.update_target_model()  # Ensure the target model is updated at the end of training
 
         if len(self.memory) > self.batch_size:
             self.replay(self.batch_size)

@@ -8,7 +8,7 @@ from src.utils.utils import (
     plot_agent_comparison,
     plot_training_results,
 )
-from tests.test_utils import TestCase
+from test_utils import TestCase  # Changed this line
 
 
 class TestTraining(TestCase):

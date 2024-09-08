@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-from tqdm import tqdm
 
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
@@ -26,7 +25,7 @@ def train_agent(
     rewards = []
     win_rates = []
 
-    for episode in tqdm(range(num_episodes)):
+    for episode in range(num_episodes):
         state = env.reset()
         assert (
             state.shape[0] == 64
