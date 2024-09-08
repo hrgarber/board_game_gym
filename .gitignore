@@ -29,3 +29,17 @@ Thumbs.db
 # Additional ignores
 config/__pycache__/
 output/
+
+# Ignore all __pycache__ directories
+**/__pycache__/
+
+# Ignore .aider files
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v3/
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore the entire output directory
+output/
