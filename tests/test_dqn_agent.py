@@ -157,7 +157,7 @@ class TestDQNAgent(unittest.TestCase):
         
         # Additional check to ensure weights are different
         self.assertFalse(
-            torch.allclose(initial_target_weights, updated_weights),
+            torch.allclose(initial_target_weights, updated_weights, atol=1e-6),
             "Target model weights were not updated significantly"
         )
 
