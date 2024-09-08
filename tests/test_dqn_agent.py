@@ -143,8 +143,9 @@ class TestDQNAgent(unittest.TestCase):
         weight_difference = torch.sum(torch.abs(initial_target_weights - updated_weights))
         print(f"Weight difference: {weight_difference.item()}")
         
-        self.assertFalse(
-            torch.equal(initial_target_weights, updated_weights),
+        self.assertGreater(
+            weight_difference.item(),
+            0,
             "Target model weights were not updated"
         )
 
