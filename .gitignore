@@ -30,11 +30,13 @@ Thumbs.db
 config/__pycache__/
 output/
 
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Ignore all __pycache__ directories
 **/__pycache__/
-
-# Ignore compiled Python files
-*.pyc
 
 # Ignore the entire output directory
 output/
