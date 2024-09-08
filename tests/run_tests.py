@@ -17,9 +17,8 @@ class TestResult(unittest.TestResult):
         self.failed_tests.append(test)
 
 def run_tests(test_suite):
-    result = TestResult()
     runner = unittest.TextTestRunner(verbosity=2, resultclass=TestResult)
-    runner.run(test_suite, result=result)
+    result = runner.run(test_suite)
     return result.failed_tests
 
 def run_all_tests():
