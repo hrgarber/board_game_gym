@@ -4,7 +4,8 @@ def list_first_layer():
     ignore_dirs = {
         '__pycache__',
         'output',
-        'logs'
+        'logs',
+        'reports'
     }
     
     ignore_files = {
