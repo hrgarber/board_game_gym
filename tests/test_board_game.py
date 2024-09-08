@@ -13,6 +13,13 @@ class TestBoardGameEnv(unittest.TestCase):
         self.assertTrue(
             result, f"Failed to block horizontal potential win:\n{self.env.board}"
         )
+        
+    def test_blocking_potential_win_horizontal_edge(self):
+        self.env.board[0, 4:] = 1
+        result = self.env.check_blocking_move(0, 3)
+        self.assertTrue(
+            result, f"Failed to block horizontal potential win at edge:\n{self.env.board}"
+        )
 
     def test_blocking_potential_win_vertical(self):
         self.env.board[:4, 0] = 1

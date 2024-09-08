@@ -135,16 +135,12 @@ class TestDQNAgent(unittest.TestCase):
 
     def test_target_model_update_frequency(self):
         initial_target_weights = self.agent.target_model.fc1.weight.data.clone()
-        print(f"Update target every: {self.agent.update_target_every}")
 
         # Train for update_target_every + 1 episodes to ensure an update occurs
         self.agent.train(self.env, self.agent.update_target_every + 1, 10)
 
         updated_weights = self.agent.target_model.fc1.weight.data
-        weight_difference = torch.sum(
-            torch.abs(initial_target_weights - updated_weights)
-        )
-        print(f"Weight difference: {weight_difference.item()}")
+        weight_difference = torch.sum(torch.abs(initial_target_weights - updated_weights))
 
         self.assertGreater(
             weight_difference.item(), 0, "Target model weights were not updated"
@@ -154,6 +150,12 @@ class TestDQNAgent(unittest.TestCase):
         self.assertFalse(
             torch.allclose(initial_target_weights, updated_weights, atol=1e-6),
             "Target model weights were not updated significantly",
+        )
+
+        # Check if the update frequency is correct
+        self.assertEqual(
+            self.agent.update_target_counter, 1,
+            "Target model update frequency is incorrect"
         )
 
 
