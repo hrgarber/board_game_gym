@@ -1,17 +1,19 @@
 import argparse
 import json
 import os
+import sys
 from typing import Any, Dict
 
-from src.utils.hyperparameter_tuning import (
+# Add the project root directory to the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.append(project_root)
+
+from utils.hyperparameter_tuning import (
     bayesian_optimization,
     grid_search,
     random_search,
     visualize_tuning_results,
 )
-
-# Add the project root directory to the Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 
 def load_config(config_path: str) -> Dict[str, Any]:

@@ -16,10 +16,10 @@ from tqdm import tqdm
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(project_root)
 
-from src.agents.dqn_agent import DQNAgent
-from src.agents.q_learning_agent import QLearningAgent
-from src.environments.board_game_env import BoardGameEnv
-from src.utils.utils import evaluate_agent
+from agents.dqn_agent import DQNAgent
+from agents.q_learning_agent import QLearningAgent
+from environments.board_game_env import BoardGameEnv
+from utils.utils import evaluate_agent
 
 # Set up logging
 log_dir = os.path.join(project_root, "logs")

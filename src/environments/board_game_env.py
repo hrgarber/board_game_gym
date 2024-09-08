@@ -1,5 +1,11 @@
 import gym
 import numpy as np
+import sys
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = Path(__file__).parents[2]
+sys.path.insert(0, str(project_root))
 
 class BoardGameEnv(gym.Env):
     def __init__(self, board_size=8):
