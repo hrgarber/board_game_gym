@@ -762,9 +762,7 @@ def visualize_tuning_results(results, method):
                 optuna.visualization.plot_optimization_history(study)
                 plt.title("Bayesian Optimization History")
             else:
-                print(
-                    "Warning: No trials found in the study for Bayesian optimization."
-                )
+                print("Warning: No trials found in the study for Bayesian optimization.")
         else:
             print(
                 "Warning: 'study' not found or is None in results for Bayesian optimization."
