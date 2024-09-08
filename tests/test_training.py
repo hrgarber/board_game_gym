@@ -164,7 +164,7 @@ class TestTraining(TestCase):
             q_results = self.train_agent(
                 self.env, self.q_learning_agent, num_episodes, max_steps
             )
-            
+
             # Train DQN agent
             dqn_results = self.train_agent(
                 self.env,
