@@ -12,83 +12,35 @@ The project consists of several components:
 - Hyperparameter tuning using grid search, random search, and Bayesian optimization
 - A basic web interface for playing the game
 
-## Instructions
-
-The game is played on an 8x8 grid board. Two players take turns placing their pieces on the board, with the goal of forming an unbroken chain of five pieces horizontally, vertically, or diagonally.
-
-Key rules:
-1. Players alternate turns, placing one piece at a time on an empty cell.
-2. The first player to create a continuous line of five of their pieces wins the game.
-3. If the board fills up before either player achieves five in a row, the game is a draw.
-4. Once a piece is placed, it cannot be moved or removed.
-
-The AI opponent uses reinforcement learning techniques to improve its strategy over time.
-
-## Roadmap
-
-### Completed
-1. Set up the project structure with necessary directories and files
-2. Implemented the core game environment (BoardGameEnv) in Python
-3. Created the Q-learning agent (QLearningAgent) in Python
-4. Developed the Deep Q-Network agent (DQNAgent) in Python
-5. Implemented utility functions for saving/loading models and visualizing results
-6. Created Jupyter notebooks for training both Q-learning and DQN agents
-7. Implemented a basic web interface for the game using HTML, CSS, and JavaScript
-8. Added unit tests for the board game environment, Q-learning agent, and DQN agent
-9. Created a main script for playing against the trained AI
-10. Implemented Alpha-Beta Pruning algorithm for improved decision-making
-11. Implemented hyperparameter tuning using grid search, random search, and Bayesian optimization
-12. Created an agent evaluation framework for assessing and comparing agent performance
-
-### In Progress
-13. Refining and optimizing the training process for Q-learning, DQN, and Alpha-Beta Pruning agents
-14. Improving the web interface to allow playing against the trained AI
-
-### Upcoming
-15. Implement cross-platform compatibility checks and optimizations
-16. Add more comprehensive documentation and comments to the code
-17. Perform thorough testing and debugging of all components
-18. Create a user guide for setting up and using the project
-19. Optimize performance for larger board sizes and more complex game rules
-20. Implement additional AI algorithms for comparison (e.g., SARSA, A3C)
-21. Add support for multiplayer games (AI vs AI, Human vs Human)
-22. Develop a graphical user interface (GUI) for easier interaction with the game and AI
-
 ## File Structure
 
-- `src/`
-  - `environments/`
-    - `board_game_env.py`: Contains the custom OpenAI Gym environment for the board game.
-  - `agents/`
-    - `q_learning_agent.py`: Implements the Q-learning agent using PyTorch.
-    - `dqn_agent.py`: Implements the DQN agent using PyTorch.
-  - `utils/`
-    - `utils.py`: Contains utility functions.
-    - `hyperparameter_tuning.py`: Implements grid search, random search, and Bayesian optimization for hyperparameter tuning.
-    - `agent_evaluation.py`: Contains functions for evaluating agent performance.
-    - `training_utils.py`: Contains utilities for training agents.
-- `game_files/`: Contains game-related files for the web interface.
-- `notebooks/`
-  - `train_q_learning_ai.ipynb`: Jupyter notebook for training the AI using Q-learning.
-  - `train_dqn_ai.ipynb`: Jupyter notebook for training the AI using DQN.
-  - `hyperparameter_tuning.ipynb`: Jupyter notebook for hyperparameter tuning.
-- `main.py`: Provides a command-line interface for playing against the trained AI.
-- `requirements.txt`: Lists the required Python packages.
-- `models/`: Directory for storing trained model versions.
-- `tests/`: Contains unit tests for various components of the project.
-
-## Requirements
-
-- Python 3.7 or later
-- OpenAI Gym
-- NumPy
-- Matplotlib
-- Jupyter Notebook
-- PyTorch
-- tqdm
-- Optuna (for Bayesian optimization)
-- Pandas
-- Seaborn
+```
+.
+├── src/
+│   ├── environments/
+│   │   └── board_game_env.py
+│   ├── agents/
+│   │   ├── q_learning_agent.py
+│   │   └── dqn_agent.py
+│   └── utils/
+│       ├── utils.py
+│       ├── hyperparameter_tuning.py
+│       ├── agent_evaluation.py
+│       └── training_utils.py
+├── game_files/
+├── notebooks/
+│   ├── train_q_learning_ai.ipynb
+│   ├── train_dqn_ai.ipynb
+│   └── hyperparameter_tuning.ipynb
+├── tests/
+├── models/
+├── config/
+├── logs/
+├── docs/
+├── scripts/
+├── main.py
+└── requirements.txt
+```
 
 ## Installation
 
@@ -155,22 +107,9 @@ You have two options for training the AI:
    ```
 2. Follow the instructions in the notebook to train the AI using DQN.
 
-Both notebooks will automatically use GPU acceleration if available on Windows with a CUDA-enabled device. They will visualize the training progress and save the trained models.
-
-Key features of the training process:
-- Visualization of rewards and win rates over time
-- GPU acceleration support for faster training on Windows with CUDA-enabled devices
-- Ability to save and load trained models
-
 ### Hyperparameter Tuning
 
-To perform hyperparameter tuning, you can use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py`:
-
-1. Grid Search: `grid_search(agent_type, param_grid, num_episodes, eval_episodes)`
-2. Random Search: `random_search(agent_type, param_ranges, num_iterations, num_episodes, eval_episodes)`
-3. Bayesian Optimization: `bayesian_optimization(agent_type, param_ranges, n_trials, num_episodes, eval_episodes)`
-
-These functions allow you to find the best hyperparameters for both Q-learning and DQN agents.
+Use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py` for hyperparameter tuning.
 
 ### Playing the Game
 
@@ -178,16 +117,11 @@ These functions allow you to find the best hyperparameters for both Q-learning a
    ```
    python main.py --agent [q_learning/dqn] --model [path_to_model_file]
    ```
-   Replace `[q_learning/dqn]` with your choice of agent and `[path_to_model_file]` with the path to your trained model file.
 2. Follow the prompts to make moves and interact with the AI.
 
 ### Web Interface
 
-To play the game using the web interface:
-
-1. Open the `game_files/index.html` file in a web browser.
-2. Use the buttons to train the AI, start a new game, or reset the board.
-3. Click on the cells to make your moves when playing against the AI.
+Open the `game_files/index.html` file in a web browser to play the game using the web interface.
 
 ## Running Tests
 
@@ -196,58 +130,6 @@ To run the tests for this project, use the following command:
 ```
 python -m unittest discover tests
 ```
-
-This will run all the tests in the `tests` directory and report the results.
-
-## Implementations
-
-### Q-learning
-
-The Q-learning implementation uses a tabular approach with PyTorch tensors:
-- Stores Q-values in a PyTorch tensor for efficient updates and GPU acceleration.
-- Uses an epsilon-greedy policy for action selection.
-- Implements experience replay for improved learning stability.
-
-### Deep Q-Network (DQN)
-
-The DQN implementation uses a neural network to approximate the Q-function:
-- Uses a PyTorch neural network for Q-value approximation.
-- Implements experience replay and a separate target network for improved stability during training.
-- Uses an epsilon-greedy policy with decaying exploration rate.
-
-### Hyperparameter Tuning
-
-The project includes three methods for hyperparameter tuning:
-- Grid Search: Exhaustively searches through a predefined set of hyperparameters.
-- Random Search: Randomly samples hyperparameters from defined ranges.
-- Bayesian Optimization: Uses Optuna to perform efficient hyperparameter optimization.
-
-### Agent Evaluation
-
-The project now includes an agent evaluation framework:
-- `evaluate_agent`: Runs the agent in the environment without exploration.
-- `calculate_metrics`: Processes evaluation results and calculates performance metrics.
-- `plot_learning_curve`: Visualizes episode rewards over time.
-- `plot_average_reward`: Visualizes average reward per episode.
-- `plot_loss_curve`: Visualizes the loss curve for DQN.
-
-## Customization
-
-You can customize various aspects of the project:
-
-- Modify the `BoardGameEnv` class in `board_game_env.py` to change the game rules or board size.
-- Adjust the hyperparameters in `q_learning_agent.py` and `dqn_agent.py` to experiment with different learning strategies.
-- Modify the training process in the Jupyter notebooks to change the number of episodes, batch size, or add different visualizations.
-- Experiment with different neural network architectures in the `DQN` class for improved performance.
-- Use the hyperparameter tuning functions to find optimal configurations for your specific use case.
-
-## Cross-Platform Compatibility
-
-This project is designed to work on both Windows and Mac:
-- On Windows with a CUDA-enabled GPU, the training process will automatically use GPU acceleration for faster computations.
-- On Mac or Windows without a CUDA-enabled GPU, the training process will run on the CPU.
-
-The code automatically detects the available hardware and adjusts accordingly, ensuring seamless operation across different platforms.
 
 ## Contributing
 
