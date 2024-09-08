@@ -8,7 +8,7 @@ sys.path.insert(0, str(project_root))
 
 import numpy as np
 
-from board_game_gym.config import (
+from config.config import (
     LEARNING_RATE,
     DISCOUNT_FACTOR,
     EPSILON,

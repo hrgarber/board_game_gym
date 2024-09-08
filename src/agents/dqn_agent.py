@@ -12,7 +12,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from board_game_gym.config import (
+from config.config import (
     LEARNING_RATE,
     DISCOUNT_FACTOR,
     EPSILON,
