@@ -16,6 +16,18 @@ The project consists of several components:
 
 ```
 .
+├── config/
+│   └── config.py
+├── docs/
+│   └── README.md
+├── game_files/
+├── logs/
+├── notebooks/
+│   ├── train_q_learning_ai.ipynb
+│   ├── train_dqn_ai.ipynb
+│   └── hyperparameter_tuning.ipynb
+├── output/
+├── scripts/
 ├── src/
 │   ├── environments/
 │   │   └── board_game_env.py
@@ -27,18 +39,10 @@ The project consists of several components:
 │       ├── hyperparameter_tuning.py
 │       ├── agent_evaluation.py
 │       └── training_utils.py
-├── game_files/
-├── notebooks/
-│   ├── train_q_learning_ai.ipynb
-│   ├── train_dqn_ai.ipynb
-│   └── hyperparameter_tuning.ipynb
 ├── tests/
-├── models/
-├── config/
-├── logs/
-├── docs/
-├── scripts/
+├── list_files.py
 ├── main.py
+├── pytest.ini
 └── requirements.txt
 ```
 
@@ -128,7 +132,7 @@ Open the `game_files/index.html` file in a web browser to play the game using th
 To run the tests for this project, use the following command:
 
 ```
-python -m unittest discover tests
+python -m pytest
 ```
 
 ## Contributing

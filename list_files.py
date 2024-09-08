@@ -2,7 +2,7 @@ import os
 
 def list_first_layer():
     ignore_files = {
-        'pytest.ini', 'config.py', 'list_files.py', 'README.md',
+        'list_files.py', 'README.md',
         'hyperparameter_config.json', 'error_log.txt'
     }
     ignore_extensions = {'.pyc', '.log', '.png', '.txt'}
@@ -10,7 +10,7 @@ def list_first_layer():
     for root, dirs, files in os.walk('.', topdown=True):
         print("Directories:")
         for name in sorted(dirs):
-            if not name.startswith('.'):  # Ignore hidden directories
+            if not name.startswith('.') and name != '__pycache__':  # Ignore hidden directories and __pycache__
                 print(f"  {name}")
         
         print("\nFiles:")
