@@ -154,6 +154,7 @@ class TestTraining(TestCase):
 
         # Mock the train_agent function to return predetermined results
         def mock_train_agent(*args, **kwargs):
+            print("Mock train_agent called")
             return [1, 2, 3, 4, 5], [0.1, 0.2, 0.3, 0.4, 0.5]
 
         # Replace the actual train_agent function with our mock
@@ -166,6 +167,7 @@ class TestTraining(TestCase):
             q_results = train_agent(
                 self.env, self.q_learning_agent, num_episodes, max_steps
             )
+            print(f"Q-Learning results: {q_results}")
 
             # Train DQN agent
             dqn_results = train_agent(
@@ -176,20 +178,21 @@ class TestTraining(TestCase):
                 batch_size,
                 update_target_every,
             )
+            print(f"DQN results: {dqn_results}")
 
             # Test that the results are in the expected format
-            self.assertEqual(len(q_results), 2)
-            self.assertEqual(len(dqn_results), 2)
-            self.assertEqual(len(q_results[0]), 5)
-            self.assertEqual(len(q_results[1]), 5)
-            self.assertEqual(len(dqn_results[0]), 5)
-            self.assertEqual(len(dqn_results[1]), 5)
+            self.assertEqual(len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}")
+            self.assertEqual(len(dqn_results), 2, f"Expected 2 items in dqn_results, got {len(dqn_results)}")
+            self.assertEqual(len(q_results[0]), 5, f"Expected 5 items in q_results[0], got {len(q_results[0])}")
+            self.assertEqual(len(q_results[1]), 5, f"Expected 5 items in q_results[1], got {len(q_results[1])}")
+            self.assertEqual(len(dqn_results[0]), 5, f"Expected 5 items in dqn_results[0], got {len(dqn_results[0])}")
+            self.assertEqual(len(dqn_results[1]), 5, f"Expected 5 items in dqn_results[1], got {len(dqn_results[1])}")
 
             # Test that the values are as expected
-            self.assertEqual(q_results[0], [1, 2, 3, 4, 5])
-            self.assertEqual(q_results[1], [0.1, 0.2, 0.3, 0.4, 0.5])
-            self.assertEqual(dqn_results[0], [1, 2, 3, 4, 5])
-            self.assertEqual(dqn_results[1], [0.1, 0.2, 0.3, 0.4, 0.5])
+            self.assertEqual(q_results[0], [1, 2, 3, 4, 5], f"Unexpected q_results[0]: {q_results[0]}")
+            self.assertEqual(q_results[1], [0.1, 0.2, 0.3, 0.4, 0.5], f"Unexpected q_results[1]: {q_results[1]}")
+            self.assertEqual(dqn_results[0], [1, 2, 3, 4, 5], f"Unexpected dqn_results[0]: {dqn_results[0]}")
+            self.assertEqual(dqn_results[1], [0.1, 0.2, 0.3, 0.4, 0.5], f"Unexpected dqn_results[1]: {dqn_results[1]}")
 
         finally:
             # Restore the original train_agent function
