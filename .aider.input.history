@@ -175,3 +175,33 @@
 
 # 2024-09-08 01:00:55.248416
 +/run git add .
+
+# 2024-09-08 01:00:55.478569
++/run git commit -m "Refactor: Reorganize project structure"
+
+# 2024-09-08 01:03:02.627727
++/run mkdir -p config notebooks logs docs scripts
+
+# 2024-09-08 01:03:02.839409
++/run mv logs/hyperparameter_tuning_20240906_001503.log logs/
+
+# 2024-09-08 01:03:03.026908
++/run mv tests/test_board_game.py tests/
+
+# 2024-09-08 01:03:03.217006
++/run mv tests/test_q_learning_agent.py tests/
+
+# 2024-09-08 01:03:03.381526
++/run mv docs/repo_structure.txt docs/
+
+# 2024-09-08 01:03:03.572823
++/run mv .gitignore .gitignore.bak
+
+# 2024-09-08 01:03:03.763354
++/run cat > .gitignore < EOF
+
+# 2024-09-08 01:03:03.947932
++/run EOF
+
+# 2024-09-08 01:03:04.133913
++/run git add .
