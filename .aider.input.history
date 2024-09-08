@@ -328,3 +328,48 @@
 
 # 2024-09-08 01:31:53.325113
 +/run git add .
+
+# 2024-09-08 01:31:53.580572
++/run git commit -m "chore: Update .gitignore to exclude compiled Python files and output directory"
+
+# 2024-09-08 01:31:53.799794
++/run git push origin refactor-codebase
+
+# 2024-09-08 01:32:01.861607
++run all the tests
+
+# 2024-09-08 01:34:10.092543
++/run python -m pytest tests/
+
+# 2024-09-08 01:37:03.728547
++i want you to make a plan to fix those 2 errors and then do it
+
+# 2024-09-08 01:38:11.674282
++/run python -m pytest tests/
+
+# 2024-09-08 01:42:19.265416
++just run the dnq agent tests
+
+# 2024-09-08 01:43:05.630020
++/run python -m pytest tests/test_dqn_agent.py
+
+# 2024-09-08 01:43:12.755262
++fix that error
+
+# 2024-09-08 01:43:55.926217
++/run python -m pytest tests/test_dqn_agent.py
+
+# 2024-09-08 01:44:50.734354
++check that the file has been update since the refactor because im guessing its not importing a file weve moved correectly or something
+
+# 2024-09-08 01:45:59.418162
++/run python -m pytest tests/test_dqn_agent.py::TestDQNAgent::test_target_model_update_frequency
+
+# 2024-09-08 01:46:38.886467
++/run git status
+
+# 2024-09-08 01:46:47.568755
++add commit push
+
+# 2024-09-08 01:47:13.164105
++/run git add .
