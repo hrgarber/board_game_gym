@@ -17,7 +17,7 @@ class TestResult(unittest.TestResult):
         self.failed_tests.append(test)
 
 def run_tests(test_suite):
-    runner = unittest.TextTestRunner(verbosity=2, resultclass=TestResult)
+    runner = unittest.TextTestRunner(verbosity=0, resultclass=TestResult, stream=None)
     result = runner.run(test_suite)
     return result.failed_tests
 
@@ -27,30 +27,30 @@ def run_all_tests():
         create_dqn_agent_suite(),
         create_training_suite()
     ]
+    total_tests = 0
     failed_tests = []
 
     for suite in all_suites:
+        total_tests += suite.countTestCases()
         failed_tests.extend(run_tests(suite))
 
-    while failed_tests:
-        print("\nRe-running failed tests:")
-        retry_suite = unittest.TestSuite(failed_tests)
-        failed_tests = run_tests(retry_suite)
-
-    if not failed_tests:
-        print("\nAll tests passed successfully!")
+    print_summary(total_tests, failed_tests)
 
 def run_specific_tests(create_suite_func):
     suite = create_suite_func()
+    total_tests = suite.countTestCases()
     failed_tests = run_tests(suite)
 
-    while failed_tests:
-        print("\nRe-running failed tests:")
-        retry_suite = unittest.TestSuite(failed_tests)
-        failed_tests = run_tests(retry_suite)
+    print_summary(total_tests, failed_tests)
 
-    if not failed_tests:
-        print("\nAll tests passed successfully!")
+def print_summary(total_tests, failed_tests):
+    print(f"\nRan {total_tests} tests")
+    if failed_tests:
+        print(f"FAILED (failures={len(failed_tests)})")
+        for test in failed_tests:
+            print(f"  {test}")
+    else:
+        print("OK")
 
 if __name__ == "__main__":
     import sys
