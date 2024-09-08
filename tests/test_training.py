@@ -157,17 +157,18 @@ class TestTraining(TestCase):
             return [1, 2, 3, 4, 5], [0.1, 0.2, 0.3, 0.4, 0.5]
 
         # Replace the actual train_agent function with our mock
-        original_train_agent = self.train_agent
-        self.train_agent = mock_train_agent
+        from src.utils.training_utils import train_agent as original_train_agent
+        import src.utils.training_utils
+        src.utils.training_utils.train_agent = mock_train_agent
 
         try:
             # Train Q-Learning agent
-            q_results = self.train_agent(
+            q_results = train_agent(
                 self.env, self.q_learning_agent, num_episodes, max_steps
             )
 
             # Train DQN agent
-            dqn_results = self.train_agent(
+            dqn_results = train_agent(
                 self.env,
                 self.dqn_agent,
                 num_episodes,
@@ -192,7 +193,7 @@ class TestTraining(TestCase):
 
         finally:
             # Restore the original train_agent function
-            self.train_agent = original_train_agent
+            src.utils.training_utils.train_agent = original_train_agent
 
     def test_epsilon_decay_during_training(self):
         num_episodes = 100
