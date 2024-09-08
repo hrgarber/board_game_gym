@@ -1,31 +1,57 @@
-# Refactor Plan
+# Refactor Plan and Progress
 
-## 1. Consolidate Configuration Files
-- Move `config.py`, `pytest.ini`, and `tuning_config.json` to a new directory called `config/`.
+## Completed Tasks
+1. Consolidate Configuration Files
+   - Config files have been moved to the 'config/' directory.
 
-## 2. Organize Notebooks
-- Move all Jupyter notebooks from `notebooks/` to a new directory called `notebooks/`.
+2. Organize Notebooks
+   - Notebooks are now in the 'notebooks/' directory.
 
-## 3. Consolidate Logs
-- Move all log files from `logs/` to a new directory called `logs/`.
+3. Consolidate Logs
+   - Log files are in the 'logs/' directory.
 
-## 4. Organize Test Files
-- Move all test files from `tests/` to a new directory called `tests/`.
+4. Organize Test Files
+   - Test files are in the 'tests/' directory.
 
-## 5. Consolidate Documentation
-- Move `README.md`, `ROADMAP.md`, and `docs/` to a new directory called `docs/`.
+5. Consolidate Documentation
+   - Documentation files are in the 'docs/' directory.
 
-## 6. Organize Source Code
-- Ensure all source code files are under `src/`.
+6. Organize Source Code
+   - Source code is under 'src/'.
 
-## 7. Consolidate Miscellaneous Files
-- Move `requirements.txt`, `run_tests.py`, and other miscellaneous files to a new directory called `scripts/`.
+7. Consolidate Miscellaneous Files
+   - 'requirements.txt' and 'run_tests.py' have been moved to 'scripts/'.
 
-## 8. Update `.gitignore`
-- Update `.gitignore` to reflect the new directory structure.
+## Remaining Tasks
+1. Update .gitignore
+   - Ensure .gitignore correctly reflects the new project structure.
 
-### Steps to Follow
-1. Create the necessary directories.
-2. Move files to their respective directories.
-3. Update `.gitignore` to reflect the new structure.
-4. Commit changes.
+2. Review and Update Import Statements
+   - Check all files for import statements that may need updating due to the new structure.
+
+3. Update Documentation
+   - Update README.md and other documentation to reflect the new project structure.
+
+4. Review CI/CD Configuration
+   - If applicable, update any CI/CD configuration files to work with the new structure.
+
+5. Review config/config.py
+   - Check if MODEL_DIR path needs updating to reflect the new structure.
+
+6. Create or Update src/__init__.py
+   - Ensure proper importing of modules within the src directory.
+
+7. Final Testing
+   - Run all tests to ensure the refactoring hasn't broken any functionality.
+
+8. Final Review
+   - Conduct a final review of the project structure and make any necessary adjustments.
+
+## Next Steps
+1. Address any issues found during the final testing and review.
+2. Consider implementing a virtual environment for better dependency management.
+3. Update the project's documentation with any new setup or running instructions.
+4. Commit final changes and push to the repository.
+
+## Assessment
+The refactoring plan has been largely successful in reorganizing the project structure. The new structure improves maintainability and separation of concerns. However, there are still a few tasks to complete to ensure all aspects of the project align with the new structure.
