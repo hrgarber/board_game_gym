@@ -1,14 +1,6 @@
 import unittest
-import sys
-from pathlib import Path
-
-# Add the project root to the Python path
-project_root = Path(__file__).parents[2]
-sys.path.insert(0, str(project_root))
-
 import numpy as np
-
-from board_game_gym.src.environments.board_game_env import BoardGameEnv
+from src.environments.board_game_env import BoardGameEnv
 
 class TestBoardGameEnv(unittest.TestCase):
     def setUp(self):

@@ -1,12 +1,9 @@
 import unittest
-
 import numpy as np
 import torch
-
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
-
 
 class TestCase(unittest.TestCase):
     def setUp(self):
