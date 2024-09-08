@@ -306,10 +306,14 @@ def visualize_tuning_results(results, method):
                 optuna.visualization.plot_slice(study)
                 plt.title("Slice Plot")
             else:
-                print(f"Not enough trials ({len(study.trials)}) to visualize Bayesian optimization results.")
+                print(
+                    f"Not enough trials ({len(study.trials)}) to visualize Bayesian optimization results."
+                )
                 return
         else:
-            print("Error: 'study' not found or is None in results for Bayesian optimization.")
+            print(
+                "Error: 'study' not found or is None in results for Bayesian optimization."
+            )
             return
     else:
         print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")

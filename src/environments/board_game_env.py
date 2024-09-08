@@ -7,6 +7,7 @@ from pathlib import Path
 project_root = Path(__file__).parents[2]
 sys.path.insert(0, str(project_root))
 
+
 class BoardGameEnv(gym.Env):
     def __init__(self, board_size=8):
         super().__init__()
@@ -58,13 +59,21 @@ class BoardGameEnv(gym.Env):
             count = 1
             for i in range(1, 5):
                 r, c = row + i * dr, col + i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
             for i in range(1, 5):
                 r, c = row - i * dr, col - i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
@@ -77,7 +86,7 @@ class BoardGameEnv(gym.Env):
 
     def check_blocking_move(self, row, col):
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        
+
         # Check if the current move completes the player's own winning line
         if self.check_win(row, col):
             return True
@@ -108,13 +117,15 @@ class BoardGameEnv(gym.Env):
                         break
                 else:
                     break
-            
+
             # If the move blocks an opponent's winning move or creates a winning opportunity
             if count_opponent >= 3 or count_same >= 4:
                 return True
 
         # Check if the move blocks a potential future winning move for the opponent
-        self.board[row, col] = -self.current_player  # Temporarily place opponent's piece
+        self.board[
+            row, col
+        ] = -self.current_player  # Temporarily place opponent's piece
         if self.check_win(row, col):
             self.board[row, col] = 0  # Reset the board
             return True
@@ -129,13 +140,21 @@ class BoardGameEnv(gym.Env):
             count = 1
             for i in range(1, line_length):
                 r, c = row + i * dr, col + i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
             for i in range(1, line_length):
                 r, c = row - i * dr, col - i * dc
-                if 0 <= r < self.board_size and 0 <= c < self.board_size and self.board[r, c] == player:
+                if (
+                    0 <= r < self.board_size
+                    and 0 <= c < self.board_size
+                    and self.board[r, c] == player
+                ):
                     count += 1
                 else:
                     break
