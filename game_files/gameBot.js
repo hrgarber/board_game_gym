@@ -3,98 +3,90 @@
 console.log("Loading gameBot.js");
 
 class BoardGame {
-    constructor(boardSize = 8) {
-        console.log(`Creating BoardGame with size ${boardSize}`);
-        this.boardSize = boardSize;
+    constructor() {
+        console.log("Creating BoardGame");
+        this.boardSize = { rows: 12, cols: 8 };
         this.board = this.initializeBoard();
-        this.currentPlayer = 1; // 1 for X, -1 for O
+        this.currentPlayer = 1; // 1 for White, -1 for Black
         this.gameOver = false;
         this.winner = null;
     }
 
     initializeBoard() {
-        return Array(this.boardSize).fill().map(() => Array(this.boardSize).fill(0));
+        return Array(this.boardSize.rows).fill().map(() => Array(this.boardSize.cols).fill(0));
     }
 
-    makeMove(row, col) {
+    makeMove(row, col, pieceType) {
         if (this.gameOver || this.board[row][col] !== 0) {
             return false;
         }
-        this.board[row][col] = this.currentPlayer;
-        if (this.checkWin(row, col)) {
+
+        if (pieceType === 'permanent') {
+            this.board[row][col] = -this.currentPlayer * 2; // Use 2 or -2 for permanent pieces
+            this.flipAdjacentPieces(row, col);
+        } else {
+            this.board[row][col] = this.currentPlayer;
+        }
+
+        if (this.checkWin()) {
             this.gameOver = true;
             this.winner = this.currentPlayer;
-        } else if (this.isBoardFull() || !this.isWinPossible()) {
-            this.gameOver = true;
-            this.winner = null; // It's a draw
         } else {
             this.currentPlayer *= -1; // Switch player
         }
         return true;
     }
 
-    checkWin(row, col) {
-        const directions = [
-            [0, 1], [1, 0], [1, 1], [1, -1] // horizontal, vertical, diagonal
-        ];
-        
-        for (const [dx, dy] of directions) {
-            let count = 1;
-            for (const factor of [-1, 1]) {
-                for (let i = 1; i < 5; i++) {
-                    const newRow = row + factor * i * dx;
-                    const newCol = col + factor * i * dy;
-                    if (
-                        newRow < 0 || newRow >= this.boardSize ||
-                        newCol < 0 || newCol >= this.boardSize ||
-                        this.board[newRow][newCol] !== this.board[row][col]
-                    ) {
-                        break;
-                    }
-                    count++;
+    flipAdjacentPieces(row, col) {
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                if (i === 0 && j === 0) continue;
+                const newRow = row + i;
+                const newCol = col + j;
+                if (
+                    newRow >= 0 && newRow < this.boardSize.rows &&
+                    newCol >= 0 && newCol < this.boardSize.cols &&
+                    Math.abs(this.board[newRow][newCol]) === 1 // Only flip regular pieces
+                ) {
+                    this.board[newRow][newCol] *= -1;
                 }
             }
-            if (count >= 5) return true;
+        }
+    }
+
+    checkWin() {
+        // Check for a path from side A to side B
+        const visited = Array(this.boardSize.rows).fill().map(() => Array(this.boardSize.cols).fill(false));
+        for (let col = 0; col < this.boardSize.cols; col++) {
+            if (Math.abs(this.board[0][col]) === Math.abs(this.currentPlayer)) {
+                if (this.dfs(0, col, visited)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
 
-    isBoardFull() {
-        return this.board.every(row => row.every(cell => cell !== 0));
-    }
+    dfs(row, col, visited) {
+        if (row === this.boardSize.rows - 1) return true; // Reached side B
+        visited[row][col] = true;
 
-    isWinPossible() {
-        const directions = [
-            [0, 1], [1, 0], [1, 1], [1, -1] // horizontal, vertical, diagonal
-        ];
-        
-        for (let row = 0; row < this.boardSize; row++) {
-            for (let col = 0; col < this.boardSize; col++) {
-                if (this.board[row][col] !== 0) continue; // Skip occupied cells
-                
-                for (const [dx, dy] of directions) {
-                    let xCount = 0, oCount = 0, emptyCount = 1; // Start with 1 empty (current cell)
-                    
-                    for (let i = -4; i <= 4; i++) {
-                        const newRow = row + i * dx;
-                        const newCol = col + i * dy;
-                        
-                        if (newRow < 0 || newRow >= this.boardSize || newCol < 0 || newCol >= this.boardSize) {
-                            continue;
-                        }
-                        
-                        if (this.board[newRow][newCol] === 1) xCount++;
-                        else if (this.board[newRow][newCol] === -1) oCount++;
-                        else emptyCount++;
-                        
-                        if (xCount + emptyCount >= 5 || oCount + emptyCount >= 5) {
-                            return true; // A win is still possible
-                        }
-                    }
+        const directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+        for (const [dx, dy] of directions) {
+            const newRow = row + dx;
+            const newCol = col + dy;
+            if (
+                newRow >= 0 && newRow < this.boardSize.rows &&
+                newCol >= 0 && newCol < this.boardSize.cols &&
+                !visited[newRow][newCol] &&
+                Math.abs(this.board[newRow][newCol]) === Math.abs(this.currentPlayer)
+            ) {
+                if (this.dfs(newRow, newCol, visited)) {
+                    return true;
                 }
             }
         }
-        return false; // No win is possible
+        return false;
     }
 
     resetGame() {
@@ -107,12 +99,12 @@ class BoardGame {
     getGameStatus() {
         if (this.gameOver) {
             if (this.winner) {
-                return `Player ${this.winner === 1 ? 'X' : 'O'} wins!`;
+                return `Player ${this.winner === 1 ? 'White' : 'Black'} wins!`;
             } else {
                 return "It's a draw!";
             }
         } else {
-            return `Current player: ${this.currentPlayer === 1 ? 'X' : 'O'}`;
+            return `Current player: ${this.currentPlayer === 1 ? 'White' : 'Black'}`;
         }
     }
 }
