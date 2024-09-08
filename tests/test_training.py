@@ -147,56 +147,43 @@ class TestTraining(TestCase):
         self.assertEqual(len(dqn_results[1]), num_episodes // 100 + 1)
 
     def test_training_improvement(self):
-        num_episodes = 10  # Reduced number of episodes for faster testing
+        num_episodes = 100  # Increased number of episodes for better training
         max_steps = 100
         batch_size = 32
         update_target_every = 5
 
-        # Mock the train_agent function to return predetermined results
-        def mock_train_agent(*args, **kwargs):
-            print("Mock train_agent called")
-            return [1, 2, 3, 4, 5], [0.1, 0.2, 0.3, 0.4, 0.5]
+        # Train Q-Learning agent
+        q_results = train_agent(
+            self.env, self.q_learning_agent, num_episodes, max_steps
+        )
+        print(f"Q-Learning results: {q_results}")
 
-        # Replace the actual train_agent function with our mock
-        from src.utils.training_utils import train_agent as original_train_agent
-        import src.utils.training_utils
-        src.utils.training_utils.train_agent = mock_train_agent
+        # Train DQN agent
+        dqn_results = train_agent(
+            self.env,
+            self.dqn_agent,
+            num_episodes,
+            max_steps,
+            batch_size,
+            update_target_every,
+        )
+        print(f"DQN results: {dqn_results}")
 
-        try:
-            # Train Q-Learning agent
-            q_results = train_agent(
-                self.env, self.q_learning_agent, num_episodes, max_steps
-            )
-            print(f"Q-Learning results: {q_results}")
+        # Test that the results are in the expected format
+        self.assertEqual(len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}")
+        self.assertEqual(len(dqn_results), 2, f"Expected 2 items in dqn_results, got {len(dqn_results)}")
+        self.assertEqual(len(q_results[0]), num_episodes, f"Expected {num_episodes} items in q_results[0], got {len(q_results[0])}")
+        self.assertEqual(len(q_results[1]), num_episodes // 100 + 1, f"Expected {num_episodes // 100 + 1} items in q_results[1], got {len(q_results[1])}")
+        self.assertEqual(len(dqn_results[0]), num_episodes, f"Expected {num_episodes} items in dqn_results[0], got {len(dqn_results[0])}")
+        self.assertEqual(len(dqn_results[1]), num_episodes // 100 + 1, f"Expected {num_episodes // 100 + 1} items in dqn_results[1], got {len(dqn_results[1])}")
 
-            # Train DQN agent
-            dqn_results = train_agent(
-                self.env,
-                self.dqn_agent,
-                num_episodes,
-                max_steps,
-                batch_size,
-                update_target_every,
-            )
-            print(f"DQN results: {dqn_results}")
+        # Test that the training shows improvement
+        self.assertGreater(q_results[1][-1], q_results[1][0], "Q-Learning agent did not show improvement")
+        self.assertGreater(dqn_results[1][-1], dqn_results[1][0], "DQN agent did not show improvement")
 
-            # Test that the results are in the expected format
-            self.assertEqual(len(q_results), 2, f"Expected 2 items in q_results, got {len(q_results)}")
-            self.assertEqual(len(dqn_results), 2, f"Expected 2 items in dqn_results, got {len(dqn_results)}")
-            self.assertEqual(len(q_results[0]), 5, f"Expected 5 items in q_results[0], got {len(q_results[0])}")
-            self.assertEqual(len(q_results[1]), 5, f"Expected 5 items in q_results[1], got {len(q_results[1])}")
-            self.assertEqual(len(dqn_results[0]), 5, f"Expected 5 items in dqn_results[0], got {len(dqn_results[0])}")
-            self.assertEqual(len(dqn_results[1]), 5, f"Expected 5 items in dqn_results[1], got {len(dqn_results[1])}")
-
-            # Test that the values are as expected
-            self.assertEqual(q_results[0], [1, 2, 3, 4, 5], f"Unexpected q_results[0]: {q_results[0]}")
-            self.assertEqual(q_results[1], [0.1, 0.2, 0.3, 0.4, 0.5], f"Unexpected q_results[1]: {q_results[1]}")
-            self.assertEqual(dqn_results[0], [1, 2, 3, 4, 5], f"Unexpected dqn_results[0]: {dqn_results[0]}")
-            self.assertEqual(dqn_results[1], [0.1, 0.2, 0.3, 0.4, 0.5], f"Unexpected dqn_results[1]: {dqn_results[1]}")
-
-        finally:
-            # Restore the original train_agent function
-            src.utils.training_utils.train_agent = original_train_agent
+        # Test that the final performance is above a certain threshold
+        self.assertGreater(q_results[1][-1], 0.6, "Q-Learning agent final performance below threshold")
+        self.assertGreater(dqn_results[1][-1], 0.6, "DQN agent final performance below threshold")
 
     def test_epsilon_decay_during_training(self):
         num_episodes = 100
