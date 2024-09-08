@@ -1,6 +1,6 @@
 console.log("Starting gameBot.test.js");
 
-const { BoardGame } = require('./gameBot');
+const BoardGame = require('./gameBot');
 
 console.log("BoardGame imported:", BoardGame);
 
