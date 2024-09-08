@@ -175,3 +175,21 @@
 2024-09-08 02:57:24,896 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
 2024-09-08 02:57:25,467 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
 2024-09-08 02:57:25,470 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2024-09-08 12:19:32,030 - INFO - Starting grid search for q_learning agent
+2024-09-08 12:20:50,385 - INFO - Starting grid search for q_learning agent
+2024-09-08 12:22:03,610 - INFO - Starting Bayesian optimization for q_learning agent
+2024-09-08 12:22:03,611 - INFO - Trial 0: Parameters: {'learning_rate': 0.07563321616476477, 'discount_factor': 0.9513651647309613, 'epsilon': 0.2519160419858326, 'epsilon_decay': 0.9978391204974163}, Performance: 0.5
+2024-09-08 12:22:03,611 - INFO - Trial 1: Parameters: {'learning_rate': 0.0012722232658209107, 'discount_factor': 0.912045644384567, 'epsilon': 0.27144000436428894, 'epsilon_decay': 0.9933525557668871}, Performance: 0.5
+2024-09-08 12:22:03,612 - INFO - Trial 2: Parameters: {'learning_rate': 0.03029300897376815, 'discount_factor': 0.9050342691954156, 'epsilon': 0.4406964211523554, 'epsilon_decay': 0.9997594213387491}, Performance: 0.5
+2024-09-08 12:22:03,612 - INFO - Trial 3: Parameters: {'learning_rate': 0.0016850420433006886, 'discount_factor': 0.9141258205732212, 'epsilon': 0.14141456453337922, 'epsilon_decay': 0.9998237664397155}, Performance: 0.5
+2024-09-08 12:22:03,612 - INFO - Trial 4: Parameters: {'learning_rate': 0.005481519958202243, 'discount_factor': 0.9215620969864983, 'epsilon': 0.4697175411576756, 'epsilon_decay': 0.993303296162026}, Performance: 0.5
+2024-09-08 12:22:03,613 - INFO - Bayesian optimization completed. Best parameters: {'learning_rate': 0.07563321616476477, 'discount_factor': 0.9513651647309613, 'epsilon': 0.2519160419858326, 'epsilon_decay': 0.9978391204974163}, Best performance: 0.5
+2024-09-08 12:22:03,631 - INFO - Starting grid search for q_learning agent
+2024-09-08 12:22:03,658 - INFO - Grid search completed. Best parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.995}, Best performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Starting random search for q_learning agent
+2024-09-08 12:22:03,659 - INFO - Parameters: {'learning_rate': 0.0021748261966575417, 'discount_factor': 0.9573670955837202, 'epsilon': 0.1994755729617298, 'epsilon_decay': 0.9937225870430129}, Performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Parameters: {'learning_rate': 0.09215963033125443, 'discount_factor': 0.9661328450406603, 'epsilon': 0.3571434740441891, 'epsilon_decay': 0.995316063883753}, Performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Parameters: {'learning_rate': 0.09275617164720305, 'discount_factor': 0.9177320067004643, 'epsilon': 0.16770578773625228, 'epsilon_decay': 0.9944606803839697}, Performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Parameters: {'learning_rate': 0.09869652906088783, 'discount_factor': 0.9461049690404225, 'epsilon': 0.15600168184795984, 'epsilon_decay': 0.993432562367679}, Performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Parameters: {'learning_rate': 0.04323539102453879, 'discount_factor': 0.9036958783770387, 'epsilon': 0.21687550823827417, 'epsilon_decay': 0.9904899489700798}, Performance: 0.5
+2024-09-08 12:22:03,659 - INFO - Random search completed. Best parameters: {'learning_rate': 0.0021748261966575417, 'discount_factor': 0.9573670955837202, 'epsilon': 0.1994755729617298, 'epsilon_decay': 0.9937225870430129}, Best performance: 0.5
