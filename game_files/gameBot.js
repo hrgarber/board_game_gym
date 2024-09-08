@@ -1,7 +1,10 @@
 // gameBot.js - Board Game Logic
 
+console.log("Loading gameBot.js");
+
 class BoardGame {
     constructor(boardSize = 8) {
+        console.log(`Creating BoardGame with size ${boardSize}`);
         this.boardSize = boardSize;
         this.board = this.initializeBoard();
         this.currentPlayer = 1; // 1 for X, -1 for O
@@ -12,6 +15,7 @@ class BoardGame {
     // ... rest of the class implementation ...
 }
 
+console.log("Exporting BoardGame");
 module.exports = { BoardGame };
 
     initializeBoard() {

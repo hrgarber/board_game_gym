@@ -1,13 +1,21 @@
+console.log("Starting gameBot.test.js");
+
 const { BoardGame } = require('./gameBot');
+
+console.log("BoardGame imported:", BoardGame);
 
 describe('BoardGame', () => {
   let game;
 
   beforeEach(() => {
+    console.log("Creating new BoardGame instance");
     game = new BoardGame(8);
+    console.log("BoardGame instance created:", game);
   });
 
   test('initializes with correct board size', () => {
+    console.log("Testing board size");
+    console.log("Board:", game.board);
     expect(game.board.length).toBe(8);
     expect(game.board[0].length).toBe(8);
   });
