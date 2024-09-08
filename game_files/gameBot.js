@@ -9,6 +9,11 @@ class BoardGame {
         this.winner = null;
     }
 
+    // ... rest of the class implementation ...
+}
+
+module.exports = { BoardGame };
+
     initializeBoard() {
         return Array(this.boardSize).fill().map(() => Array(this.boardSize).fill(0));
     }
