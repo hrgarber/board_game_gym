@@ -25,4 +25,13 @@ jobs:
       - name: Display Black version
         run: black --version
       - name: Run Black
-        run: black --check --diff --color --verbose --line-length 100 ./src
+        run: python scripts/run_black.py
+      - name: Check for changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            echo "Black made changes. Please commit these changes."
+            git diff
+            exit 1
+          else
+            echo "No changes made by Black."
+          fi

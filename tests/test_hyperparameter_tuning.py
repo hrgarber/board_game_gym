@@ -11,6 +11,7 @@ from src.utils.hyperparameter_tuning import (
     visualize_tuning_results,
 )
 
+
 class TestHyperparameterTuning(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
@@ -198,7 +199,9 @@ class TestHyperparameterTuning(unittest.TestCase):
                 optuna.trial.create_trial(
                     params={"learning_rate": np.random.uniform(0.001, 0.1)},
                     distributions={
-                        "learning_rate": optuna.distributions.FloatDistribution(0.001, 0.1)
+                        "learning_rate": optuna.distributions.FloatDistribution(
+                            0.001, 0.1
+                        )
                     },
                     value=np.random.uniform(0.5, 0.8),
                 )
@@ -210,8 +213,12 @@ class TestHyperparameterTuning(unittest.TestCase):
             visualize_tuning_results(random_results, "random")
             visualize_tuning_results(bayesian_results, "bayesian")
         except Exception as e:
-            if "Cannot evaluate parameter importances with only a single trial" in str(e):
-                print("Bayesian optimization visualization skipped due to insufficient trials.")
+            if "Cannot evaluate parameter importances with only a single trial" in str(
+                e
+            ):
+                print(
+                    "Bayesian optimization visualization skipped due to insufficient trials."
+                )
             else:
                 self.fail(f"Visualization failed with unexpected error: {str(e)}")
 

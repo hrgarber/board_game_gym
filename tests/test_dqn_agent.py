@@ -5,6 +5,7 @@ import torch
 from src.agents.dqn_agent import DQNAgent
 from src.environments.board_game_env import BoardGameEnv
 
+
 class TestDQNAgent(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
@@ -135,24 +136,24 @@ class TestDQNAgent(unittest.TestCase):
     def test_target_model_update_frequency(self):
         initial_target_weights = self.agent.target_model.fc1.weight.data.clone()
         print(f"Update target every: {self.agent.update_target_every}")
-        
+
         # Train for update_target_every + 1 episodes to ensure an update occurs
         self.agent.train(self.env, self.agent.update_target_every + 1, 10)
-        
+
         updated_weights = self.agent.target_model.fc1.weight.data
-        weight_difference = torch.sum(torch.abs(initial_target_weights - updated_weights))
-        print(f"Weight difference: {weight_difference.item()}")
-        
-        self.assertGreater(
-            weight_difference.item(),
-            0,
-            "Target model weights were not updated"
+        weight_difference = torch.sum(
+            torch.abs(initial_target_weights - updated_weights)
         )
-        
+        print(f"Weight difference: {weight_difference.item()}")
+
+        self.assertGreater(
+            weight_difference.item(), 0, "Target model weights were not updated"
+        )
+
         # Additional check to ensure weights are different
         self.assertFalse(
             torch.allclose(initial_target_weights, updated_weights, atol=1e-6),
-            "Target model weights were not updated significantly"
+            "Target model weights were not updated significantly",
         )
 
 

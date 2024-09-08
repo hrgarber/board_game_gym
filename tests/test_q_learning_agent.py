@@ -4,6 +4,7 @@ import numpy as np
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
 
+
 class TestQLearningAgent(unittest.TestCase):
     def setUp(self):
         self.env = BoardGameEnv()
