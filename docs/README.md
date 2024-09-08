@@ -1,132 +1,96 @@
-# Board Game AI with OpenAI Gym and PyTorch
+# Board Game Gym
 
-This project implements a board game AI using OpenAI Gym and PyTorch. The AI can be trained using either Q-learning or Deep Q-Network (DQN) to play a simple board game (similar to Tic-Tac-Toe or Connect Four). The project includes progress evaluation across multiple training sessions, with GPU acceleration support for Windows users with CUDA-enabled devices.
+## Overview
 
-## Project Overview
+Board Game Gym is a reinforcement learning environment for training AI agents to play board games. This project combines the power of OpenAI Gym-style environments with deep reinforcement learning techniques to create intelligent game-playing agents.
 
-The project consists of several components:
-- A custom OpenAI Gym environment for the board game
-- Q-learning and DQN agents implemented with PyTorch for training and decision-making
-- Jupyter notebooks for training the AI using both methods and visualizing the learning process
-- A command-line interface for playing against the trained AI
-- Hyperparameter tuning using grid search, random search, and Bayesian optimization
-- A basic web interface for playing the game
+## Project Components
+
+- **Custom OpenAI Gym Environment**: A flexible board game environment compatible with the OpenAI Gym interface.
+- **Q-Learning Agent**: Implementation of a tabular Q-learning algorithm for simpler game scenarios.
+- **Deep Q-Network (DQN) Agent**: A more advanced agent using deep learning for complex game states.
+- **Hyperparameter Tuning**: Utilities for optimizing agent performance through grid search, random search, and Bayesian optimization.
+- **Jupyter Notebooks**: Interactive notebooks for training, visualization, and analysis.
+- **Command-line Interface**: For playing against trained AI models.
+- **Web Interface**: A basic web-based game interface for human vs. AI gameplay.
 
 ## File Structure
 
 ```
-.
+board_game_gym/
 ├── README.md
 ├── config/
 │   ├── config.py
 │   └── pytest.ini
 ├── docs/
-│   └── README.md
+│   └── README.md (this file)
 ├── game_files/
-├── hyperparameter_config.json
-├── list_files.py
-├── logs/
+│   └── index.html
 ├── notebooks/
-├── output/
-├── refactor_plan.md
+│   ├── train_q_learning_ai.ipynb
+│   ├── train_dqn_ai.ipynb
+│   └── hyperparameter_tuning.ipynb
 ├── scripts/
+│   └── requirements.txt
 ├── src/
+│   ├── agents/
+│   │   ├── q_learning_agent.py
+│   │   └── dqn_agent.py
+│   ├── environments/
+│   │   └── board_game_env.py
+│   └── utils/
+│       └── hyperparameter_tuning.py
 └── tests/
+    ├── test_board_game.py
+    ├── test_dqn_agent.py
+    └── test_training.py
 ```
 
 ## Installation
 
-You can install this project using either conda or pip. Choose the method that best suits your setup.
-
-### Using conda
-
-1. Clone this repository or download the project files.
-2. Navigate to the project directory.
-3. Create a conda environment:
-   ```
-   conda create --name board_game_gym python=3.8
-   ```
-4. Activate the conda environment:
-   ```
-   conda activate board_game_gym
-   ```
-5. Install the required packages:
-   ```
-   conda install --file requirements.txt
-   ```
-
-### Using pip
-
-1. Clone this repository or download the project files.
-2. Navigate to the project directory.
-3. Create a virtual environment (recommended):
-   ```
-   python -m venv venv
-   ```
-4. Activate the virtual environment:
-   - On Windows:
-     ```
-     venv\Scripts\activate
-     ```
-   - On macOS and Linux:
-     ```
-     source venv/bin/activate
-     ```
-5. Install the required packages:
-   ```
-   pip install -r requirements.txt
-   ```
+For detailed installation instructions, please refer to the main README.md file in the project root directory.
 
 ## Usage
 
-### Training the AI
+### Training Agents
 
-You have two options for training the AI:
+To train the agents, use the Jupyter notebooks provided in the `notebooks/` directory:
 
-#### Q-learning
-
-1. Open the `train_q_learning_ai.ipynb` notebook in Jupyter:
-   ```
-   jupyter notebook notebooks/train_q_learning_ai.ipynb
-   ```
-2. Follow the instructions in the notebook to train the AI using Q-learning.
-
-#### Deep Q-Network (DQN)
-
-1. Open the `train_dqn_ai.ipynb` notebook in Jupyter:
-   ```
-   jupyter notebook notebooks/train_dqn_ai.ipynb
-   ```
-2. Follow the instructions in the notebook to train the AI using DQN.
+- `train_q_learning_ai.ipynb`: For training the Q-learning agent
+- `train_dqn_ai.ipynb`: For training the DQN agent
 
 ### Hyperparameter Tuning
 
-Use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py` for hyperparameter tuning.
+Use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py` to optimize agent performance.
 
 ### Playing the Game
 
-1. Run the main script:
+1. Command-line Interface:
    ```
    python main.py --agent [q_learning/dqn] --model [path_to_model_file]
    ```
-2. Follow the prompts to make moves and interact with the AI.
 
-### Web Interface
+2. Web Interface:
+   Open `game_files/index.html` in a web browser.
 
-Open the `game_files/index.html` file in a web browser to play the game using the web interface.
+## Testing
 
-## Running Tests
-
-To run the tests for this project, use the following command:
+Run the test suite using:
 
 ```
 python -m pytest
 ```
 
+For more specific test runs, use:
+
+```
+python tests/run_tests.py [board_game/dqn_agent/training]
+```
+
 ## Contributing
 
-Contributions to improve the project are welcome. Please feel free to submit issues or pull requests.
+We welcome contributions! Please see the main README.md for guidelines on how to contribute to this project.
 
 ## License
 
-This project is open-source and available under the MIT License.
+This project is licensed under the MIT License. See the LICENSE file in the project root for full license information.
