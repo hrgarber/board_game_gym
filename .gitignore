@@ -41,8 +41,6 @@ models/
 *.txt
 *.log
 *.png
-*.json
-notebooks/
 logs/
 *.txt
 *.log
