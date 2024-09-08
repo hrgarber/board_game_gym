@@ -6,10 +6,8 @@ def list_first_layer():
         '__pycache__',
         'error_log.txt',
         'errors.txt',
-        'grid_tuning_results.png',
         'hyperparameter_tuning_20240906_001503.log',
-        'pylint-report.txt',
-        'random_tuning_results.png'
+        'pylint-report.txt'
     }
     
     for root, dirs, files in os.walk('.', topdown=True):
