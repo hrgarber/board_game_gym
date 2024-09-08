@@ -2,6 +2,7 @@ import itertools
 import logging
 import os
 import sys
+from typing import Dict, List, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,20 +33,24 @@ logging.basicConfig(
 
 
 def cross_validate(
-    agent_type, params, n_splits=5, num_episodes=1000, eval_episodes=100
-):
+    agent_type: str,
+    params: Dict[str, Union[float, int]],
+    n_splits: int = 5,
+    num_episodes: int = 1000,
+    eval_episodes: int = 100
+) -> float:
     """
     Perform cross-validation for hyperparameter tuning.
 
     Args:
-        agent_type (str): Type of agent ('q_learning' or 'dqn').
-        params (dict): Dictionary of hyperparameters.
-        n_splits (int): Number of splits for cross-validation.
-        num_episodes (int): Number of episodes to train for each fold.
-        eval_episodes (int): Number of episodes to evaluate each trained agent.
+        agent_type: Type of agent ('q_learning' or 'dqn').
+        params: Dictionary of hyperparameters.
+        n_splits: Number of splits for cross-validation.
+        num_episodes: Number of episodes to train for each fold.
+        eval_episodes: Number of episodes to evaluate each trained agent.
 
     Returns:
-        float: Mean performance across all folds.
+        Mean performance across all folds.
     """
     env = BoardGameEnv()
     state_size = env.observation_space.shape[0] * env.observation_space.shape[1]
@@ -80,10 +85,24 @@ def cross_validate(
 
 
 def grid_search(
-    agent_type, param_grid, num_episodes=1000, eval_episodes=100, n_splits=5
-):
+    agent_type: str,
+    param_grid: Dict[str, List[Union[float, int]]],
+    num_episodes: int = 1000,
+    eval_episodes: int = 100,
+    n_splits: int = 5
+) -> Dict[str, Union[List[Dict[str, Union[float, int]]], List[float], Dict[str, Union[float, int]], float]]:
     """
     Perform grid search for hyperparameter tuning with cross-validation.
+
+    Args:
+        agent_type: Type of agent ('q_learning' or 'dqn').
+        param_grid: Dictionary of parameters and their possible values.
+        num_episodes: Number of episodes to train for each combination.
+        eval_episodes: Number of episodes to evaluate each trained agent.
+        n_splits: Number of splits for cross-validation.
+
+    Returns:
+        Dictionary containing results of the grid search.
     """
     logging.info(f"Starting grid search for {agent_type} agent")
     results = {"params": [], "performances": []}
@@ -326,7 +345,7 @@ def visualize_tuning_results(results, method):
     plt.close()
 
 
-if __name__ == "__main__":
+def main():
     q_learning_param_grid = {
         "learning_rate": [0.001, 0.01, 0.1],
         "discount_factor": [0.9, 0.95, 0.99],
@@ -388,6 +407,9 @@ if __name__ == "__main__":
     dqn_bayesian_results = bayesian_optimization("dqn", dqn_param_ranges)
     print(dqn_bayesian_results)
     visualize_tuning_results(dqn_bayesian_results, "bayesian")
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     q_learning_param_grid = {
