@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, '..')));
 
 const games = {};
 
