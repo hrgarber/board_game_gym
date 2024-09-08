@@ -56,3 +56,6 @@ htmlcov/
 
 # MyPy cache
 .mypy_cache/
+
+# Backup files
+*.bak
