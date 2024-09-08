@@ -110,7 +110,7 @@ class BoardGameEnv(gym.Env):
                     break
             
             # If the move blocks an opponent's winning move or creates a winning opportunity
-            if count_opponent >= 4 or count_same >= 5:
+            if count_opponent >= 3 or count_same >= 4:
                 return True
 
         return False
