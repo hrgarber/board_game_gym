@@ -61,3 +61,8 @@ class TestBoardGameEnv(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+def create_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestBoardGameEnv))
+    return suite

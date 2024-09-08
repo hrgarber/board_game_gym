@@ -1,3 +1,4 @@
+import unittest
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -220,6 +221,9 @@ class TestTraining(TestCase):
 
 
 if __name__ == "__main__":
-    from unittest import main
+    unittest.main()
 
-    main()
+def create_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestTraining))
+    return suite
