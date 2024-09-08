@@ -1,0 +1,96 @@
+2024-09-07 19:34:49,444 - INFO - Starting Bayesian optimization for q_learning agent
+2024-09-07 19:34:49,551 - INFO - Trial 0: Parameters: {'learning_rate': 0.0052854836032937115, 'discount_factor': 0.9777887761357417, 'epsilon': 0.39824700471829755, 'epsilon_decay': 0.9959731242941792}, Performance: 0.0
+2024-09-07 19:34:49,670 - INFO - Trial 1: Parameters: {'learning_rate': 0.002916399082431481, 'discount_factor': 0.9233018191451777, 'epsilon': 0.18741432512258355, 'epsilon_decay': 0.9951646171929879}, Performance: 0.0
+2024-09-07 19:34:49,775 - INFO - Trial 2: Parameters: {'learning_rate': 0.0020365682563128254, 'discount_factor': 0.9660272306968113, 'epsilon': 0.21517601393224917, 'epsilon_decay': 0.9988802382225535}, Performance: 0.0
+2024-09-07 19:34:49,879 - INFO - Trial 3: Parameters: {'learning_rate': 0.0075112045640765785, 'discount_factor': 0.9307787363216217, 'epsilon': 0.25816938786094173, 'epsilon_decay': 0.9942241627160706}, Performance: 0.0
+2024-09-07 19:34:49,988 - INFO - Trial 4: Parameters: {'learning_rate': 0.0017910071580154283, 'discount_factor': 0.9020956804111289, 'epsilon': 0.36114243770414445, 'epsilon_decay': 0.990355820529206}, Performance: 0.0
+2024-09-07 19:34:49,989 - INFO - Bayesian optimization completed. Best parameters: {'learning_rate': 0.0052854836032937115, 'discount_factor': 0.9777887761357417, 'epsilon': 0.39824700471829755, 'epsilon_decay': 0.9959731242941792}, Best performance: 0.0
+2024-09-07 19:34:49,989 - INFO - Starting grid search for q_learning agent
+2024-09-07 19:34:50,120 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:50,227 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:50,341 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:50,454 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:50,561 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:50,665 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:50,758 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:50,868 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:50,984 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:51,104 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:51,200 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:51,301 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:51,415 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:51,522 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:51,648 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:34:51,748 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:34:51,748 - INFO - Grid search completed. Best parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Best performance: 0.0
+2024-09-07 19:34:51,749 - INFO - Starting random search for q_learning agent
+2024-09-07 19:34:51,851 - INFO - Parameters: {'learning_rate': 0.011410315081539172, 'discount_factor': 0.93498987171224, 'epsilon': 0.49030662323345, 'epsilon_decay': 0.9931261109195193}, Performance: 0.0
+2024-09-07 19:34:51,950 - INFO - Parameters: {'learning_rate': 0.02640469196106405, 'discount_factor': 0.9662952855051072, 'epsilon': 0.2804819466453877, 'epsilon_decay': 0.9989996064199765}, Performance: 0.0
+2024-09-07 19:34:52,049 - INFO - Parameters: {'learning_rate': 0.04469608519492522, 'discount_factor': 0.973443147379231, 'epsilon': 0.22083781581401662, 'epsilon_decay': 0.9997517362900673}, Performance: 0.0
+2024-09-07 19:34:52,159 - INFO - Parameters: {'learning_rate': 0.03528840173559631, 'discount_factor': 0.9877353164716035, 'epsilon': 0.11385611953119468, 'epsilon_decay': 0.9948665196135341}, Performance: 0.0
+2024-09-07 19:34:52,290 - INFO - Parameters: {'learning_rate': 0.08275048128017153, 'discount_factor': 0.9357601523271757, 'epsilon': 0.24692099392828248, 'epsilon_decay': 0.9966528233650767}, Performance: 0.0
+2024-09-07 19:34:52,290 - INFO - Random search completed. Best parameters: {'learning_rate': 0.011410315081539172, 'discount_factor': 0.93498987171224, 'epsilon': 0.49030662323345, 'epsilon_decay': 0.9931261109195193}, Best performance: 0.0
+2024-09-07 19:37:13,352 - INFO - Starting Bayesian optimization for q_learning agent
+2024-09-07 19:37:13,464 - INFO - Trial 0: Parameters: {'learning_rate': 0.01931395643643361, 'discount_factor': 0.9497544535895088, 'epsilon': 0.3499907869535384, 'epsilon_decay': 0.9934184193876603}, Performance: 0.0
+2024-09-07 19:37:13,585 - INFO - Trial 1: Parameters: {'learning_rate': 0.015113448996819849, 'discount_factor': 0.9643665677641091, 'epsilon': 0.28138669141473127, 'epsilon_decay': 0.9958306293514073}, Performance: 0.0
+2024-09-07 19:37:13,683 - INFO - Trial 2: Parameters: {'learning_rate': 0.010176074398101668, 'discount_factor': 0.9449997811791486, 'epsilon': 0.3349103632317183, 'epsilon_decay': 0.9962582638330215}, Performance: 0.0
+2024-09-07 19:37:13,787 - INFO - Trial 3: Parameters: {'learning_rate': 0.013679235741891923, 'discount_factor': 0.9885561794247514, 'epsilon': 0.23844377498785146, 'epsilon_decay': 0.9947755064014938}, Performance: 0.0
+2024-09-07 19:37:13,891 - INFO - Trial 4: Parameters: {'learning_rate': 0.02028143537227504, 'discount_factor': 0.9257556180375004, 'epsilon': 0.4297808910094917, 'epsilon_decay': 0.9936634565987171}, Performance: 0.0
+2024-09-07 19:37:13,892 - INFO - Bayesian optimization completed. Best parameters: {'learning_rate': 0.01931395643643361, 'discount_factor': 0.9497544535895088, 'epsilon': 0.3499907869535384, 'epsilon_decay': 0.9934184193876603}, Best performance: 0.0
+2024-09-07 19:37:13,892 - INFO - Starting grid search for q_learning agent
+2024-09-07 19:37:14,036 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:14,149 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:14,257 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:14,363 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:14,465 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:14,586 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:14,690 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:14,797 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:14,898 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:14,999 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:15,097 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:15,201 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:15,300 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:15,409 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:15,509 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:37:15,612 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:37:15,612 - INFO - Grid search completed. Best parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Best performance: 0.0
+2024-09-07 19:37:15,613 - INFO - Starting random search for q_learning agent
+2024-09-07 19:37:15,723 - INFO - Parameters: {'learning_rate': 0.03503066732853535, 'discount_factor': 0.9272775401387473, 'epsilon': 0.18231104664952974, 'epsilon_decay': 0.9930945508713762}, Performance: 0.0
+2024-09-07 19:37:15,821 - INFO - Parameters: {'learning_rate': 0.02766910069582849, 'discount_factor': 0.9097149020690998, 'epsilon': 0.3808774085330142, 'epsilon_decay': 0.9929949378080712}, Performance: 0.0
+2024-09-07 19:37:15,915 - INFO - Parameters: {'learning_rate': 0.03209052166625945, 'discount_factor': 0.9691011386010421, 'epsilon': 0.4991133010505684, 'epsilon_decay': 0.9915150810942166}, Performance: 0.0
+2024-09-07 19:37:16,006 - INFO - Parameters: {'learning_rate': 0.06167385779195129, 'discount_factor': 0.9248302049338729, 'epsilon': 0.3920821677147869, 'epsilon_decay': 0.9914988982796524}, Performance: 0.0
+2024-09-07 19:37:16,110 - INFO - Parameters: {'learning_rate': 0.08630815711209722, 'discount_factor': 0.9162566676244268, 'epsilon': 0.22624162251106897, 'epsilon_decay': 0.9979259149306872}, Performance: 0.0
+2024-09-07 19:37:16,111 - INFO - Random search completed. Best parameters: {'learning_rate': 0.03503066732853535, 'discount_factor': 0.9272775401387473, 'epsilon': 0.18231104664952974, 'epsilon_decay': 0.9930945508713762}, Best performance: 0.0
+2024-09-07 19:39:32,935 - INFO - Starting Bayesian optimization for q_learning agent
+2024-09-07 19:39:33,048 - INFO - Trial 0: Parameters: {'learning_rate': 0.022091583355845643, 'discount_factor': 0.9100095074072172, 'epsilon': 0.47447805625980644, 'epsilon_decay': 0.9948338903808651}, Performance: 0.0
+2024-09-07 19:39:33,161 - INFO - Trial 1: Parameters: {'learning_rate': 0.013221178115744615, 'discount_factor': 0.9115259345992732, 'epsilon': 0.11708416882722977, 'epsilon_decay': 0.9945394841064584}, Performance: 0.0
+2024-09-07 19:39:33,258 - INFO - Trial 2: Parameters: {'learning_rate': 0.04883246996097186, 'discount_factor': 0.9696408766623402, 'epsilon': 0.40568876566734136, 'epsilon_decay': 0.9943919440482937}, Performance: 0.0
+2024-09-07 19:39:33,350 - INFO - Trial 3: Parameters: {'learning_rate': 0.0024812261780426947, 'discount_factor': 0.9328765432446393, 'epsilon': 0.23727554499946402, 'epsilon_decay': 0.9976264499956512}, Performance: 0.0
+2024-09-07 19:39:33,466 - INFO - Trial 4: Parameters: {'learning_rate': 0.08127634310836154, 'discount_factor': 0.9687119219032071, 'epsilon': 0.17436665948869737, 'epsilon_decay': 0.9968277198648033}, Performance: 0.0
+2024-09-07 19:39:33,467 - INFO - Bayesian optimization completed. Best parameters: {'learning_rate': 0.022091583355845643, 'discount_factor': 0.9100095074072172, 'epsilon': 0.47447805625980644, 'epsilon_decay': 0.9948338903808651}, Best performance: 0.0
+2024-09-07 19:39:33,467 - INFO - Starting grid search for q_learning agent
+2024-09-07 19:39:33,594 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:33,694 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:33,792 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:33,891 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:33,998 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:34,109 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:34,215 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:34,317 - INFO - Parameters: {'learning_rate': 0.01, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:34,420 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:34,523 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:34,620 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:34,722 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.9, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:34,833 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:34,938 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.1, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:35,045 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.99}, Performance: 0.0
+2024-09-07 19:39:35,145 - INFO - Parameters: {'learning_rate': 0.1, 'discount_factor': 0.99, 'epsilon': 0.2, 'epsilon_decay': 0.999}, Performance: 0.0
+2024-09-07 19:39:35,146 - INFO - Grid search completed. Best parameters: {'learning_rate': 0.01, 'discount_factor': 0.9, 'epsilon': 0.1, 'epsilon_decay': 0.99}, Best performance: 0.0
+2024-09-07 19:39:35,146 - INFO - Starting random search for q_learning agent
+2024-09-07 19:39:35,245 - INFO - Parameters: {'learning_rate': 0.08024631569592228, 'discount_factor': 0.94224139767212, 'epsilon': 0.3025394877887573, 'epsilon_decay': 0.9963059144264949}, Performance: 0.0
+2024-09-07 19:39:35,336 - INFO - Parameters: {'learning_rate': 0.07453056255309098, 'discount_factor': 0.9877140027988814, 'epsilon': 0.2923460498440106, 'epsilon_decay': 0.9953628546028246}, Performance: 0.0
+2024-09-07 19:39:35,423 - INFO - Parameters: {'learning_rate': 0.08918739056478224, 'discount_factor': 0.9560753040209314, 'epsilon': 0.2925265127589375, 'epsilon_decay': 0.9946152930940967}, Performance: 0.0
+2024-09-07 19:39:35,523 - INFO - Parameters: {'learning_rate': 0.09180394928225603, 'discount_factor': 0.9772405575447632, 'epsilon': 0.11455817411603651, 'epsilon_decay': 0.9929817953790642}, Performance: 0.0
+2024-09-07 19:39:35,624 - INFO - Parameters: {'learning_rate': 0.02794142408924066, 'discount_factor': 0.9898264815939039, 'epsilon': 0.19370246075247835, 'epsilon_decay': 0.996352991611749}, Performance: 0.0
+2024-09-07 19:39:35,625 - INFO - Random search completed. Best parameters: {'learning_rate': 0.08024631569592228, 'discount_factor': 0.94224139767212, 'epsilon': 0.3025394877887573, 'epsilon_decay': 0.9963059144264949}, Best performance: 0.0

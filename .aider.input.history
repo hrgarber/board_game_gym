@@ -1,0 +1,177 @@
+
+# 2024-09-08 00:18:47.497814
++there are files that are not coding and need to have their extentions added to the git ignore and other similar fiels
+
+# 2024-09-08 00:19:59.047136
++ok update it by looking at whats in my dir
+
+# 2024-09-08 00:20:06.931941
++/ls
+
+# 2024-09-08 00:20:15.714993
++/run ls
+
+# 2024-09-08 00:21:55.391527
++remove the notebooks from the git ignore and also make it so any config.json or naming scheme is not in the ignore cause i assume we will need it
+
+# 2024-09-08 00:24:44.996261
++do a recursive walk through the dir and then come up with a plan to refactor the structure 
+
+# 2024-09-08 00:24:52.750081
++/run find . -print
+
+# 2024-09-08 00:27:15.419621
++based off that last command output come up with a plan that will consolidate and simplify the dir structure. make the plan and put it in a file so you can follow along the steps. 
+
+# 2024-09-08 00:30:18.672837
++/run mkdir -p config logs docs scripts
+
+# 2024-09-08 00:30:18.819731
++/run mv config.py pytest.ini tuning_config.json config/
+
+# 2024-09-08 00:30:18.984412
++/run mv notebooks/*.ipynb notebooks/
+
+# 2024-09-08 00:30:19.133004
++/run mv logs/*.log logs/
+
+# 2024-09-08 00:30:19.278821
++/run mv tests/*.py tests/
+
+# 2024-09-08 00:30:19.431026
++/run mv README.md ROADMAP.md docs/
+
+# 2024-09-08 00:30:19.571178
++/run mv requirements.txt run_tests.py scripts/
+
+# 2024-09-08 00:30:21.529645
++/run mkdir config
+
+# 2024-09-08 00:30:21.697631
++/run mv config.py pytest.ini tuning_config.json config/
+
+# 2024-09-08 00:30:43.948359
++sine you moved a lot of things around i need you to go throuigh and check the imports for all files that previously referenced then
+
+# 2024-09-08 00:32:16.674469
++next step in the plan
+
+# 2024-09-08 00:33:52.339794
++/run mv main.py src/
+
+# 2024-09-08 00:33:57.866971
++next step 
+
+# 2024-09-08 00:36:00.523595
++next step
+
+# 2024-09-08 00:37:25.983067
++/drop *
+
+# 2024-09-08 00:37:29.066112
++/add *
+
+# 2024-09-08 00:37:41.315558
++/drop *
+
+# 2024-09-08 00:38:04.521085
++/ask is there an aider ignore?
+
+# 2024-09-08 00:38:35.176443
++next step in out plan we were just doing
+
+# 2024-09-08 00:40:29.138929
++/run mv main.py src/main.py
+
+# 2024-09-08 00:42:06.769418
++/run mv main.py src/main.py
+
+# 2024-09-08 00:44:24.974417
++/run mv main.py src/main.py
+
+# 2024-09-08 00:44:36.060062
++/drop *
+
+# 2024-09-08 00:44:41.694568
++next step in our plan
+
+# 2024-09-08 00:45:07.353322
++/map-refresh
+
+# 2024-09-08 00:45:13.283934
++/map
+
+# 2024-09-08 00:45:28.286066
++double check the status because oyu are a bit off
+
+# 2024-09-08 00:46:48.494091
++ok do that next step and after update the file with the instructions for the new status
+
+# 2024-09-08 00:47:22.132955
++no so you already ackknowledged that main had already been moved. the plan is old so it needs to be updated first based off the work youve already done
+
+# 2024-09-08 00:47:39.127158
++ask me to and ill do it
+
+# 2024-09-08 00:48:18.850366
++/add src/utils/tune_hyperparameters.py
+
+# 2024-09-08 00:48:23.400757
++ok do your work now
+
+# 2024-09-08 00:50:14.434543
++you keep trying to move main to src main but youve already done that from what i undersatnd stop doing that. remove that and other completed steps from the file detailing this refactor
+
+# 2024-09-08 00:54:07.063340
++i am mid way through a refactor detailed in a markdown file. look at it and then look atthe current astate of the repo and continue
+
+# 2024-09-08 00:55:04.973734
++/help how can i increase the repo map size so those files that it cant include can be included
+
+# 2024-09-08 00:57:27.122940
++/map-refresh
+
+# 2024-09-08 00:57:45.665671
++i am mid way through a refactor detailed in a markdown file. look at it and then look atthe current astate of the repo and continue
+
+# 2024-09-08 00:58:02.950129
++its a .md file but im not sure which you find it for me
+
+# 2024-09-08 00:58:08.284279
++/run find . -name "*.md" -type f
+
+# 2024-09-08 00:58:18.287977
++its the refactor plan. read it
+
+# 2024-09-08 00:59:27.532301
++/add *
+
+# 2024-09-08 00:59:37.096698
++i am mid way through a refactor detailed in a markdown file. look at it and then look atthe current astate of the repo and continue
+
+# 2024-09-08 01:00:53.758394
++/run mkdir -p config notebooks logs docs scripts
+
+# 2024-09-08 01:00:53.948405
++/run mv logs/hyperparameter_tuning_20240906_001503.log logs/
+
+# 2024-09-08 01:00:54.125634
++/run mv tests/test_board_game.py tests/
+
+# 2024-09-08 01:00:54.311102
++/run mv tests/test_q_learning_agent.py tests/
+
+# 2024-09-08 01:00:54.502720
++/run mv docs/repo_structure.txt docs/
+
+# 2024-09-08 01:00:54.692775
++/run mv .gitignore .gitignore.bak
+
+# 2024-09-08 01:00:54.878239
++/run cat > .gitignore < EOF
+
+# 2024-09-08 01:00:55.065244
++/run EOF
+
+# 2024-09-08 01:00:55.248416
++/run git add .
