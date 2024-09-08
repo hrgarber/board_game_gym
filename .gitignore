@@ -38,3 +38,19 @@ output/
 
 # Ignore the entire output directory
 output/
+
+# Logs
+*.log
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy cache
+.mypy_cache/
