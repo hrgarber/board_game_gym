@@ -113,6 +113,13 @@ class BoardGameEnv(gym.Env):
             if count_opponent >= 3 or count_same >= 4:
                 return True
 
+        # Check if the move blocks a potential future winning move for the opponent
+        self.board[row, col] = -self.current_player  # Temporarily place opponent's piece
+        if self.check_win(row, col):
+            self.board[row, col] = 0  # Reset the board
+            return True
+        self.board[row, col] = 0  # Reset the board
+
         return False
 
     def check_line(self, row, col, line_length):

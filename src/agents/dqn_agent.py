@@ -83,6 +83,7 @@ class DQNAgent:
         # Ensure the update is registered by PyTorch
         for target_param, param in zip(self.target_model.parameters(), self.model.parameters()):
             target_param.data.copy_(param.data)
+        print("Target model updated")  # Add this line for debugging
 
     def act(self, state):
         if np.random.rand() <= self.epsilon:
