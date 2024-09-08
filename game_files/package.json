@@ -2,9 +2,9 @@
   "name": "board-game",
   "version": "1.0.0",
   "description": "A strategic board game",
-  "main": "game_files/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node game_files/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1"
