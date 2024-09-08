@@ -1,5 +1,6 @@
 import unittest
 import sys
+import os
 from .test_board_game import create_suite as create_board_game_suite
 from .test_dqn_agent import create_suite as create_dqn_agent_suite
 from .test_training import create_suite as create_training_suite
@@ -15,9 +16,9 @@ class DetailedTestResult(unittest.TextTestResult):
         self.successes.append(test)
 
 
-def run_tests(test_suite, verbosity=2):
+def run_tests(test_suite, verbosity=0):
     runner = unittest.TextTestRunner(
-        verbosity=verbosity, resultclass=DetailedTestResult
+        verbosity=verbosity, resultclass=DetailedTestResult, stream=open(os.devnull, 'w')
     )
     result = runner.run(test_suite)
     return result
@@ -30,17 +31,10 @@ def print_summary(result):
     print(f"Failures: {len(result.failures)}")
     print(f"Errors: {len(result.errors)}")
 
-    if result.failures:
-        print("\nFailures:")
-        for test, error in result.failures:
+    if result.failures or result.errors:
+        print("\nFailed tests:")
+        for test, error in result.failures + result.errors:
             print(f"  {test}")
-            print(f"    {error}")
-
-    if result.errors:
-        print("\nErrors:")
-        for test, error in result.errors:
-            print(f"  {test}")
-            print(f"    {error}")
 
 
 def run_all_tests():
