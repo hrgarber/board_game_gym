@@ -21,6 +21,8 @@ def save_results(results: Dict[str, Any], output_path: str) -> None:
         json.dump(results, f, indent=2)
 
 
+from src.main import main
+
 def main():
     parser = argparse.ArgumentParser(
         description="Hyperparameter tuning for Board Game AI"
