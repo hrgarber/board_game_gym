@@ -734,7 +734,7 @@ def visualize_tuning_results(results, method):
     elif method == "bayesian":
         if "study" in results and results["study"] is not None:
             study = results["study"]
-            if len(study.trials) > 0:
+            if len(study.trials) > 1:
                 # Plot optimization history
                 plt.subplot(2, 2, 1)
                 optuna.visualization.plot_optimization_history(study)
@@ -754,14 +754,16 @@ def visualize_tuning_results(results, method):
                 plt.subplot(2, 2, 4)
                 optuna.visualization.plot_slice(study)
                 plt.title("Slice Plot")
+            elif len(study.trials) == 1:
+                print("Warning: Only one trial found in the study. Some plots may not be available.")
+                plt.subplot(2, 2, 1)
+                optuna.visualization.plot_optimization_history(study)
+                plt.title("Bayesian Optimization History")
             else:
-                print("Error: No trials found in the study for Bayesian optimization.")
-                return
+                print("Warning: No trials found in the study for Bayesian optimization.")
         else:
-            print(
-                "Error: 'study' not found or is None in results for Bayesian optimization."
-            )
-            return
+            print("Warning: 'study' not found or is None in results for Bayesian optimization.")
+        return
     else:
         print(f"Error: Unknown method '{method}'. Use 'grid', 'random', or 'bayesian'.")
         return

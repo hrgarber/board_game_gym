@@ -85,7 +85,8 @@ class DQNAgent:
             self.target_model.parameters(), self.model.parameters()
         ):
             target_param.data.copy_(param.data)
-        print("Target model updated")  # Add this line for debugging
+        self.target_model.eval()  # Set the target model to evaluation mode
+        print("Target model updated")  # Keep this line for debugging
 
     def act(self, state):
         if np.random.rand() <= self.epsilon:
