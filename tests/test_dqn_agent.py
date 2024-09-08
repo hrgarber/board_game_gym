@@ -2,8 +2,8 @@ import os
 import unittest
 import numpy as np
 import torch
-from src.agents.dqn_agent import DQNAgent
-from src.environments.board_game_env import BoardGameEnv
+from ..src.agents.dqn_agent import DQNAgent
+from ..src.environments.board_game_env import BoardGameEnv
 
 
 class TestDQNAgent(unittest.TestCase):
