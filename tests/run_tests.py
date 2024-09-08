@@ -1,7 +1,7 @@
 import unittest
-from test_board_game import create_suite as create_board_game_suite
-from test_dqn_agent import create_suite as create_dqn_agent_suite
-from test_training import create_suite as create_training_suite
+from .test_board_game import create_suite as create_board_game_suite
+from .test_dqn_agent import create_suite as create_dqn_agent_suite
+from .test_training import create_suite as create_training_suite
 
 def run_all_tests():
     test_suite = unittest.TestSuite([
