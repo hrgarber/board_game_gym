@@ -16,7 +16,9 @@ class DetailedTestResult(unittest.TextTestResult):
 
 
 def run_tests(test_suite, verbosity=2):
-    runner = unittest.TextTestRunner(verbosity=verbosity, resultclass=DetailedTestResult)
+    runner = unittest.TextTestRunner(
+        verbosity=verbosity, resultclass=DetailedTestResult
+    )
     result = runner.run(test_suite)
     return result
 
