@@ -339,9 +339,7 @@ def visualize_tuning_results(results, method):
         return
 
     plt.tight_layout()
-    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
-    os.makedirs(output_dir, exist_ok=True)
-    plt.savefig(os.path.join(output_dir, f"{method}_tuning_results.png"))
+    save_tuning_results(plt.gcf(), f"{method}_tuning_results.png")
     plt.close()
 
 
@@ -365,6 +363,8 @@ def main():
     q_learning_results = grid_search("q_learning", q_learning_param_grid)
     print(q_learning_results)
     visualize_tuning_results(q_learning_results, "grid")
+    save_tuning_results(plt.gcf(), "grid_tuning_results.png")
+    plt.close()
 
     print("\nGrid Search for DQN:")
     dqn_results = grid_search("dqn", dqn_param_grid)
@@ -390,6 +390,8 @@ def main():
     q_learning_random_results = random_search("q_learning", q_learning_param_ranges)
     print(q_learning_random_results)
     visualize_tuning_results(q_learning_random_results, "random")
+    save_tuning_results(plt.gcf(), "random_tuning_results.png")
+    plt.close()
 
     print("\nRandom Search for DQN:")
     dqn_random_results = random_search("dqn", dqn_param_ranges)
@@ -486,6 +488,8 @@ import pandas as pd
 import seaborn as sns
 from sklearn.model_selection import KFold
 from tqdm import tqdm
+
+from src.utils.visualization import save_tuning_results
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
