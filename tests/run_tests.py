@@ -4,8 +4,8 @@ from .test_dqn_agent import create_suite as create_dqn_agent_suite
 from .test_training import create_suite as create_training_suite
 
 class TestResult(unittest.TestResult):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, stream=None, descriptions=None, verbosity=None):
+        super().__init__(stream, descriptions, verbosity)
         self.failed_tests = []
 
     def addFailure(self, test, err):
@@ -17,8 +17,9 @@ class TestResult(unittest.TestResult):
         self.failed_tests.append(test)
 
 def run_tests(test_suite):
+    result = TestResult()
     runner = unittest.TextTestRunner(verbosity=2, resultclass=TestResult)
-    result = runner.run(test_suite)
+    runner.run(test_suite, result=result)
     return result.failed_tests
 
 def run_all_tests():
