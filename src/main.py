@@ -3,12 +3,12 @@ import os
 import sys
 from pathlib import Path
 
+from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization
+from src.utils.utils import load_config, save_results
+
 # Add the project root to the Python path
 project_root = Path(__file__).parents[1]
 sys.path.insert(0, str(project_root))
-
-from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization
-from src.utils.utils import load_config, save_results
 
 def main():
     parser = argparse.ArgumentParser(
