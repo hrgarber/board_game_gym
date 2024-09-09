@@ -3,17 +3,20 @@ import os
 import sys
 from pathlib import Path
 
-from src.utils.hyperparameter_tuning import grid_search, random_search, bayesian_optimization
+from src.utils.hyperparameter_tuning import (
+    grid_search,
+    random_search,
+    bayesian_optimization,
+)
 from src.utils.utils import load_config, save_results
 
 # Add the project root to the Python path
 project_root = Path(__file__).parents[1]
 sys.path.insert(0, str(project_root))
 
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="Hyperparameter tuning for Board Game AI"
-    )
+    parser = argparse.ArgumentParser(description="Hyperparameter tuning for Board Game AI")
     parser.add_argument(
         "agent", choices=["q_learning", "dqn"], help="Type of agent to tune"
     )
@@ -48,6 +51,7 @@ def main():
     output_file = os.path.join(output_dir, args.output)
     save_results(results, output_file)
     print(f"Tuning completed. Results saved to {output_file}")
+
 
 if __name__ == "__main__":
     main()

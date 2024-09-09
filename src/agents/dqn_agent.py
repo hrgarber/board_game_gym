@@ -100,7 +100,7 @@ class DQNAgent:
 
     def replay(self, batch_size):
         if len(self.memory) < batch_size:
-            return 0  # Return 0 if no replay was performed
+            return 0  # Return 0 if no replay was performe
 
         minibatch = random.sample(self.memory, batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)

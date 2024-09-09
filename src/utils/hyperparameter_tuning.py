@@ -95,7 +95,15 @@ def grid_search(
     num_episodes: int = 1000,
     eval_episodes: int = 100,
     n_splits: int = 5,
-) -> Dict[str, Union[List[Dict[str, Union[float, int]]], List[float], Dict[str, Union[float, int]], float]]:
+) -> Dict[
+    str,
+    Union[
+        List[Dict[str, Union[float, int]]],
+        List[float],
+        Dict[str, Union[float, int]],
+        float,
+    ],
+]:
     """
     Perform grid search for hyperparameter tuning with cross-validation.
 
@@ -138,7 +146,15 @@ def random_search(
     num_episodes: int = 1000,
     eval_episodes: int = 100,
     n_splits: int = 5,
-) -> Dict[str, Union[List[Dict[str, Union[float, int]]], List[float], Dict[str, Union[float, int]], float]]:
+) -> Dict[
+    str,
+    Union[
+        List[Dict[str, Union[float, int]]],
+        List[float],
+        Dict[str, Union[float, int]],
+        float,
+    ],
+]:
     """
     Perform random search for hyperparameter tuning with cross-validation.
 
