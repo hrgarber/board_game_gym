@@ -1,0 +1,15 @@
+[FORMAT]
+max-line-length=120
+
+[MASTER]
+ignore=CVS
+ignore-patterns=
+persistent=yes
+load-plugins=
+jobs=1
+unsafe-load-any-extension=no
+extension-pkg-whitelist=
+
+[MESSAGES CONTROL]
+confidence=
+disable=C0111
