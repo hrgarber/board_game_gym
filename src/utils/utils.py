@@ -1,6 +1,7 @@
 import os
 
 import matplotlib.pyplot as plt
+import torch
 
 from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
