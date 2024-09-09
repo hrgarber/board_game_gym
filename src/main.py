@@ -16,7 +16,9 @@ sys.path.insert(0, str(project_root))
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Hyperparameter tuning for Board Game AI")
+    parser = argparse.ArgumentParser(
+        description="Hyperparameter tuning for Board Game AI"
+    )
     parser.add_argument(
         "agent", choices=["q_learning", "dqn"], help="Type of agent to tune"
     )
