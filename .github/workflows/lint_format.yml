@@ -22,6 +22,7 @@ jobs:
         VALIDATE_PYTHON_BLACK: false
         VALIDATE_PYTHON_ISORT: false
         VALIDATE_PYTHON_PYLINT: false
+        FILTER_REGEX_EXCLUDE: $(git ls-files --others --ignored --exclude-standard | tr '\n' '|')
 
     - name: Set up Python
       uses: actions/setup-python@v3
