@@ -27,7 +27,9 @@ from src.utils.utils import evaluate_agent
 log_dir = os.path.join(project_root, "logs")
 os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
-    filename=os.path.join(log_dir, f"hyperparameter_tuning_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"),
+    filename=os.path.join(
+        log_dir, f"hyperparameter_tuning_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    ),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -38,7 +40,7 @@ def cross_validate(
     params: Dict[str, Union[float, int]],
     n_splits: int = 5,
     num_episodes: int = 1000,
-    eval_episodes: int = 100
+    eval_episodes: int = 100,
 ) -> float:
     """
     Perform cross-validation for hyperparameter tuning.
@@ -90,8 +92,16 @@ def grid_search(
     param_grid: Dict[str, List[Union[float, int]]],
     num_episodes: int = 1000,
     eval_episodes: int = 100,
-    n_splits: int = 5
-) -> Dict[str, Union[List[Dict[str, Union[float, int]]], List[float], Dict[str, Union[float, int]], float]]:
+    n_splits: int = 5,
+) -> Dict[
+    str,
+    Union[
+        List[Dict[str, Union[float, int]]],
+        List[float],
+        Dict[str, Union[float, int]],
+        float,
+    ],
+]:
     """
     Perform grid search for hyperparameter tuning with cross-validation.
 
@@ -412,6 +422,7 @@ def main():
     dqn_bayesian_results = bayesian_optimization("dqn", dqn_param_ranges)
     print(dqn_bayesian_results)
     visualize_tuning_results(dqn_bayesian_results, "bayesian")
+
 
 if __name__ == "__main__":
     main()
