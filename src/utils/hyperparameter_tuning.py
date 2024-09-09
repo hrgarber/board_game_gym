@@ -2,7 +2,7 @@ import itertools
 import logging
 import os
 from datetime import datetime
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Tuple
 
 import numpy as np
 import optuna
