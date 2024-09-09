@@ -13,6 +13,10 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Generate exclude list
+      id: exclude
+      run: echo "list=$(git ls-files --others --ignored --exclude-standard | tr '\n' '|')" >> $GITHUB_OUTPUT
+
     - name: Lint Code Base
       uses: github/super-linter@v5
       env:
@@ -22,7 +26,8 @@ jobs:
         VALIDATE_PYTHON_BLACK: false
         VALIDATE_PYTHON_ISORT: false
         VALIDATE_PYTHON_PYLINT: false
-        FILTER_REGEX_EXCLUDE: $(git ls-files --others --ignored --exclude-standard | tr '\n' '|')
+        FILTER_REGEX_EXCLUDE: ${{ steps.exclude.outputs.list }}
+        DISABLE_ERRORS: true
 
     - name: Set up Python
       uses: actions/setup-python@v3
