@@ -1,5 +1,7 @@
 import unittest
+
 import numpy as np
+
 from src.environments.board_game_env import BoardGameEnv
 
 
@@ -13,12 +15,13 @@ class TestBoardGameEnv(unittest.TestCase):
         self.assertTrue(
             result, f"Failed to block horizontal potential win:\n{self.env.board}"
         )
-        
+
     def test_blocking_potential_win_horizontal_edge(self):
         self.env.board[0, 4:] = 1
         result = self.env.check_blocking_move(0, 3)
         self.assertTrue(
-            result, f"Failed to block horizontal potential win at edge:\n{self.env.board}"
+            result,
+            f"Failed to block horizontal potential win at edge:\n{self.env.board}",
         )
 
     def test_blocking_potential_win_vertical(self):
@@ -61,6 +64,7 @@ class TestBoardGameEnv(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 def create_suite():
     suite = unittest.TestSuite()

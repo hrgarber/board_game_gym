@@ -8,13 +8,8 @@ sys.path.insert(0, str(project_root))
 
 import numpy as np
 
-from config.config import (
-    LEARNING_RATE,
-    DISCOUNT_FACTOR,
-    EPSILON,
-    EPSILON_DECAY,
-    EPSILON_MIN,
-)
+from config.config import (DISCOUNT_FACTOR, EPSILON, EPSILON_DECAY,
+                           EPSILON_MIN, LEARNING_RATE)
 
 
 class QLearningAgent:

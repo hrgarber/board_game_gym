@@ -8,12 +8,9 @@ from typing import Any, Dict
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(project_root)
 
-from src.utils.hyperparameter_tuning import (
-    bayesian_optimization,
-    grid_search,
-    random_search,
-    visualize_tuning_results,
-)
+from src.utils.hyperparameter_tuning import (bayesian_optimization,
+                                             grid_search, random_search,
+                                             visualize_tuning_results)
 
 
 def load_config(config_path: str) -> Dict[str, Any]:

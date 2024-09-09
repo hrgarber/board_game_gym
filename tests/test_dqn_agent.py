@@ -1,7 +1,9 @@
 import os
 import unittest
+
 import numpy as np
 import torch
+
 from src.agents.dqn_agent import DQNAgent
 from src.environments.board_game_env import BoardGameEnv
 
@@ -140,7 +142,9 @@ class TestDQNAgent(unittest.TestCase):
         self.agent.train(self.env, self.agent.update_target_every + 1, 10)
 
         updated_weights = self.agent.target_model.fc1.weight.data
-        weight_difference = torch.sum(torch.abs(initial_target_weights - updated_weights))
+        weight_difference = torch.sum(
+            torch.abs(initial_target_weights - updated_weights)
+        )
 
         self.assertGreater(
             weight_difference.item(), 0, "Target model weights were not updated"
@@ -157,6 +161,7 @@ class TestDQNAgent(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 def create_suite():
     suite = unittest.TestSuite()

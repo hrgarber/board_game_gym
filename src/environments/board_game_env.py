@@ -1,7 +1,8 @@
-import gym
-import numpy as np
 import sys
 from pathlib import Path
+
+import gym
+import numpy as np
 
 # Add the project root to the Python path
 project_root = Path(__file__).parents[2]

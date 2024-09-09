@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class BoardGame:
     def __init__(self, size=3):
         self.size = size
@@ -20,12 +21,12 @@ class BoardGame:
                 return self.board[i, 0]
             if abs(np.sum(self.board[:, i])) == self.size:
                 return self.board[0, i]
-        
+
         if abs(np.trace(self.board)) == self.size:
             return self.board[0, 0]
         if abs(np.trace(np.fliplr(self.board))) == self.size:
-            return self.board[0, self.size-1]
-        
+            return self.board[0, self.size - 1]
+
         return 0  # No winner yet
 
     def is_full(self):
