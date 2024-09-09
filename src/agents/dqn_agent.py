@@ -3,6 +3,8 @@ import sys
 from collections import deque
 from pathlib import Path
 
+import numpy as np
+import torch
 import torch.nn as nn
 import torch.optim as optim
 
@@ -145,7 +147,8 @@ class DQNAgent:
     def update(self, state, action, reward, next_state, done):
         self.remember(state, action, reward, next_state, done)
         if len(self.memory) > self.batch_size:
-            self.replay(self.batch_size)
+            return self.replay(self.batch_size)
+        return 0  # Return 0 if no replay was performed
 
     def train(self, env, num_episodes, max_steps):
         for episode in range(num_episodes):
