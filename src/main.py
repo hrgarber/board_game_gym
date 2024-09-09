@@ -16,6 +16,14 @@ sys.path.insert(0, str(project_root))
 
 
 def main():
+    # Configure Black
+    import black
+
+    black.Mode(
+        line_length=120,
+        string_normalization=True,
+        is_pyi=False,
+    )
     parser = argparse.ArgumentParser(
         description="Hyperparameter tuning for Board Game AI"
     )
