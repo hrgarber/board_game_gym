@@ -2,7 +2,7 @@ import itertools
 import logging
 import os
 from datetime import datetime
-from typing import Dict, List, Union, Tuple
+from typing import Dict, List, Union
 
 import numpy as np
 import optuna
@@ -13,7 +13,6 @@ from src.agents.dqn_agent import DQNAgent
 from src.agents.q_learning_agent import QLearningAgent
 from src.environments.board_game_env import BoardGameEnv
 from src.utils.utils import evaluate_agent
-from src.utils.visualization import visualize_tuning_results
 
 # Set up logging
 log_dir = os.path.join("logs")
