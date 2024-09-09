@@ -1,6 +1,6 @@
 import random
-from collections import deque
 import sys
+from collections import deque
 from pathlib import Path
 
 # Add the project root to the Python path
@@ -12,16 +12,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from config.config import (
-    LEARNING_RATE,
-    DISCOUNT_FACTOR,
-    EPSILON,
-    EPSILON_MIN,
-    EPSILON_DECAY,
-    BATCH_SIZE,
-    UPDATE_TARGET_EVERY,
-    DEVICE,
-)
+from config.config import (BATCH_SIZE, DEVICE, DISCOUNT_FACTOR, EPSILON,
+                           EPSILON_DECAY, EPSILON_MIN, LEARNING_RATE,
+                           UPDATE_TARGET_EVERY)
 
 
 class DQN(nn.Module):
@@ -88,6 +81,7 @@ class DQNAgent:
         self.target_model.eval()  # Set the target model to evaluation mode
         # Use logging for debugging instead of print
         import logging
+
         logging.debug("Target model updated")
 
     def act(self, state):
