@@ -8,16 +8,25 @@ permissions:
 jobs:
   lint-and-format:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11"]
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Lint Code Base
+      uses: github/super-linter@v5
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_PYTHON_BLACK: false
+        VALIDATE_PYTHON_ISORT: false
+        VALIDATE_PYTHON_PYLINT: false
 
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.11"
 
     - name: Cache pip dependencies
       uses: actions/cache@v3
