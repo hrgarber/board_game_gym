@@ -3,23 +3,30 @@ import sys
 from collections import deque
 from pathlib import Path
 
-# Add the project root to the Python path
-project_root = Path(__file__).parents[2]
-sys.path.insert(0, str(project_root))
-
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from config.config import (BATCH_SIZE, DEVICE, DISCOUNT_FACTOR, EPSILON,
-                           EPSILON_DECAY, EPSILON_MIN, LEARNING_RATE,
-                           UPDATE_TARGET_EVERY)
+# Add the project root to the Python path
+project_root = Path(__file__).parents[2]
+sys.path.insert(0, str(project_root))
+
+from config.config import (
+    BATCH_SIZE,
+    DEVICE,
+    DISCOUNT_FACTOR,
+    EPSILON,
+    EPSILON_DECAY,
+    EPSILON_MIN,
+    LEARNING_RATE,
+    UPDATE_TARGET_EVERY,
+)
 
 
 class DQN(nn.Module):
     def __init__(self, state_size, action_size):
-        super(DQN, self).__init__()
+        super().__init__()
         self.state_size = state_size
         self.action_size = action_size
         self.fc1 = nn.Linear(state_size, 128)
@@ -145,7 +152,7 @@ class DQNAgent:
     def train(self, env, num_episodes, max_steps):
         for episode in range(num_episodes):
             state = env.reset()
-            for step in range(max_steps):
+            for _ in range(max_steps):
                 action = self.act(state)
                 next_state, reward, done, _ = env.step(action)
                 self.update(state, action, reward, next_state, done)
