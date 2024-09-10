@@ -1,10 +1,11 @@
+---
 name: Black Code Formatter
 
 on:
   push:
-    branches: [ main, refactor-codebase ]
+    branches: [main, refactor-codebase]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   lint:

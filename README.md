@@ -15,15 +15,18 @@ Board Game Gym is a sophisticated board game environment built using OpenAI Gym.
 
 ## Game Rules
 
-### Objective:
+### Objective
+
 - The goal is to build a continuous path across the long side of the board, connecting one end to the other (sides A and B) in your color.
 
-### Setup:
+### Setup
+
 - Players: Two players—one plays as white, the other as black.
 - Board: The game starts with an empty 12x8 rectangular grid.
 - First Move: The white player always goes first.
 
-### Game Play:
+### Game Play
+
 - Turns: Players take turns placing one piece at a time anywhere on the board.
 - Piece Types:
   - Regular Pieces: Placed showing your color.
@@ -31,34 +34,38 @@ Board Game Gym is a sophisticated board game environment built using OpenAI Gym.
 - Move Choice: On each turn, a player must choose to place either a regular or a permanent piece, but not both.
 - Strategic Use of Permanent Pieces: Permanent pieces are placed in your opponent's color, and they flip the adjacent and diagonal regular pieces. The use of permanent pieces is crucial for both advancing your own path and disrupting your opponent's progress.
 
-### Path Building:
+### Path Building
+
 - Path Formation: A path is created by connecting pieces that are "touching" each other either adjacently or diagonally.
 - Inclusive Path: Your path may include any pieces with your color showing on top, including pieces that were flipped by a permanent piece.
 - Path Direction: The path can weave back and forth in any direction as long as it connects opposite ends (sides A and B) and the pieces are linked together.
 - Path Flexibility: The path can weave in any direction as long as its pieces touch adjacently or diagonally.
 
-### Winning:
+### Winning
+
 - Win Condition: The first player to complete a continuous path connecting sides A and B wins.
 
-### Special Rules:
+### Special Rules
+
 - Edge Rule: If you play a permanent piece at either side A or B, it must be placed in your opponent's color.
 - Flipping Mechanic: When placing a permanent piece, it flips all touching regular pieces, but not other permanent pieces.
 - Permanent Pieces: These pieces remain static and cannot be flipped once placed, making their placement a significant strategic choice.
 
-### Additional Insights:
+### Additional Insights
+
 - Simplified Flow: The game flow is simple but strategic. Players alternate placing pieces, and the dynamic nature of flipping pieces creates opportunities for both advancing your path and disrupting your opponent's progress.
 - Permanent Pieces and Flipping: Permanent pieces are especially important as they flip adjacent regular pieces, including your own, creating significant changes in board control.
 
 ## Installation
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/yourusername/board_game_gym.git
    cd board_game_gym
    ```
 
 2. Install the required dependencies:
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
@@ -117,7 +124,7 @@ board_game_gym/
 
 To run the board game environment:
 
-```
+```bash
 python src/backend/main.py
 ```
 
@@ -127,7 +134,7 @@ There are two ways to train the AI model:
 
 1. Using the convenience script (recommended):
 
-```
+```bash
 ./train_ai.sh [options]
 ```
 
@@ -135,7 +142,7 @@ This script will activate the conda environment, install required packages, run 
 
 2. Manually running the Python script:
 
-```
+```bash
 python src/backend/train_ai.py [options]
 ```
 
@@ -153,7 +160,7 @@ The training script now supports the following command-line arguments:
 
 Example usage:
 
-```
+```bash
 ./train_ai.sh --timesteps 200000 --lr 0.0001 --n_steps 1024
 ```
 
@@ -163,7 +170,7 @@ This will train the AI for 200,000 timesteps with a learning rate of 0.0001 and 
 
 To view the TensorBoard logs during or after training, run:
 
-```
+```bash
 tensorboard --logdir=./tensorboard_logs
 ```
 
@@ -173,7 +180,7 @@ Then open a web browser and go to `http://localhost:6006/` to view the TensorBoa
 
 To run all tests:
 
-```
+```bash
 python src/tests/run_tests.py
 ```
 
@@ -181,7 +188,7 @@ python src/tests/run_tests.py
 
 This project uses Black for code formatting. To format all Python files, run:
 
-```
+```bash
 python src/scripts/run_black.py
 ```
 

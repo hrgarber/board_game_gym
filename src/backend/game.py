@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class BoardGame:
     def __init__(self):
         self.rows, self.cols = 8, 12
@@ -20,8 +21,8 @@ class BoardGame:
         return False
 
     def _flip_adjacent_pieces(self, row, col):
-        for i in range(max(0, row-1), min(self.rows, row+2)):
-            for j in range(max(0, col-1), min(self.cols, col+2)):
+        for i in range(max(0, row - 1), min(self.rows, row + 2)):
+            for j in range(max(0, col - 1), min(self.cols, col + 2)):
                 if (i, j) != (row, col) and not self.permanent_pieces[i, j]:
                     self.board[i, j] *= -1
 
@@ -42,18 +43,21 @@ class BoardGame:
     def _dfs(self, row, col, player, visited):
         if col == self.cols - 1:
             return True
-        
+
         visited.add((row, col))
-        
+
         for dr in [-1, 0, 1]:
             for dc in [-1, 0, 1]:
                 new_row, new_col = row + dr, col + dc
-                if (0 <= new_row < self.rows and 0 <= new_col < self.cols and
-                    (new_row, new_col) not in visited and
-                    self.board[new_row, new_col] == player):
+                if (
+                    0 <= new_row < self.rows
+                    and 0 <= new_col < self.cols
+                    and (new_row, new_col) not in visited
+                    and self.board[new_row, new_col] == player
+                ):
                     if self._dfs(new_row, new_col, player, visited):
                         return True
-        
+
         visited.remove((row, col))
         return False
 
