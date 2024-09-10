@@ -1,18 +1,12 @@
 import os
 
-import torch
-
 # General settings
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+DEVICE = "cpu"  # We'll update this when we implement the new RL approach
 
 # Agent settings
 LEARNING_RATE = 1e-3
 DISCOUNT_FACTOR = 0.99
-EPSILON = 1.0
-EPSILON_MIN = 0.01
-EPSILON_DECAY = 0.995
-BATCH_SIZE = 32
-UPDATE_TARGET_EVERY = 100
+EXPLORATION_RATE = 0.1
 
 # Environment settings
 MAX_STEPS = 1000
@@ -28,11 +22,11 @@ EVAL_EPISODES = 100
 # File paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
-IMAGE_DIR = os.path.join(BASE_DIR, "output", "images")
+OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 
 # Ensure directories exist
-for directory in [MODEL_DIR, IMAGE_DIR, LOG_DIR]:
+for directory in [MODEL_DIR, OUTPUT_DIR, LOG_DIR]:
     os.makedirs(directory, exist_ok=True)
 
 # Logging settings
