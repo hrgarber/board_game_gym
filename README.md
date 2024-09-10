@@ -2,33 +2,26 @@
 
 ## Overview
 
-Board Game Gym is a reinforcement learning environment for training AI agents to play board games. This project combines the power of OpenAI Gym-style environments with deep reinforcement learning techniques to create intelligent game-playing agents.
+Board Game Gym is a reinforcement learning environment for training AI agents to play board games. This project aims to create intelligent game-playing agents using various reinforcement learning techniques.
 
 ## Features
 
-- Custom board game environment compatible with OpenAI Gym interface
-- Implementation of Q-Learning and Deep Q-Network (DQN) agents
-- Flexible and extensible architecture for adding new games and agents
-- Comprehensive test suite for ensuring code reliability
-- Hyperparameter tuning utilities for optimizing agent performance
+- Custom board game environment
+- Implementation of AI agents (specific types to be determined)
+- Flexible architecture for adding new games and agents
+- Test suite for ensuring code reliability
 
 ## Installation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/hrgarber/board_game_gym.git
+   git clone https://github.com/yourusername/board_game_gym.git
    cd board_game_gym
    ```
 
-2. Create a virtual environment (optional but recommended):
+2. Install the required dependencies:
    ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
-
-3. Install the required dependencies:
-   ```
-   pip install -r scripts/requirements.txt
+   pip install -r requirements.txt
    ```
 
 ## Project Structure
@@ -36,32 +29,11 @@ Board Game Gym is a reinforcement learning environment for training AI agents to
 ```
 board_game_gym/
 ├── README.md
-├── config/
-│   ├── config.py
-│   └── pytest.ini
-├── docs/
-│   └── README.md
-├── game_files/
-│   └── index.html
-├── notebooks/
-│   ├── train_q_learning_ai.ipynb
-│   ├── train_dqn_ai.ipynb
-│   └── hyperparameter_tuning.ipynb
-├── scripts/
-│   └── requirements.txt
+├── requirements.txt
 ├── src/
-│   ├── agents/
-│   │   ├── q_learning_agent.py
-│   │   └── dqn_agent.py
-│   ├── environments/
-│   │   └── board_game_env.py
-│   ├── utils/
-│   │   └── hyperparameter_tuning.py
 │   └── game.py
 └── tests/
-    ├── test_board_game.py
-    ├── test_dqn_agent.py
-    └── test_training.py
+    └── test_board_game.py
 ```
 
 ## Game Logic
@@ -70,37 +42,19 @@ The `src/game.py` file contains the core game logic for the board game. It inclu
 
 - A `BoardGame` class that represents the game state
 - Methods for making moves, checking for winners, and resetting the game
-- A flexible board size (default is 3x3 for Tic-Tac-Toe)
 
 To play the game or integrate it with AI agents, you can import and use the `BoardGame` class from `src/game.py`.
 
 ## Usage
 
-### Training Agents
+(To be updated with specific usage instructions as the project develops)
 
-To train the agents, use the Jupyter notebooks provided in the `notebooks/` directory:
+## Running Tests
 
-- `train_q_learning_ai.ipynb`: For training the Q-learning agent
-- `train_dqn_ai.ipynb`: For training the DQN agent
-
-### Hyperparameter Tuning
-
-Use the `hyperparameter_tuning.ipynb` notebook or the functions in `src/utils/hyperparameter_tuning.py` to optimize agent performance.
-
-### Running Tests
-
-To run all tests:
+To run the tests:
 
 ```
-python tests/run_tests.py
-```
-
-To run specific test suites:
-
-```
-python tests/run_tests.py board_game
-python tests/run_tests.py dqn_agent
-python tests/run_tests.py training
+python -m pytest tests/
 ```
 
 ## Contributing
@@ -113,14 +67,10 @@ Contributions are welcome! Please follow these steps:
 4. Run the test suite to ensure everything is working
 5. Submit a pull request with a clear description of your changes
 
-For more details, please see the [CONTRIBUTING.md](CONTRIBUTING.md) file.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- OpenAI Gym for the environment interface inspiration
-- PyTorch for the deep learning framework
 - All contributors who have helped shape this project
