@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.environments.board_game_env import BoardGameEnv
+from src.backend.environments.board_game_env import BoardGameEnv
 
 
 class TestBoardGameEnv(unittest.TestCase):

@@ -38,45 +38,46 @@ board_game_gym/
 ├── docs/
 │   ├── repo_structure.txt
 │   └── ROADMAP.md
-├── game_files/
-│   ├── game_bot.py
-│   ├── gameBot.js
-│   ├── index.html
-│   ├── script.js
-│   └── styles.css
 ├── logs/
 │   └── error_log.txt
-├── scripts/
-│   ├── run_black.py
-│   └── run_tests.py
 ├── src/
-│   ├── main.py
-│   ├── game.py
-│   └── environments/
-│       ├── __init__.py
-│       └── board_game_env.py
-└── tests/
-    ├── run_tests.py
-    ├── test_board_game.py
-    └── test_utils.py
+│   ├── frontend/
+│   │   ├── index.html
+│   │   ├── script.js
+│   │   └── styles.css
+│   ├── backend/
+│   │   ├── main.py
+│   │   ├── game.py
+│   │   ├── game_bot.py
+│   │   └── environments/
+│   │       ├── __init__.py
+│   │       └── board_game_env.py
+│   ├── tests/
+│   │   ├── run_tests.py
+│   │   ├── test_board_game.py
+│   │   └── test_utils.py
+│   └── scripts/
+│       ├── run_black.py
+│       └── run_tests.py
 ```
 
 ### Directory Descriptions
 
 - `config/`: Contains configuration files for the project and pytest.
 - `docs/`: Holds documentation files including the project roadmap.
-- `game_files/`: Contains files for the experimental web-based game interface.
 - `logs/`: Stores log files generated during runtime.
-- `scripts/`: Includes utility scripts for running tests and formatting code.
 - `src/`: Contains the main source code for the project.
-- `tests/`: Holds all test files for the project.
+  - `frontend/`: Holds files for the experimental web-based game interface.
+  - `backend/`: Contains the main Python backend code.
+  - `tests/`: Holds all test files for the project.
+  - `scripts/`: Includes utility scripts for running tests and formatting code.
 
 ## Usage
 
 To run the board game environment:
 
 ```
-python src/main.py
+python src/backend/main.py
 ```
 
 ## Running Tests
@@ -84,7 +85,7 @@ python src/main.py
 To run all tests:
 
 ```
-python tests/run_tests.py
+python src/tests/run_tests.py
 ```
 
 ## Code Formatting
@@ -92,7 +93,7 @@ python tests/run_tests.py
 This project uses Black for code formatting. To format all Python files, run:
 
 ```
-python scripts/run_black.py
+python src/scripts/run_black.py
 ```
 
 ## Contributing

@@ -5,30 +5,42 @@ The repository is structured to separate concerns and promote modularity:
 1. src/
    - Contains the core source code of the project
    - Subdirectories:
-     - environments/: The game environment (BoardGameEnv)
-   - main.py: Entry point for running the game
+     - frontend/: Web-based game interface files (HTML, CSS, JS)
+     - backend/: Core Python backend code
+       - environments/: The game environment (BoardGameEnv)
+     - tests/: Contains unit tests for various components of the project
+     - scripts/: Utility scripts for running tests and formatting code
 
-2. tests/
-   - Contains unit tests for various components of the project
-   - Helps ensure code reliability and facilitates refactoring
-
-3. config/
+2. config/
    - Contains configuration files for the project
    - config.py: Main configuration file
+   - pytest.ini: Configuration for pytest
 
-4. docs/
+3. docs/
    - Contains documentation files
    - repo_structure.txt: This file
    - ROADMAP.md: Future plans for the project
+
+4. logs/
+   - Stores log files generated during runtime
 
 5. Root directory files:
    - requirements.txt: Lists project dependencies
    - README.md: Project documentation
    - .gitignore: Specifies intentionally untracked files to ignore
+   - .pylintrc: Configuration for pylint
 
-This structure separates the core logic (src/), testing (tests/), configuration (config/), and documentation (docs/). It allows for easy navigation, maintenance, and scalability of the project.
+This structure separates the frontend (src/frontend/), backend (src/backend/), testing (src/tests/), scripting (src/scripts/), configuration (config/), documentation (docs/), and logging (logs/). It allows for easy navigation, maintenance, and scalability of the project.
+
+Key changes in the new structure:
+1. Consolidated src/ directory now contains all code-related subdirectories
+2. Clear separation between frontend and backend code
+3. Tests moved closer to the code they're testing
+4. Scripts consolidated into src/scripts/
 
 Future considerations:
 1. Implementing a more robust logging system
 2. Adding more detailed documentation
 3. Expanding the game environment to support different board games
+4. Improving the frontend-backend integration
+5. Adding containerization for easier deployment and development
