@@ -16,7 +16,7 @@ Board Game Gym is a sophisticated board game environment built using OpenAI Gym.
 ## Game Rules
 
 ### Objective:
-- The goal is to build a continuous path across the long side of the board, connecting one end to the other (sides A and B).
+- The goal is to build a continuous path across the long side of the board, connecting one end to the other (sides A and B) in your color.
 
 ### Setup:
 - Players: Two players—one plays as white, the other as black.
@@ -29,18 +29,25 @@ Board Game Gym is a sophisticated board game environment built using OpenAI Gym.
   - Regular Pieces: Placed showing your color.
   - Permanent Pieces: Placed showing your opponent's color. When placed, they flip all directly touching regular pieces (adjacently and diagonally), including those of your own color. Permanent pieces do not flip other permanent pieces.
 - Move Choice: On each turn, a player must choose to place either a regular or a permanent piece, but not both.
+- Strategic Use of Permanent Pieces: Permanent pieces are placed in your opponent's color, and they flip the adjacent and diagonal regular pieces. The use of permanent pieces is crucial for both advancing your own path and disrupting your opponent's progress.
 
 ### Path Building:
 - Path Formation: A path is created by connecting pieces that are "touching" each other either adjacently or diagonally.
-- Inclusive Path: Your path may include any pieces with your color showing on top.
+- Inclusive Path: Your path may include any pieces with your color showing on top, including pieces that were flipped by a permanent piece.
 - Path Direction: The path can weave back and forth in any direction as long as it connects opposite ends (sides A and B) and the pieces are linked together.
+- Path Flexibility: The path can weave in any direction as long as its pieces touch adjacently or diagonally.
 
 ### Winning:
-- The game is won by the first player who completes a path connecting sides A and B.
+- Win Condition: The first player to complete a continuous path connecting sides A and B wins.
 
 ### Special Rules:
 - Edge Rule: If you play a permanent piece at either side A or B, it must be placed in your opponent's color.
 - Flipping Mechanic: When placing a permanent piece, it flips all touching regular pieces, but not other permanent pieces.
+- Permanent Pieces: These pieces remain static and cannot be flipped once placed, making their placement a significant strategic choice.
+
+### Additional Insights:
+- Simplified Flow: The game flow is simple but strategic. Players alternate placing pieces, and the dynamic nature of flipping pieces creates opportunities for both advancing your path and disrupting your opponent's progress.
+- Permanent Pieces and Flipping: Permanent pieces are especially important as they flip adjacent regular pieces, including your own, creating significant changes in board control.
 
 ## Installation
 
@@ -63,6 +70,7 @@ board_game_gym/
 ├── requirements.txt
 ├── .gitignore
 ├── .pylintrc
+├── train_ai.sh
 ├── config/
 │   ├── config.py
 │   └── pytest.ini
@@ -81,12 +89,10 @@ board_game_gym/
 │   │   ├── main.py
 │   │   ├── game.py
 │   │   ├── game_bot.py
+│   │   ├── train_ai.py
 │   │   └── environments/
 │   │       ├── __init__.py
 │   │       └── board_game_env.py
-│   ├── ai/
-│   │   ├── train.py
-│   │   └── evaluate.py
 │   ├── tests/
 │   │   ├── run_tests.py
 │   │   ├── test_board_game.py
@@ -103,8 +109,7 @@ board_game_gym/
 - `logs/`: Stores log files generated during runtime.
 - `src/`: Contains the main source code for the project.
   - `frontend/`: Holds files for the experimental web-based game interface.
-  - `backend/`: Contains the main Python backend code.
-  - `ai/`: Contains scripts for training and evaluating AI models.
+  - `backend/`: Contains the main Python backend code, including the AI training script.
   - `tests/`: Holds all test files for the project.
   - `scripts/`: Includes utility scripts for running tests and formatting code.
 
@@ -116,17 +121,53 @@ To run the board game environment:
 python src/backend/main.py
 ```
 
-To train the AI model:
+### Training the AI
+
+There are two ways to train the AI model:
+
+1. Using the convenience script (recommended):
 
 ```
-python src/ai/train.py
+./train_ai.sh [options]
 ```
 
-To evaluate the AI model:
+This script will activate the conda environment, install required packages, run the training script with the provided options, and deactivate the environment when finished.
+
+2. Manually running the Python script:
 
 ```
-python src/ai/evaluate.py
+python src/backend/train_ai.py [options]
 ```
+
+Both methods will train the AI model using Stable Baselines3, save the trained model, and provide a TensorBoard log for visualization of the training progress.
+
+#### Training Options
+
+The training script now supports the following command-line arguments:
+
+- `--timesteps`: Total timesteps for training (default: 100000)
+- `--lr`: Learning rate (default: 0.0003)
+- `--n_steps`: Number of steps per update (default: 2048)
+- `--eval_episodes`: Number of episodes for evaluation (default: 10)
+- `--test_episodes`: Number of episodes for testing (default: 5)
+
+Example usage:
+
+```
+./train_ai.sh --timesteps 200000 --lr 0.0001 --n_steps 1024
+```
+
+This will train the AI for 200,000 timesteps with a learning rate of 0.0001 and 1024 steps per update.
+
+### Visualizing Training Progress
+
+To view the TensorBoard logs during or after training, run:
+
+```
+tensorboard --logdir=./tensorboard_logs
+```
+
+Then open a web browser and go to `http://localhost:6006/` to view the TensorBoard dashboard.
 
 ## Running Tests
 
