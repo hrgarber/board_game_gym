@@ -1,17 +1,14 @@
-import logging
 import os
 import sys
 import unittest
 
-# Add the parent directory to sys.path to allow importing from sibling directories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+# Add the project root to sys.path to allow importing from sibling directories
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, project_root)
 
 from src.tests.test_board_game import create_suite as create_board_game_suite
 from src.tests.test_utils import TestCase as UtilsTestCase
-
-# Configure logging
-logging.basicConfig(level=logging.WARNING)  # Set to WARNING to suppress debug messages
-
+from src.backend.logger import logger
 
 class DetailedTestResult(unittest.TextTestResult):
     def __init__(self, stream, descriptions, verbosity):
@@ -21,35 +18,42 @@ class DetailedTestResult(unittest.TextTestResult):
     def addSuccess(self, test):
         super().addSuccess(test)
         self.successes.append(test)
+        logger.info(f"Test passed: {test}")
 
+    def addError(self, test, err):
+        super().addError(test, err)
+        logger.error(f"Test error: {test}\n{err}")
 
-def run_tests(test_suite, verbosity=0):
+    def addFailure(self, test, err):
+        super().addFailure(test, err)
+        logger.error(f"Test failed: {test}\n{err}")
+
+def run_tests(test_suite, verbosity=2):
+    logger.info("Starting test run")
     runner = unittest.TextTestRunner(
         verbosity=verbosity,
         resultclass=DetailedTestResult,
-        stream=open(os.devnull, "w"),
     )
     result = runner.run(test_suite)
     return result
 
-
 def print_summary(result):
-    print("\nTest Summary:")
-    print(f"Ran {result.testsRun} tests")
-    print(f"Successes: {len(result.successes)}")
-    print(f"Failures: {len(result.failures)}")
-    print(f"Errors: {len(result.errors)}")
+    logger.info("\nTest Summary:")
+    logger.info(f"Ran {result.testsRun} tests")
+    logger.info(f"Successes: {len(result.successes)}")
+    logger.info(f"Failures: {len(result.failures)}")
+    logger.info(f"Errors: {len(result.errors)}")
 
     if result.wasSuccessful():
-        print("\nAll tests passed successfully!")
+        logger.info("\nAll tests passed successfully!")
     else:
-        print("\nFailed tests:")
+        logger.error("\nFailed tests:")
         for test, error in result.failures + result.errors:
-            print(f"  {test}")
-            print(f"    {error}\n")
-
+            logger.error(f"  {test}")
+            logger.error(f"    {error}\n")
 
 def run_all_tests():
+    logger.info("Running all tests")
     all_suites = unittest.TestSuite([
         create_board_game_suite(),
         unittest.TestLoader().loadTestsFromTestCase(UtilsTestCase)
@@ -57,12 +61,11 @@ def run_all_tests():
     result = run_tests(all_suites)
     print_summary(result)
 
-
 def run_specific_tests(create_suite_func):
+    logger.info(f"Running specific test suite: {create_suite_func.__name__}")
     suite = create_suite_func()
     result = run_tests(suite)
     print_summary(result)
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -72,6 +75,6 @@ if __name__ == "__main__":
         elif test_type == "utils":
             run_specific_tests(lambda: unittest.TestLoader().loadTestsFromTestCase(UtilsTestCase))
         else:
-            print("Invalid test type. Available options: board_game, utils")
+            logger.error(f"Invalid test type: {test_type}. Available options: board_game, utils")
     else:
         run_all_tests()

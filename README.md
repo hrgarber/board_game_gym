@@ -44,7 +44,8 @@ board_game_gym/
 │   ├── frontend/
 │   │   ├── index.html
 │   │   ├── script.js
-│   │   └── styles.css
+│   │   ├── styles.css
+│   │   └── gameBot.js
 │   ├── backend/
 │   │   ├── main.py
 │   │   ├── game.py

@@ -5,9 +5,10 @@ import gym
 import numpy as np
 
 # Add the project root to the Python path
-project_root = Path(__file__).parents[2]
+project_root = Path(__file__).parents[3]
 sys.path.insert(0, str(project_root))
 
+from src.backend.logger import logger
 
 class BoardGameEnv(gym.Env):
     def __init__(self, board_size=8):
@@ -20,35 +21,45 @@ class BoardGameEnv(gym.Env):
             low=-1, high=1, shape=(board_size, board_size), dtype=np.int8
         )
         self.reset()
+        logger.info(f"BoardGameEnv initialized with board size: {board_size}")
 
     def reset(self):
         self.board = np.zeros((self.board_size, self.board_size), dtype=np.int8)
         self.current_player = 1
+        logger.info("Game reset")
         return self.board.flatten()
 
     def step(self, action):
         row, col = divmod(action, self.board_size)
         if self.board[row, col] != 0:
+            logger.warning(f"Invalid move attempted at position ({row}, {col})")
             return self.board.flatten(), -10, True, {}
 
         self.board[row, col] = self.current_player
+        logger.debug(f"Player {self.current_player} placed a piece at ({row}, {col})")
 
         if self.check_win(row, col):
+            logger.info(f"Player {self.current_player} wins!")
             return self.board.flatten(), 10, True, {}
 
         if self.is_draw():
+            logger.info("Game ended in a draw")
             return self.board.flatten(), 0, True, {}
 
         if self.check_blocking_move(row, col):
             reward = 1.0
+            logger.debug(f"Blocking move detected at ({row}, {col})")
         elif self.check_line(row, col, 4):
             reward = 0.8
+            logger.debug(f"Line of 4 detected at ({row}, {col})")
         elif self.check_line(row, col, 3):
             reward = 0.5
+            logger.debug(f"Line of 3 detected at ({row}, {col})")
         else:
             reward = 0.1
 
         self.current_player *= -1
+        logger.debug(f"Turn ended. Current player is now {self.current_player}")
         return self.board.flatten(), reward, False, {}
 
     def check_win(self, row, col):
@@ -125,9 +136,7 @@ class BoardGameEnv(gym.Env):
 
         # Check if the move blocks a potential future winning move for the opponent
         original_value = self.board[row, col]
-        self.board[
-            row, col
-        ] = -self.current_player  # Temporarily place opponent's piece
+        self.board[row, col] = -self.current_player  # Temporarily place opponent's piece
         if self.check_win(row, col):
             self.board[row, col] = original_value  # Reset the board
             return True
@@ -175,7 +184,10 @@ class BoardGameEnv(gym.Env):
 
         if mode == "human":
             print(board_str)
+        logger.debug(f"Current board state:\n{board_str}")
         return board_str
 
     def get_valid_actions(self):
-        return [i for i, cell in enumerate(self.board.flatten()) if cell == 0]
+        valid_actions = [i for i, cell in enumerate(self.board.flatten()) if cell == 0]
+        logger.debug(f"Valid actions: {valid_actions}")
+        return valid_actions

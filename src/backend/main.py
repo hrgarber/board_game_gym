@@ -3,10 +3,11 @@ from pathlib import Path
 import sys
 
 # Add the project root to the Python path
-project_root = Path(__file__).parents[1]
+project_root = Path(__file__).parents[2]
 sys.path.insert(0, str(project_root))
 
-from environments.board_game_env import BoardGameEnv
+from src.backend.environments.board_game_env import BoardGameEnv
+from src.backend.logger import logger
 
 def main():
     parser = argparse.ArgumentParser(description="Board Game Gym Environment")
@@ -14,7 +15,7 @@ def main():
     args = parser.parse_args()
 
     env = BoardGameEnv(board_size=args.board_size)
-    print("Board Game Gym Environment initialized.")
+    logger.info("Board Game Gym Environment initialized.")
 
     state = env.reset()
     done = False
@@ -25,10 +26,10 @@ def main():
         valid_actions = env.get_valid_actions()
         
         if not valid_actions:
-            print("No valid actions. Game over!")
+            logger.warning("No valid actions. Game over!")
             break
 
-        print("Valid actions:", valid_actions)
+        logger.debug(f"Valid actions: {valid_actions}")
         
         while True:
             try:
@@ -36,19 +37,19 @@ def main():
                 if action in valid_actions:
                     break
                 else:
-                    print("Invalid action. Try again.")
+                    logger.warning("Invalid action. Try again.")
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                logger.error("Invalid input. Please enter a number.")
 
         state, reward, done, _ = env.step(action)
         total_reward += reward
 
-        print(f"Reward: {reward}")
-        print(f"Total Reward: {total_reward}")
+        logger.info(f"Reward: {reward}")
+        logger.info(f"Total Reward: {total_reward}")
 
     env.render()
-    print("Game Over!")
-    print(f"Final Total Reward: {total_reward}")
+    logger.info("Game Over!")
+    logger.info(f"Final Total Reward: {total_reward}")
 
 if __name__ == "__main__":
     main()
