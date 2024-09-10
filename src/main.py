@@ -3,65 +3,62 @@ import os
 import sys
 from pathlib import Path
 
-from src.utils.hyperparameter_tuning import (
-    grid_search,
-    random_search,
-    bayesian_optimization,
-)
+import torch
+from torch import nn
+import torch.optim as optim
+
+from src.environments.board_game_env import BoardGameEnv
+from src.agents.dqn_agent import DQNAgent
 from src.utils.utils import load_config, save_results
 
 # Add the project root to the Python path
 project_root = Path(__file__).parents[1]
 sys.path.insert(0, str(project_root))
 
+def train_dqn_agent(env, agent, config):
+    optimizer = optim.Adam(agent.q_network.parameters(), lr=config['LEARNING_RATE'])
+    criterion = nn.MSELoss()
+
+    for episode in range(config['NUM_EPISODES']):
+        state = env.reset()
+        total_reward = 0
+        done = False
+
+        while not done:
+            action = agent.select_action(state)
+            next_state, reward, done, _ = env.step(action)
+            agent.memory.push(state, action, reward, next_state, done)
+            state = next_state
+            total_reward += reward
+
+            if len(agent.memory) > config['BATCH_SIZE']:
+                loss = agent.update(optimizer, criterion)
+
+        if episode % 100 == 0:
+            print(f"Episode {episode}, Total Reward: {total_reward}")
+
+    return agent
 
 def main():
-    # Configure Black
-    import black
-
-    black.Mode(
-        line_length=120,
-        string_normalization=True,
-        is_pyi=False,
-    )
-    parser = argparse.ArgumentParser(
-        description="Hyperparameter tuning for Board Game AI"
-    )
-    parser.add_argument(
-        "agent", choices=["q_learning", "dqn"], help="Type of agent to tune"
-    )
-    parser.add_argument(
-        "method", choices=["grid", "random", "bayesian"], help="Tuning method to use"
-    )
-    parser.add_argument(
-        "--config",
-        default="tuning_config.json",
-        help="Path to tuning configuration file",
-    )
-    parser.add_argument(
-        "--output", default="tuning_results.json", help="Path to save tuning results"
-    )
+    parser = argparse.ArgumentParser(description="Train DQN agent for Board Game AI")
+    parser.add_argument("--config", default="config/config.py", help="Path to configuration file")
     args = parser.parse_args()
 
     config = load_config(args.config)
 
-    tuning_methods = {
-        "grid": grid_search,
-        "random": random_search,
-        "bayesian": bayesian_optimization,
-    }
+    env = BoardGameEnv(board_size=config['BOARD_SIZE'])
+    state_size = env.observation_space.shape[0]
+    action_size = env.action_space.n
 
-    results = tuning_methods[args.method](
-        args.agent,
-        config[args.agent]["param_grid" if args.method == "grid" else "param_ranges"],
-    )
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    agent = DQNAgent(state_size, action_size, config['BATCH_SIZE'], config['DISCOUNT_FACTOR'], config['EXPLORATION_RATE'], device)
 
-    output_dir = os.path.join(project_root, "output", "hyperparameter_tuning")
-    os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, args.output)
-    save_results(results, output_file)
-    print(f"Tuning completed. Results saved to {output_file}")
+    trained_agent = train_dqn_agent(env, agent, config)
 
+    # Save the trained model
+    model_path = os.path.join(project_root, "models", "dqn_model.pth")
+    torch.save(trained_agent.q_network.state_dict(), model_path)
+    print(f"Trained model saved to {model_path}")
 
 if __name__ == "__main__":
     main()
