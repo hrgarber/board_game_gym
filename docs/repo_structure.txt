@@ -1,39 +1,34 @@
-Board Game AI Repository Structure Explanation
+Board Game Gym Repository Structure Explanation
 
 The repository is structured to separate concerns and promote modularity:
 
 1. src/
    - Contains the core source code of the project
    - Subdirectories:
-     - agents/: Implementations of AI agents (Q-learning, DQN)
      - environments/: The game environment (BoardGameEnv)
-     - utils/: Utility functions and helper modules
+   - main.py: Entry point for running the game
 
 2. tests/
    - Contains unit tests for various components of the project
    - Helps ensure code reliability and facilitates refactoring
 
-3. notebooks/
-   - Jupyter notebooks for interactive development and visualization
-   - Useful for training, hyperparameter tuning, and result analysis
+3. config/
+   - Contains configuration files for the project
+   - config.py: Main configuration file
 
-4. game_files/
-   - Contains files related to the web-based game interface
-   - Includes HTML, CSS, and JavaScript files
+4. docs/
+   - Contains documentation files
+   - repo_structure.txt: This file
+   - ROADMAP.md: Future plans for the project
 
-5. models/
-   - Directory for storing trained model files
-
-6. Root directory files:
-   - main.py: Entry point for running the game or training
+5. Root directory files:
    - requirements.txt: Lists project dependencies
    - README.md: Project documentation
    - .gitignore: Specifies intentionally untracked files to ignore
 
-This structure separates the core logic (src/), testing (tests/), experimentation (notebooks/), and user interface (game_files/). It allows for easy navigation, maintenance, and scalability of the project.
+This structure separates the core logic (src/), testing (tests/), configuration (config/), and documentation (docs/). It allows for easy navigation, maintenance, and scalability of the project.
 
-Future refactoring could consider:
-1. Separating the web interface into its own module or subproject
-2. Creating a dedicated config directory for hyperparameter configurations
-3. Implementing a more robust logging system
-4. Adding a documentation directory for more detailed guides and explanations
+Future considerations:
+1. Implementing a more robust logging system
+2. Adding more detailed documentation
+3. Expanding the game environment to support different board games

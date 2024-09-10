@@ -7,8 +7,7 @@ import unittest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from tests.test_board_game import create_suite as create_board_game_suite
-from tests.test_dqn_agent import create_suite as create_dqn_agent_suite
-from tests.test_training import create_suite as create_training_suite
+from tests.test_utils import TestCase as UtilsTestCase
 
 # Configure logging
 logging.basicConfig(level=logging.WARNING)  # Set to WARNING to suppress debug messages
@@ -51,13 +50,10 @@ def print_summary(result):
 
 
 def run_all_tests():
-    all_suites = unittest.TestSuite(
-        [
-            create_board_game_suite(),
-            create_dqn_agent_suite(),
-            create_training_suite(),
-        ]
-    )
+    all_suites = unittest.TestSuite([
+        create_board_game_suite(),
+        unittest.TestLoader().loadTestsFromTestCase(UtilsTestCase)
+    ])
     result = run_tests(all_suites)
     print_summary(result)
 
@@ -73,13 +69,9 @@ if __name__ == "__main__":
         test_type = sys.argv[1]
         if test_type == "board_game":
             run_specific_tests(create_board_game_suite)
-        elif test_type == "dqn_agent":
-            run_specific_tests(create_dqn_agent_suite)
-        elif test_type == "training":
-            run_specific_tests(create_training_suite)
+        elif test_type == "utils":
+            run_specific_tests(lambda: unittest.TestLoader().loadTestsFromTestCase(UtilsTestCase))
         else:
-            print(
-                "Invalid test type. Available options: board_game, dqn_agent, training"
-            )
+            print("Invalid test type. Available options: board_game, utils")
     else:
         run_all_tests()

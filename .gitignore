@@ -154,3 +154,6 @@ output/
 reports/pylint-report.txt
 node_modules/
 __pycache__/
+
+# macOS
+.DS_Store

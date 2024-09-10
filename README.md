@@ -2,13 +2,12 @@
 
 ## Overview
 
-Board Game Gym is a reinforcement learning environment for training AI agents to play board games. This project aims to create intelligent game-playing agents using deep reinforcement learning techniques.
+Board Game Gym is a simple board game environment built using OpenAI Gym. This project provides a flexible structure for implementing and playing board games.
 
 ## Features
 
-- Custom board game environment
-- Implementation of DQN (Deep Q-Network) agent
-- Flexible architecture for adding new games and agents
+- Custom board game environment using OpenAI Gym
+- Flexible architecture for adding new games
 
 ## Installation
 
@@ -31,13 +30,13 @@ board_game_gym/
 ├── requirements.txt
 └── src/
     ├── main.py
-    └── agents/
-        └── dqn_agent.py
+    └── environments/
+        └── board_game_env.py
 ```
 
 ## Usage
 
-To train the DQN agent, run:
+To run the board game environment:
 
 ```
 python src/main.py
@@ -48,7 +47,7 @@ python src/main.py
 To run all tests:
 
 ```
-pytest
+python tests/run_tests.py
 ```
 
 ## Contributing
@@ -67,5 +66,4 @@ This project is licensed under the MIT License. See the LICENSE file in the proj
 
 ## Acknowledgments
 
-- OpenAI Gym for inspiration on environment design
-- PyTorch community for deep learning resources
+- OpenAI Gym for the environment design
