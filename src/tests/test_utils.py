@@ -7,9 +7,7 @@ class TestCase(unittest.TestCase):
     def setUp(self):
         logger.info("Setting up test environment")
         self.env = BoardGameEnv()
-        self.state_size = (
-            self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
-        )
+        self.state_size = self.env.observation_space.shape[0] * self.env.observation_space.shape[1]
         self.action_size = self.env.action_space.n
         logger.debug(f"State size: {self.state_size}, Action size: {self.action_size}")
 
@@ -60,7 +58,38 @@ class TestCase(unittest.TestCase):
         logger.debug(f"Valid actions: {valid_actions}")
         for action in valid_actions:
             self.assert_valid_action(action)
+        self.assertEqual(len(valid_actions), self.env.board_width * self.env.board_height * 2)
         logger.debug("All actions are valid")
+
+    def test_board_dimensions(self):
+        logger.info("Testing board dimensions")
+        self.assertEqual(self.env.board_width, 12, "Board width should be 12")
+        self.assertEqual(self.env.board_height, 8, "Board height should be 8")
+        self.assertEqual(self.env.board.shape, (8, 12), "Board shape should be (8, 12)")
+        logger.debug("Board dimensions are correct")
+
+    def test_action_space(self):
+        logger.info("Testing action space")
+        self.assertEqual(self.action_size, self.env.board_width * self.env.board_height * 2, 
+                         "Action space should be twice the number of board cells")
+        logger.debug("Action space is correct")
+
+    def test_observation_space(self):
+        logger.info("Testing observation space")
+        self.assertEqual(self.env.observation_space.shape, (8, 12), 
+                         "Observation space shape should match the board dimensions")
+        self.assertTrue(np.all(self.env.observation_space.low == -2), "Lowest observation value should be -2")
+        self.assertTrue(np.all(self.env.observation_space.high == 2), "Highest observation value should be 2")
+        logger.debug("Observation space is correct")
+
+    def test_reset(self):
+        logger.info("Testing reset function")
+        self.env.step(0)  # Make a move
+        reset_state = self.env.reset()
+        self.assert_valid_state(reset_state)
+        self.assertTrue(np.all(self.env.board == 0), "Board should be empty after reset")
+        self.assertEqual(self.env.current_player, 1, "Current player should be 1 after reset")
+        logger.debug("Reset function works correctly")
 
 if __name__ == "__main__":
     unittest.main()
