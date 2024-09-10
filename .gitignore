@@ -152,3 +152,5 @@ cython_debug/
 config/__pycache__/
 output/
 reports/pylint-report.txt
+node_modules/
+__pycache__/
